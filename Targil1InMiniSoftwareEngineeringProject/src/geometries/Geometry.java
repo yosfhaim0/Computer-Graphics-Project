@@ -2,7 +2,7 @@ package geometries;
 
 import primitive.*;
 /**
- * interface for geomtrie Shapes
+ * interface for Geometry Shapes
  * @author yosefHaim
  *
  */

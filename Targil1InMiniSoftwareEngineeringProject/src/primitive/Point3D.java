@@ -1,5 +1,9 @@
 package primitive;
-
+/**
+ * A point in three-dimensional space of this shape: (x,y,z)
+ * @author yosefHaim
+ *
+ */
 public class Point3D {
 	final private Coordinate x,y,z;
 	public static Point3D ZERO=new Point3D(0,0,0);
@@ -42,13 +46,13 @@ public class Point3D {
 	public double getZ() {return this.z.coord;}
 
 	@Override
-	 public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        //if (!super.equals(o)) return false;
-        Point3D that = (Point3D) o;
-        return x.equals(that.x) && y.equals(that.y) && z.equals(that.z);
-    }
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null) return false;
+	    if (!(obj instanceof Point3D)) return false;
+	    Point3D other = (Point3D)obj;
+        return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
+	 }
 	@Override
 	public String toString() {
 		return "("+x+","+y+","+z+")";
