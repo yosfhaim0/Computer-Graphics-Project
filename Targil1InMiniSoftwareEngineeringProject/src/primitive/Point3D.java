@@ -1,7 +1,7 @@
 package primitive;
 
 public class Point3D {
-	final Coordinate x,y,z;
+	final private Coordinate x,y,z;
 	public static Point3D ZERO=new Point3D(0,0,0);
 	/**
 	 * point Represented bay three coordinate
@@ -28,7 +28,19 @@ public class Point3D {
 		this.y=new Coordinate(y);
 		this.z=new Coordinate(z);
 	}
-	
+	/*
+	 * return double number*
+	 */
+	public double getX() {return this.x.coord;}
+	/*
+	 * return double number*
+	 */
+	public double getY() {return this.y.coord;}
+	/*
+	 * return double number*
+	 */
+	public double getZ() {return this.z.coord;}
+
 	@Override
 	 public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,9 +69,9 @@ public class Point3D {
 	 * @return new point the sum of the two point 3D 
 	 */
 	public Point3D add(Vector v) {
-		return new Point3D(this.x.coord+v.head.x.coord,
-				this.y.coord+v.head.y.coord,
-				this.z.coord+v.head.z.coord);
+		return new Point3D(this.x.coord+v.getHead().x.coord,
+				this.y.coord+v.getHead().y.coord,
+				this.z.coord+v.getHead().z.coord);
 		
 	}
 	/**

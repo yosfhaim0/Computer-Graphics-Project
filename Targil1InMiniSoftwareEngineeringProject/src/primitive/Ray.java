@@ -3,8 +3,8 @@ package primitive;
 import static primitive.Util.isZero;
 
 public class Ray {
-Point3D p0;
-Vector dir;
+	private Point3D p0;
+	private Vector dir;
 /**
  * (ray) - A fundamental object in geometry - 
  * the group of points on a straight line that are on one relative side
@@ -16,7 +16,7 @@ Vector dir;
 Ray(Point3D p,Vector v){
     if (isZero(v.length() - 1)) 
     	v.normalize();
-	this.p0=new Point3D(p.x,p.y,p.z);
+	this.p0=new Point3D(p.getX(),p.getY(),p.getZ());
 	this.dir=new Vector(v.normalized().getHead());
 }
 @Override

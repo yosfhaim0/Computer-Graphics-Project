@@ -3,7 +3,11 @@ package geometries;
 import primitive.Point3D;
 import primitive.Ray;
 import primitive.Vector;
-
+/**
+ * Tube with unlimited height
+ * @author yosefHaim
+ *
+ */
 public class Tube implements Geometry {
 
 	protected Ray axisRay;
