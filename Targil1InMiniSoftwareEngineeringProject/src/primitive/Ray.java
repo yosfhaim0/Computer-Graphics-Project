@@ -13,7 +13,7 @@ Vector dir;
  * @param p point of the begin
  * @param v direction of the ray
  */
-Ray(Point3D p,Vector v){
+public Ray(Point3D p,Vector v){
     if (isZero(v.length() - 1)) 
     	v.normalize();
 	this.p0=new Point3D(p.x,p.y,p.z);

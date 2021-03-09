@@ -7,5 +7,5 @@ import primitive.*;
  *
  */
 public interface Geometry {
-Vector getNormal(Point3D p);
+	Vector getNormal(Point3D p);
 }

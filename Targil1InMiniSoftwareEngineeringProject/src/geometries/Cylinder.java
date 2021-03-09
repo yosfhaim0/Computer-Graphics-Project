@@ -1,7 +1,11 @@
 package geometries;
+
 import primitive.*;
-public class Cylinder extends Tube{
+
+public class Cylinder extends Tube {
+	
 	private double height;
+	
 	public Vector getNormal(Point3D p) {
 		return null;
 	}
@@ -9,6 +13,7 @@ public class Cylinder extends Tube{
 		super(ray,rad);
 		this.height=height;
 	}
+	
 	public double getHeight() {return this.height;}
 	@Override
 	public String toString() {

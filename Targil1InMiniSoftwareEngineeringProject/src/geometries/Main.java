@@ -1,7 +1,10 @@
 package geometries;
-import primitive.*;
 import static java.lang.System.out;
-import static primitive.Util.*;
+import static primitive.Util.isZero;
+
+import primitive.Point3D;
+import primitive.Ray;
+import primitive.Vector;
 
 /**
  * Test program for the 1st stage
@@ -16,6 +19,10 @@ public final class Main {
      * @param args irrelevant here
      */
     public static void main(String[] args) {
+    	Ray r = new Ray(new Point3D(1, 1, 1), new Vector(1, 2, 3));
+    	Tube t = new Cylinder(null, 0, 0);
+    	Tube t2 = new Cylinder(null, 0, 0);
+    	Tube t3 = t;
 
         try { // test zero vector
             new Vector(0, 0, 0);
