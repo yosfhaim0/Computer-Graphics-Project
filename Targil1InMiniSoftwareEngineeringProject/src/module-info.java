@@ -1,2 +1,0 @@
-module Targil1InMiniSoftwareEngineeringProject {
-}
