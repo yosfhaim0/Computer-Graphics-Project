@@ -17,8 +17,7 @@ public class Triangle extends Polygon implements Geometry {
 	
 	@Override
 	public Vector getNormal(Point3D p) {
-		// TODO Auto-generated method stub
-		return null;
+		return super.getNormal(p);
 	}
 
 	@Override

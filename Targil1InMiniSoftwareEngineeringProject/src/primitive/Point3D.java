@@ -6,6 +6,9 @@ package primitive;
  */
 public class Point3D {
 	final private Coordinate x,y,z;
+	/**
+	 * ZERO=(0,0,0)
+	 */
 	public static Point3D ZERO=new Point3D(0,0,0);
 	/**
 	 * point Represented bay three coordinate
@@ -32,16 +35,19 @@ public class Point3D {
 		this.y=new Coordinate(y);
 		this.z=new Coordinate(z);
 	}
-	/*
-	 * return double number*
+	/**
+	 * 
+	 * @return double number*
 	 */
 	public double getX() {return this.x.coord;}
-	/*
-	 * return double number*
+	/**
+	 * 
+	 * @return double number*
 	 */
 	public double getY() {return this.y.coord;}
-	/*
-	 * return double number*
+	/**
+	 * 
+	 * @return double number*
 	 */
 	public double getZ() {return this.z.coord;}
 
@@ -58,7 +64,7 @@ public class Point3D {
 		return "("+x+","+y+","+z+")";
 	}
 	/**
-	 * 
+	 *  subtract((x1,y1,z1),(x2,y2,z2))=(x1-x2,y1-y2,z1-z2)
 	 * @param p the head of the vector for subtract
 	 * @return vector (this point less given point)
 	 */
@@ -68,7 +74,7 @@ public class Point3D {
 						  this.z.coord-p.z.coord);
 	}
 	/**
-	 * 
+	 * add((x1,y1,z1),(x2,y2,z2))=(x1+x2,y1+y2,z1+z2)
 	 * @param v vector new Add to existing vector
 	 * @return new point the sum of the two point 3D 
 	 */
@@ -80,6 +86,7 @@ public class Point3D {
 	}
 	/**
 	 * The distance between two points squares
+	 * distanceSquared(x,y,z)=x^2+y^2+z^2
 	 * @param other 
 	 * @return double
 	 */
@@ -91,8 +98,9 @@ public class Point3D {
 	/**
 	 * Distance between 2 points
 	 * Uses the previous function named: double distanceSquared(Point3D)
+	 * distance(x,y,z)=sqrt(x^2+y^2+z^2)
 	 * @param other Point3D
-	 * @return distance
+	 * @return double
 	 */
 	public double distance(Point3D other) {
 		return Math.sqrt(this.distanceSquared(other));

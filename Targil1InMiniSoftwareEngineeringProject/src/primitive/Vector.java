@@ -1,8 +1,9 @@
 package primitive;
 /**
+ * A vector is an object with size and direction
  * Vector from the beginning of the axes to a certain point
  * Builders : a) three coordinates, b) three double-digit numbers, c) a Point3D
-.  Copy builder not exist!!!
+.* Copy builder not exist!!!
  * @author yosefHaim
  *
  */
@@ -68,6 +69,7 @@ public String toString() {
  * Subtraction of vectors
  * Subtraction between two vectors, i.e. subtracting their heads, 
  * i.e. returning a new vector which is the subtraction between their two heads
+ * subtract((x1,y1,z1),(x2,y2,z2))=(x1-x2,y1-y2,z1-z2)
  * @param v vector to subtract
  * @return new vector
  */
@@ -76,8 +78,9 @@ public Vector subtract(Vector v) {
 }
 /**
  * Connecting vectors
- * @param v
- * @return
+ * add((x1,y1,z1),(x2,y2,z2))=(x1+x2,y1+y2,z1+z2)
+ * @param v vector
+ * @return new Vector
  */
 public Vector add(Vector v) {
 	return new Vector(head.add(v));
@@ -86,7 +89,7 @@ public Vector add(Vector v) {
  * Scalar multiplication
  * scale(a(x,y,z))=(a*x,a*y,a*z)
  * @param scale
- * @return
+ * @return Vector
  */
 public Vector scale(double scale) {
 	return new Vector(this.head.getX()*scale,
@@ -133,6 +136,7 @@ public Vector crossProduct(Vector v) {
 /**
  * The distance between two points(the to head of the vector) squares
  * Uses the Point3D function named:double distanceSquared(Point3D)
+ * lengthSquared(x,y,z)=x^2+y^2+z^2
  * @return double
  */
 public double lengthSquared() {
@@ -141,6 +145,7 @@ public double lengthSquared() {
 /**
  * he distance between two points(the to head of the vector)
  * Uses the Point3D function named:double distance(Point3D)
+ * distance(x,y,z)=sqrt(x^2+y^2+z^2)
  * @return double length of the vector
  */
 public double length() {
@@ -149,7 +154,7 @@ public double length() {
 /**
  * Each component of the vector is divided by its length
  * This action is the only one that changes the vector itself !!!
- * normalize(Size(x,y,z))=(a/Size,a/Size,a/Size)
+ * normalize(x,y,z)=(a/SizeVec,a/SizeVec,a/SizeVec)
  * @return it returns the object itself (this)
  */
 public Vector normalize() {
@@ -165,7 +170,7 @@ public Vector normalize() {
  * @return Vector(new)
  */
 public Vector normalized() {
-	return new Vector(this.normalize().getHead());
+	return new Vector(this.getHead()).normalize();
 }
 
 

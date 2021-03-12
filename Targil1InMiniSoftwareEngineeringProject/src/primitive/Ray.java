@@ -16,15 +16,30 @@ public class Ray {
  * @param p point of the begin
  * @param v direction of the ray
  */
-Ray(Point3D p,Vector v){
-    if (isZero(v.length() - 1)) 
-    	v.normalize();
-	this.p0=new Point3D(p.getX(),p.getY(),p.getZ());
-	this.dir=new Vector(v.normalized().getHead());
+public Ray(Point3D p,Vector v){
+    if (isZero(v.length() - 1)) {
+    	this.dir=v;
+    }else {//mayby it saposd to be normalize
+		this.dir=v.normalized();
+	}
+	this.p0=p;
+	
 }
 @Override
 public String toString() {
 	return "p0: "+this.p0.toString()+" dir: "+this.dir.toString()+"\n";
+}
+/**
+ * @return the p0
+ */
+public Point3D getP0() {
+	return p0;
+}
+/**
+ * @return the direction
+ */
+public Vector getDir() {
+	return dir;
 }
 @Override
 public boolean equals(Object obj) {

@@ -17,8 +17,26 @@ public class Cylinder extends Tube{
 		super(ray,rad);
 		this.height=height;
 	}
+	@Override
 	public Vector getNormal(Point3D p) {
-		return null;
+	if(chackIfPointOnBase(p)) {
+		return this.axisRay.getDir();
+	}else {
+	return super.getNormal(p);}
+	}
+	/**
+	 * A private function that checks whether 
+	 * the point obtained is in one of the bases of the cylinder or not
+	 * @param Point3D p
+	 * @return boolean if true it on a base
+	 */
+	private boolean chackIfPointOnBase(Point3D p){
+		Vector v = p.subtract(this.axisRay.getP0());
+		Vector v1=p.subtract(this.axisRay.getDir().normalized().scale(height).getHead());
+		if(v.dotProduct(this.axisRay.getDir())==0||v1.dotProduct(this.axisRay.getDir())==0) {
+			return true;
+		}
+		return false;
 	}
 	public double getHeight() {return this.height;}
 	@Override

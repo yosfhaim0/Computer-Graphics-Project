@@ -33,9 +33,9 @@ public class Plane implements Geometry {
 	 * @param p3
 	 */
 	public Plane(Point3D p1,Point3D p2,Point3D p3) {
-		Vector v1=new Vector(p1.subtract(p2).getHead());
-		Vector v2=new Vector(p1.subtract(p3).getHead());
-		this.normal=new Vector(v1.crossProduct(v2).normalized().getHead());
+		Vector v1=p1.subtract(p2);
+		Vector v2=p1.subtract(p3);
+		this.normal=v1.crossProduct(v2).normalize();
 		this.q0=p1;
 	}
 	/**
@@ -45,14 +45,12 @@ public class Plane implements Geometry {
 	public Point3D getq0() {return this.q0;}
 	/**
 	 * Normal form the q0
-	 * @return the normal form the q0
-	 */
-	public Vector getNormal() {return this.normal;}
-	
+	 * @return Vector normal form the q0
+	 */	
 	@Override
 	public Vector getNormal(Point3D p) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    return this.normal;
+}
+	
+	public Vector getNormal() {return this.normal;}
 }
