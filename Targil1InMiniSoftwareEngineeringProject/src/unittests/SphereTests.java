@@ -29,6 +29,17 @@ public class SphereTests {
 		Vector v2 = s.getNormal(new Point3D(0,0.96,0.76));
 		double x= Math.sqrt(17);
 		assertEquals("The normal calculation is incorrect",v2,new Vector(0,4d/x,-1d/x));
+	
+	
+	
+	
+		Vector v2 = s.getNormal(new Point3D(0,0.96,0.76));
+		Vector v2 = s.getNormal(new Point3D(0,0.96,0.76));
+		Vector v2 = s.getNormal(new Point3D(0,0.96,0.76));
+		Vector v2 = s.getNormal(new Point3D(0,0.96,0.76));
+
 	}
+	
+	
 
 }
