@@ -19,7 +19,7 @@ public class Cylinder extends Tube{
 	}
 	@Override
 	public Vector getNormal(Point3D p) {
-	if(chackIfPointOnBase(p)) {
+	if(trueIfPointOnOneOfTheBase(p)) {
 		return this.axisRay.getDir();
 	}else {
 	return super.getNormal(p);}
@@ -30,7 +30,7 @@ public class Cylinder extends Tube{
 	 * @param Point3D p
 	 * @return boolean if true it on a base
 	 */
-	private boolean chackIfPointOnBase(Point3D p){
+	private boolean trueIfPointOnOneOfTheBase(Point3D p){
 		Vector v = p.subtract(this.axisRay.getP0());
 		Vector v1=p.subtract(this.axisRay.getDir().normalized().scale(height).getHead());
 		if(v.dotProduct(this.axisRay.getDir())==0||v1.dotProduct(this.axisRay.getDir())==0) {

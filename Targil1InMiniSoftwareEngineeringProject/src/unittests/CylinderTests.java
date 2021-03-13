@@ -55,6 +55,8 @@ public class CylinderTests {
 		Point3D p5=new Point3D(1,0,1);
 		Vector v5= c.getNormal(p5);
 		assertEquals("Bad normal Boundary Values2",new Vector(0,0,1),v5);
+		Point3D p9=new Point3D(1,0,1);
+
 		
 	}
 	
