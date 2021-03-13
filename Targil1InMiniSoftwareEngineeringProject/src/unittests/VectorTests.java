@@ -17,20 +17,14 @@ import primitive.*;
  */
 public class VectorTests{
 	
-	public Vector v1,v2,v3 ;
-      
-    public VectorTests(){
-     // v1 = new Vector(1, 2, 3);
-	 // v2 = new Vector(-2, -4, -6);
-	  // v3 = new Vector(1, 5, -2);
-	}
+   
 	/**
 	 * Test method for {@link primitive.Vector#subtract(primitive.Vector)}.
 	 */
 	@Test
 	public void testSubtract() {
-		v1 = new Vector(2, 4, 5);
-		v2 = new Vector(1, 2, 3);
+		Vector v1 = new Vector(2, 4, 5);
+		Vector v2 = new Vector(1, 2, 3);
 		// ============ Equivalence Partitions Tests ==============
 		assertEquals("your secced to subtract",v1.subtract(v2).length(),3,0.0001);
 		// =============== Boundary Values Tests ==================
@@ -46,9 +40,9 @@ public class VectorTests{
 	 */
 	@Test
 	public void testAdd() {
-		v1 = new Vector(1, 2, 4);
-		v2 = new Vector(-2, -4, -6);
-		v3=new Vector(-1,-2,-4);
+		Vector v1 = new Vector(1, 2, 4);
+		Vector v2 = new Vector(-2, -4, -6);
+		Vector v3=new Vector(-1,-2,-4);
 		// ============ Equivalence Partitions Tests ==============
 		Vector v4=v1.add(v2);
 		assertEquals("your secced to subtract",3,v4.length(),0.0001);
@@ -65,7 +59,7 @@ public class VectorTests{
 	 */
 	@Test
 	public void testScale() {
-		v1 = new Vector(0.5, 1, 1);
+		Vector v1 = new Vector(0.5, 1, 1);
 		// ============ Equivalence Partitions Tests ==============
 		assertEquals("your secced to subtract",3,(v1.scale(2)).length(),0.0001);
 		// =============== Boundary Values Tests ==================
@@ -94,11 +88,11 @@ public class VectorTests{
 	 */
     @Test
     public void testCrossProduct() {
-         v1 = new Vector(1, 2, 3);
-         v2 = new Vector(-2, -4, -6);
+    	Vector v1 = new Vector(1, 2, 3);
+    	Vector v2 = new Vector(-2, -4, -6);
 
         // ============ Equivalence Partitions Tests ==============
-         v3 = new Vector(0, 3, -2);
+    	Vector v3 = new Vector(0, 3, -2);
         Vector vr = v1.crossProduct(v3);
 
         // Test that length of cross-product is proper (orthogonal vectors taken for simplicity)
@@ -154,7 +148,7 @@ public class VectorTests{
 	 */
 	@Test
 	public void testNormalized() {
-		v3 = new Vector(1, 5, -2);
+		Vector v3 = new Vector(1, 5, -2);
 		// ============ Equivalence Partitions Tests ==============
 		Vector v=v3.normalized();
         assertTrue("Normaliz() Does not normalize", isZero(v.length() - 1));
