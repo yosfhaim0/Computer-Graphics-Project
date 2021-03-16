@@ -1,46 +1,52 @@
 package geometries;
-import primitive.*;
+
+import primitives.*;
+
 /**
  * Tube with limited height
- * @author yosefHaim 
+ * 
+ * @author yosefHaim
  *
  */
-public class Cylinder extends Tube{
+public class Cylinder extends Tube {
 	private double height;
+
 	/**
 	 * 
-	 * @param ray the start of the Cylinder
-	 * @param rad The width(rad*2) of the Cylinder
+	 * @param ray    the start of the Cylinder
+	 * @param rad    The width(rad*2) of the Cylinder
 	 * @param height the height of the Cylinder
 	 */
-	public Cylinder(Ray ray,double rad,double height) {
-		super(ray,rad);
-		this.height=height;
+	public Cylinder(Ray ray, double rad, double height) {
+		super(ray, rad);
+		this.height = height;
 	}
+
 	@Override
 	public Vector getNormal(Point3D p) {
-	if(trueIfPointOnOneOfTheBase(p)) {
-		return this.axisRay.getDir();
-	}else {
-	return super.getNormal(p);}
-	}
-	/**
-	 * A private function that checks whether 
-	 * the point obtained is in one of the bases of the cylinder or not
-	 * @param Point3D p
-	 * @return boolean if true it on a base
-	 */
-	private boolean trueIfPointOnOneOfTheBase(Point3D p){
-		Vector v = p.subtract(this.axisRay.getP0());
-		Vector v1=p.subtract(this.axisRay.getDir().normalized().scale(height).getHead());
-		if(v.dotProduct(this.axisRay.getDir())==0||v1.dotProduct(this.axisRay.getDir())==0) {
-			return true;
+		/**
+		 * downPlane=low base 
+		 * upPlane=up base
+		 */
+		Plane downPlane = new Plane(axisRay.getP0(), axisRay.getDir());
+		Plane upPlane = new Plane(axisRay.getP0().add(axisRay.getDir().scale(height)), axisRay.getDir());
+		/**
+		 * if point if the one of the planes(up or down) return the dir of Cylinder
+		 * otherwise return normal form the side and use the tube.getNormal()
+		 */
+		if (downPlane.chackIfPointInPlane(p) || upPlane.chackIfPointInPlane(p)) {
+			return this.axisRay.getDir();
+		} else {
+			return super.getNormal(p);
 		}
-		return false;
 	}
-	public double getHeight() {return this.height;}
+
+	public double getHeight() {
+		return this.height;
+	}
+
 	@Override
 	public String toString() {
-		return super.toString()+" height: "+height;
+		return super.toString() + " height: " + height;
 	}
 }

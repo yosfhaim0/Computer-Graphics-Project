@@ -1,7 +1,12 @@
 package geometries;
 
-import primitive.Point3D;
-import primitive.Vector;
+import java.util.ArrayList;
+import java.util.List;
+
+
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 /**
  * Sphere = ball
  * @author yosefHaim
@@ -20,6 +25,9 @@ public class Sphere implements Geometry {
 	 }
 	@Override
 	public Vector getNormal(Point3D p) {
+		/**
+		 * n=normalize(P-Center)
+		 */
 		return p.subtract(center).normalize();
 	}
 	/**
@@ -36,5 +44,33 @@ public class Sphere implements Geometry {
 	public String toString() {
 		return this.center.toString();
 	}
+	@Override
+	public List<Point3D> findIntersections(Ray ray) {
+		return null;
+	}
+	
 	
 }
+/*Vector u;
+		if(ray.chackIfPointInRay(center))
+			
+		if(center.equals(ray.getP0()))
+			return List.of(ray.getDir().scale(radius).getHead());
+		u=center.subtract(ray.getP0());
+		double tm=ray.getDir().dotProduct(u);
+		if(u.length()<radius&&radius!=u.scale(tm).length())
+			{} 
+		double d=Math.sqrt((u.length()*u.length())-(tm*tm));
+		if(d>=radius)
+			return null;
+		double th=Math.sqrt((radius*radius)-(d*d));
+		double t1=tm+th;
+		double t2=tm-th;
+		if(t1<=0&&t2<=0)
+			return null;
+		List<Point3D> arr = new ArrayList<Point3D>();
+		if(t1>0)
+			arr.add(ray.getP0().add(ray.getDir().scale(t1)));
+		if(t2>0)
+			arr.add(ray.getP0().add(ray.getDir().scale(t2)));
+		return arr;*/

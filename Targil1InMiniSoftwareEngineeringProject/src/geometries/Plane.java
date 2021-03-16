@@ -1,7 +1,15 @@
 package geometries;
 
-import primitive.Point3D;
-import primitive.Vector;
+import static primitives.Util.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+
+import primitives.*;
+
 /**
  * plane is Unlimited surface
  * The class contains a vector and point, 
@@ -21,6 +29,8 @@ public class Plane implements Geometry {
 	public Plane(Point3D p,Vector v) {
 		this.q0=p;
 		this.normal=v;
+		if(!(isZero(normal.length()-1)))
+				normal.normalize();
 	}
 	/**
 	 * Constructor whit 3 point
@@ -39,18 +49,56 @@ public class Plane implements Geometry {
 		this.q0=p1;
 	}
 	/**
+	 * the fun create vector q0->p
+	 * and dot dotProduct whit normal of plane
+	 * if =0 the vectors are Vertical
+	 * it mean the point in the plane return true
+	 * otherwise the point is not in the plane return false 
+	 *  
+	 * @param p point you want to check if it is within the plain
+	 * @return true if point contained the plane and false otherwise
+	 */
+	public boolean chackIfPointInPlane(Point3D p) {
+		Vector v=p.subtract(q0);
+		
+		if(alignZero(v.dotProduct(normal))==0)
+			return true;
+		return false;
+	}
+	/**
 	 * q0 is the on of the par who present plane(there is a normal too)
 	 * @return point on the plane 
 	 */
 	public Point3D getq0() {return this.q0;}
-	/**
-	 * Normal form the q0
-	 * @return Vector normal form the q0
-	 */	
 	@Override
 	public Vector getNormal(Point3D p) {
+		/**
+		 * Normal form the q0
+		 */	
     return this.normal;
 }
 	
 	public Vector getNormal() {return this.normal;}
+	@Override
+	
+	
+	public List<Point3D> findIntersections(Ray ray) {
+		double nv=normal.dotProduct(ray.getDir());
+		double nQMinusP0=normal.dotProduct(q0.subtract(ray.getP0()));
+		if(isZero(nv))
+			/**
+			 * Because nv is equal to 0 it means that: 
+			 * 1. plane and the ray are parallel -> no intersection points
+			 * 2. they are contained each other (ray and the plane) -> infinite intersection points
+			 */
+			return null;
+		double t=alignZero(nQMinusP0/nv);
+		if(t>0) {
+			List<Point3D>arr=Arrays.asList(ray.getP0().add(ray.getDir().scale(t)));
+		return arr;
+		}
+		//if t<0 it mean there are no intersection whit the ray
+		//if t==0 it mean the begin of the ray are contained in the plane
+		return null;
+	}
 }

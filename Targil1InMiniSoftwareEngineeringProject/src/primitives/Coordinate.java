@@ -1,6 +1,6 @@
-package primitive;
+package primitives;
 
-import static primitive.Util.*;
+import static primitives.Util.*;
 
 /**
  * Class Coordinate is the basic class representing a coordinate for Cartesian
