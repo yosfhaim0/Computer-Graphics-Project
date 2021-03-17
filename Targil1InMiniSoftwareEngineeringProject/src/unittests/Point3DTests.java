@@ -51,7 +51,7 @@ public class Point3DTests {
 		Point3D p2=new Point3D(5,5,3);   
 		// ============ Equivalence Partitions Tests ==============
 		// test DistanceSquared..
-        assertTrue("distanceSquared() wrong value",isZero(p1.distanceSquared(p2)-25));
+		assertEquals("distanceSquared() wrong value",25,p1.distanceSquared(p2),0.00000000001);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class Point3DTests {
 		Point3D p1=new Point3D(1,2,3);
 		Point3D p2=new Point3D(5,5,3);
         // ============ Equivalence Partitions Tests ==============
-        assertTrue("distance() wrong value", isZero(p1.distance(p2) - 5));
+		assertEquals("distance() wrong value", 5,p1.distance(p2),0.000000001);
 
 	}
 	

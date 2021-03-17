@@ -51,7 +51,7 @@ public class PlaneTests {
 		Ray ray2=new Ray(new Point3D(0, 4, 0), new Vector(new Point3D(1, 1, 1)));
 		assertEquals("plane and the ray are parallel",null,p.findIntersections(ray2));
 		
-		// ============ Equivalence Partitions Tests ==============
+        // =============== Boundary Values Tests ==================
 		//the ray in the plane infinite point
 		Ray ray3=new Ray(new Point3D(0, 2, 0), new Vector(new Point3D(-2, 0, 2)));
 		assertEquals("the ray in the plane infinite point",null,p.findIntersections(ray3));

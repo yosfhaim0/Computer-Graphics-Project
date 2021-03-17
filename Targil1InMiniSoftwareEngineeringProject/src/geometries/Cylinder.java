@@ -12,6 +12,7 @@ public class Cylinder extends Tube {
 	private double height;
 
 	/**
+	 * ctor for: Tube with limited height
 	 * 
 	 * @param ray    the start of the Cylinder
 	 * @param rad    The width(rad*2) of the Cylinder
@@ -25,8 +26,7 @@ public class Cylinder extends Tube {
 	@Override
 	public Vector getNormal(Point3D p) {
 		/**
-		 * downPlane=low base 
-		 * upPlane=up base
+		 * downPlane=the plane low base contained upPlane=the plane up base contained
 		 */
 		Plane downPlane = new Plane(axisRay.getP0(), axisRay.getDir());
 		Plane upPlane = new Plane(axisRay.getP0().add(axisRay.getDir().scale(height)), axisRay.getDir());
@@ -41,6 +41,11 @@ public class Cylinder extends Tube {
 		}
 	}
 
+	/**
+	 * return the Height of Cylinder
+	 * 
+	 * @return double
+	 */
 	public double getHeight() {
 		return this.height;
 	}

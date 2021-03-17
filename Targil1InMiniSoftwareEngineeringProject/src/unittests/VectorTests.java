@@ -83,9 +83,9 @@ public class VectorTests{
 	     Vector v3 = new Vector(0, 3, -2);
 			// ============ Equivalence Partitions Tests ==============
 	     //test the orthogonal vector dot product really give 0
-        assertTrue("dotProduct() for orthogonal vectors is not zero", isZero(v1.dotProduct(v3)));
+	     assertEquals("dotProduct() for orthogonal vectors is not zero", 0,v1.dotProduct(v3),0.000000001);
         //test the double number given form dot product is propriety  
-        assertTrue("dotProduct() wrong value", isZero(v1.dotProduct(v2) + 28));
+	     assertEquals("dotProduct() wrong value", -28,v1.dotProduct(v2),0.0000000001);
 	}
 
 	/**
@@ -104,8 +104,8 @@ public class VectorTests{
         assertEquals("crossProduct() wrong result length", v1.length() * v3.length(), vr.length(), 0.00001);
 
         // Test cross-product result orthogonality to its operands
-        assertTrue("crossProduct() result is not orthogonal to 1st operand", isZero(vr.dotProduct(v1)));
-        assertTrue("crossProduct() result is not orthogonal to 2nd operand", isZero(vr.dotProduct(v3)));
+        assertEquals("crossProduct() result is not orthogonal to 1st operand",0, vr.dotProduct(v1),0.000000001);
+        assertEquals("crossProduct() result is not orthogonal to 2nd operand",0,vr.dotProduct(v3),0.000000001);
 
         // =============== Boundary Values Tests ==================
         // test zero vector from cross-productof co-lined vectors
@@ -124,7 +124,7 @@ public class VectorTests{
 		// ============ Equivalence Partitions Tests ==============
 		Vector v1 = new Vector(1, 2, 3);
         // test lengthSquared..
-        assertTrue("lengthSquared() wrong value", isZero(v1.lengthSquared() - 14));
+		assertEquals("lengthSquared() wrong value", 14,v1.lengthSquared(),0.0000000001);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class VectorTests{
 	public void testLength() {
 		// ============ Equivalence Partitions Tests ==============
         // test length..
-        assertTrue("length() wrong value", isZero(new Vector(0, 3, 4).length() - 5));
+		assertEquals("length() wrong value",5, new Vector(0, 3, 4).length(),0.0000000001);
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class VectorTests{
 		// ============ Equivalence Partitions Tests ==============
 		//test whether the length of a normal vector is really 1
 		v.normalize();
-        assertTrue("Normaliz() Does not normalize", isZero(v.length() - 1));
+		assertEquals("Normaliz() Does not normalize", 1,v.length(),0.000000000001);
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class VectorTests{
 		// ============ Equivalence Partitions Tests ==============
 		//test whether the length of a normal vector is really 1
 		Vector v=v3.normalized();
-        assertTrue("Normalizd() Does not normalize", isZero(v.length() - 1));
+		assertEquals("Normalizd() Does not normalize", 1,v.length(),0.000000000001);
 	}
 	/**
 	 * Test method for {@link primitives.Vector#angleBetweenTowVector()}.

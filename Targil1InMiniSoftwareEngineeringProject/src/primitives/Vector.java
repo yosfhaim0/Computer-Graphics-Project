@@ -45,7 +45,7 @@ public Vector(double x,double y,double z){
 public Vector(Point3D p){
 	if(p.equals(Point3D.ZERO))//aloghet isnt worte in section 
 		throw new IllegalArgumentException("You tried to build vector 0 it is invalid!");
-	this.head=new Point3D(p.getX(),p.getY(),p.getZ());
+	this.head=p;
 }
 /**
  * 
