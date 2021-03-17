@@ -69,9 +69,7 @@ public class Sphere implements Geometry {
 		double tm,d;
 		Vector u;
 		try{
-			System.out.print("bbbbb");
 			u = center.subtract(ray.getP0());
-			System.out.print("bbbbb");
 			tm = ray.getDir().dotProduct(u);
 			d = alignZero(Math.sqrt(u.length() * u.length() - (tm * tm)));
 		}catch (Exception e) {
