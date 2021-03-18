@@ -1,10 +1,10 @@
 package geometries;
 import static java.lang.System.out;
-import static primitive.Util.isZero;
+import static primitives.Util.isZero;
 
-import primitive.Point3D;
-import primitive.Ray;
-import primitive.Vector;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
 /**
  * Test program for the 1st stage
