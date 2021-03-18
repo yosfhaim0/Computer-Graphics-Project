@@ -1,1 +1,6 @@
-/bin/
+bin
+*.class
+*.classpath
+.settings
+.project
+*.zip
