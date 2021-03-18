@@ -1,7 +1,10 @@
 package geometries;
 
-import primitive.Point3D;
-import primitive.Vector;
+import java.util.List;
+
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
 public class Triangle extends Polygon implements Geometry {
 	/**
@@ -17,12 +20,20 @@ public class Triangle extends Polygon implements Geometry {
 	
 	@Override
 	public Vector getNormal(Point3D p) {
+		/**
+		 * Triangle like polygon
+		 * and polygon are in Plane
+		 */
 		return super.getNormal(p);
 	}
 
 	@Override
 	public String toString() {
 		return "Triangle [vertices=" + vertices + ", plane=" + plane + "]";
+	}
+	@Override
+	public List<Point3D> findIntersections(Ray ray){
+		return null;
 	}
 
 }

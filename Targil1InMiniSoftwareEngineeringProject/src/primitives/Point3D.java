@@ -1,4 +1,4 @@
-package primitive;
+package primitives;
 /**
  * A point in three-dimensional space of this shape: (x,y,z)
  * @author yosefHaim
@@ -86,14 +86,14 @@ public class Point3D {
 	}
 	/**
 	 * The distance between two points squares
-	 * distanceSquared(x,y,z)=x^2+y^2+z^2
+	 * distanceSquared((x1,y1,z1)(x2,y2,z2))=(x1-x2)^2+(y1-y2)^2+(z1-z2)^2
 	 * @param other 
 	 * @return double
 	 */
 	public double distanceSquared(Point3D other) {
 		return (this.x.coord-other.x.coord)*(this.x.coord-other.x.coord)+
 				(this.y.coord-other.y.coord)*(this.y.coord-other.y.coord)+
-				(this.z.coord-other.y.coord)*(this.z.coord-other.y.coord);			
+				(this.z.coord-other.z.coord)*(this.z.coord-other.z.coord);			
 	}
 	/**
 	 * Distance between 2 points

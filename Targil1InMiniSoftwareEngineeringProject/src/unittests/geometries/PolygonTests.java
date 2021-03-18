@@ -1,11 +1,11 @@
 
-package unittests;
+package unittests.geometries;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
 
 import geometries.*;
-import primitive.*;
+import primitives.*;
 
 /**
  * Testing Polygons

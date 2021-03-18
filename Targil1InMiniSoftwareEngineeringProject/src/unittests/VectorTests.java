@@ -4,11 +4,11 @@
 package unittests;
 
 import static org.junit.Assert.*;
-import static primitive.Util.isZero;
+import static primitives.Util.isZero;
 
 import org.junit.Test;
 
-import primitive.*;
+import primitives.*;
 
 /**
  * Unit tests for primitive.Vector class
@@ -19,14 +19,15 @@ public class VectorTests{
 	
    
 	/**
-	 * Test method for {@link primitive.Vector#subtract(primitive.Vector)}.
+	 * Test method for {@link primitives.Vector#subtract(primitives.Vector)}.
 	 */
 	@Test
 	public void testSubtract() {
 		Vector v1 = new Vector(2, 4, 5);
 		Vector v2 = new Vector(1, 2, 3);
 		// ============ Equivalence Partitions Tests ==============
-		assertEquals("your secced to subtract",v1.subtract(v2).length(),3,0.0001);
+		//test the subtract vector are correct 
+		assertEquals("bad subtract",3,v1.subtract(v2).length(),0.0001);
 		// =============== Boundary Values Tests ==================
         // test zero vector from scale vectors
         try {
@@ -36,32 +37,34 @@ public class VectorTests{
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#add(primitive.Vector)}.
+	 * Test method for {@link primitives.Vector#add(primitives.Vector)}.
 	 */
 	@Test
 	public void testAdd() {
 		Vector v1 = new Vector(1, 2, 4);
 		Vector v2 = new Vector(-2, -4, -6);
 		Vector v3=new Vector(-1,-2,-4);
-		// ============ Equivalence Partitions Tests ==============
 		Vector v4=v1.add(v2);
-		assertEquals("your secced to subtract",3,v4.length(),0.0001);
+		// ============ Equivalence Partitions Tests ==============
+		//test the add vector are correct 
+		assertEquals("add worng result",3,v4.length(),0.0001);
 		// =============== Boundary Values Tests ==================
         // test zero vector from scale vectors
         try {
             v1.add(v3);
-            fail("add() for Vector with Just the opposite coordinates does not throw an exception");
+            fail("add() for Vector with Just the opposite coordinates does not throw an exception(vector 0)");
         } catch (Exception e) {}
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#scale(double)}.
+	 * Test method for {@link primitives.Vector#scale(double)}.
 	 */
 	@Test
 	public void testScale() {
 		Vector v1 = new Vector(0.5, 1, 1);
 		// ============ Equivalence Partitions Tests ==============
-		assertEquals("your secced to subtract",3,(v1.scale(2)).length(),0.0001);
+		//test the scale vector give propriety result
+		assertEquals("scale() wrong result",3,(v1.scale(2)).length(),0.0001);
 		// =============== Boundary Values Tests ==================
         // test zero vector from scale vectors
         try {
@@ -71,7 +74,7 @@ public class VectorTests{
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#dotProduct(primitive.Vector)}.
+	 * Test method for {@link primitives.Vector#dotProduct(primitives.Vector)}.
 	 */
 	@Test
 	public void testDotProduct() {
@@ -79,12 +82,14 @@ public class VectorTests{
 	     Vector v2 = new Vector(-2, -4, -6);
 	     Vector v3 = new Vector(0, 3, -2);
 			// ============ Equivalence Partitions Tests ==============
+	     //test the orthogonal vector dot product really give 0
         assertTrue("dotProduct() for orthogonal vectors is not zero", isZero(v1.dotProduct(v3)));
+        //test the double number given form dot product is propriety  
         assertTrue("dotProduct() wrong value", isZero(v1.dotProduct(v2) + 28));
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#crossProduct(primitive.Vector)}.
+	 * Test method for {@link primitives.Vector#crossProduct(primitives.Vector)}.
 	 */
     @Test
     public void testCrossProduct() {
@@ -112,7 +117,7 @@ public class VectorTests{
 
 
 	/**
-	 * Test method for {@link primitive.Vector#lengthSquared()}.
+	 * Test method for {@link primitives.Vector#lengthSquared()}.
 	 */
 	@Test
 	public void testLengthSquared() {
@@ -123,7 +128,7 @@ public class VectorTests{
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#length()}.
+	 * Test method for {@link primitives.Vector#length()}.
 	 */
 	@Test
 	public void testLength() {
@@ -133,25 +138,45 @@ public class VectorTests{
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#normalize()}.
+	 * Test method for {@link primitives.Vector#normalize()}.
 	 */
 	@Test
 	public void testNormalize() {
 		Vector v=new Vector(1, 5, -2);
 		// ============ Equivalence Partitions Tests ==============
+		//test whether the length of a normal vector is really 1
 		v.normalize();
         assertTrue("Normaliz() Does not normalize", isZero(v.length() - 1));
 	}
 
 	/**
-	 * Test method for {@link primitive.Vector#normalized()}.
+	 * Test method for {@link primitives.Vector#normalized()}.
 	 */
 	@Test
 	public void testNormalized() {
 		Vector v3 = new Vector(1, 5, -2);
 		// ============ Equivalence Partitions Tests ==============
+		//test whether the length of a normal vector is really 1
 		Vector v=v3.normalized();
-        assertTrue("Normaliz() Does not normalize", isZero(v.length() - 1));
+        assertTrue("Normalizd() Does not normalize", isZero(v.length() - 1));
 	}
-
+	/**
+	 * Test method for {@link primitives.Vector#angleBetweenTowVector()}.
+	 */
+	@Test
+	public void testAngalBetweenTowVector() {
+		Vector v1 =new Vector(new Point3D(1, 0, 0));
+		Vector v2 =new Vector(new Point3D(-1, 0, 0));
+		Vector v4 =new Vector(new Point3D(0, 1, 0));
+		Vector v3 =new Vector(new Point3D(3, 0, 0));
+		// ============ Equivalence Partitions Tests ==============
+		//TC01:				The vectors in opposite directions
+		assertEquals("Angal Between Tow Vector opposite directions bad",Math.PI,v1.angleBetweenTowVector(v2),0.0001);
+		// ============ Equivalence Partitions Tests ==============
+		//TC01:		The vectors are in exactly the same direction
+		assertEquals("Angal Between Tow Vector same direction bad",0,v1.angleBetweenTowVector(v3),0.0001);
+		// ============ Equivalence Partitions Tests ==============
+		//TC01: 		The vectors are perpendicular
+		assertEquals("Angal Between Tow Vector perpendicular bad",Math.PI/2,v1.angleBetweenTowVector(v4),0.0001);
+	}
 }

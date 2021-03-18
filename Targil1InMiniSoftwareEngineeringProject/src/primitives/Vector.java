@@ -1,4 +1,4 @@
-package primitive;
+package primitives;
 /**
  * A vector is an object with size and direction
  * Vector from the beginning of the axes to a certain point
@@ -117,8 +117,8 @@ public double dotProduct(Vector v) {
  *    y1*z2-z1*y2
  *	-[x1*z2-z1*x2]
  *    x1*y2-y1*x2
- * @param v
- * @return
+ * @param v Vector
+ * @return new Vector
  */
 public Vector crossProduct(Vector v) {
 	double x1,x2,y1,y2,z1,z2;
@@ -171,6 +171,16 @@ public Vector normalize() {
  */
 public Vector normalized() {
 	return new Vector(this.getHead()).normalize();
+}
+/**
+ * According to a special formula returns the angle between two vectors
+ * @param v Vector
+ * @return The angle in the radians (double number)
+ */
+public double angleBetweenTowVector(Vector v) {
+	double mone= this.dotProduct(v);
+	double meane= this.length()*v.length();
+	return Math.acos(mone/meane);
 }
 
 
