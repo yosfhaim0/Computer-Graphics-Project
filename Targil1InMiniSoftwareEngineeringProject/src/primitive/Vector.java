@@ -1,23 +1,25 @@
 package primitive;
 /**
+ * A vector is an object with size and direction
  * Vector from the beginning of the axes to a certain point
  * Builders : a) three coordinates, b) three double-digit numbers, c) a Point3D
-.  Copy builder not exist!!!
+.* Copy builder not exist!!!
  * @author yosefHaim
  *
  */
 public class Vector {
-Point3D head;
+	private Point3D head;
 /**
  * Vector can be represented by three coordinate 
  * If you try to build a vector 0 then it throws an exception
  * @param x 
  * @param y
  * @param z
+ * @throws When trying to build vector 0
  */
 public Vector(Coordinate x,Coordinate y,Coordinate z){
-	if(x.equals(y)&&y.equals(z)&&z.equals(new Coordinate(0)))//need factory!!!!!!
-		throw new RuntimeException("You tried to build vector 0 it is invalid!");
+	if(Point3D.ZERO.equals(new Point3D(x,y,z)))//mayby need factory!!!!!!
+		throw new IllegalArgumentException("You tried to build vector 0 it is invalid!");
 	this.head=new Point3D(x,y,z);
 }
 /**
@@ -28,10 +30,11 @@ If you try to build a vector 0 then it throws an exception
  * @param x
  * @param y
  * @param z
+ * @throws When trying to build vector 0
  */
 public Vector(double x,double y,double z){
-	if((x==y)&&(y==z)&&(z==0))//need factory!!!!!!
-		throw new RuntimeException("You tried to build vector 0 it is invalid!");
+	if(new Point3D(x,y,z).equals(Point3D.ZERO))//need factory!!!!!!
+		throw new IllegalArgumentException("You tried to build vector 0 it is invalid!");
 	this.head=new Point3D(x,y,z);
 }
 /**
@@ -40,9 +43,9 @@ public Vector(double x,double y,double z){
  * @param p
  */
 public Vector(Point3D p){
-	if(p==Point3D.ZERO)
-		throw new RuntimeException("You tried to build vector 0 it is invalid!");
-	this.head=new Point3D(p.x,p.y,p.z);
+	if(p.equals(Point3D.ZERO))//aloghet isnt worte in section 
+		throw new IllegalArgumentException("You tried to build vector 0 it is invalid!");
+	this.head=new Point3D(p.getX(),p.getY(),p.getZ());
 }
 /**
  * 
@@ -50,72 +53,82 @@ public Vector(Point3D p){
  */
 public Point3D getHead() {return this.head;}
 @Override
-public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-    //if (!super.equals(o)) return false;
-    Vector that = (Vector) o;
-    return head.equals(that.head) ;
-}
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null) return false;
+    if (!(obj instanceof Vector)) return false;
+    Vector other = (Vector)obj;
+    return head.equals(other.head);
+ }
+
 @Override
 public String toString() {
 	return head.toString();
 }
 /**
  * Subtraction of vectors
-
-Vector multiplication
- * @param v
- * @return
+ * Subtraction between two vectors, i.e. subtracting their heads, 
+ * i.e. returning a new vector which is the subtraction between their two heads
+ * subtract((x1,y1,z1),(x2,y2,z2))=(x1-x2,y1-y2,z1-z2)
+ * @param v vector to subtract
+ * @return new vector
  */
 public Vector subtract(Vector v) {
 	return new Vector(head.subtract(v.head).head);
 }
 /**
  * Connecting vectors
- * @param v
- * @return
+ * add((x1,y1,z1),(x2,y2,z2))=(x1+x2,y1+y2,z1+z2)
+ * @param v vector
+ * @return new Vector
  */
 public Vector add(Vector v) {
 	return new Vector(head.add(v));
 }
 /**
  * Scalar multiplication
+ * scale(a(x,y,z))=(a*x,a*y,a*z)
  * @param scale
- * @return
+ * @return Vector
  */
 public Vector scale(double scale) {
-	return new Vector(this.head.x.coord*scale,
-					  this.head.y.coord*scale,
-					  this.head.z.coord*scale);	
+	return new Vector(this.head.getX()*scale,
+					  this.head.getY()*scale,
+					  this.head.getZ()*scale);	
 }
 /**
  * Returns a Scalar that is a combination of the following operation:
-Multiplies the first component of the first vector by the first component of the second vector,
- multiplies the second component by the first vector by the second component by the second vector, 
- multiplies the third component by the first vector by the third component by the second vector
- * @param v
- * @return
+ * Multiplies the first component of the first vector by the first component of the second vector,
+ * multiplies the second component by the first vector by the second component by the second vector, 
+ * multiplies the third component by the first vector by the third component by the second vector
+ * dotProduct((x1,y1,z1),(x2,y2,z2))=x1*x2+y1*y2+z1*z2
+ * @param v Vector
+ * @return double
  */
 public double dotProduct(Vector v) {
-	return  this.head.x.coord*v.head.x.coord+
-			this.head.y.coord*v.head.y.coord+
-			this.head.z.coord*v.head.z.coord;
+	return  this.head.getX()*v.head.getX()+
+			this.head.getY()*v.head.getY()+
+			this.head.getZ()*v.head.getZ();
 }
 /**
- * Vector returns, which 
- * are the result of a vector product,
+ * returns Vector , which 
+ * are the result of a vector product
+ * crossProduct((x1,y1,z1),(x2,y2,z2))=
+ *    y1*z2-z1*y2
+ *	-[x1*z2-z1*x2]
+ *    x1*y2-y1*x2
  * @param v
  * @return
  */
 public Vector crossProduct(Vector v) {
 	double x1,x2,y1,y2,z1,z2;
-	x1=this.head.x.coord;
-	y1=this.head.y.coord;
-	z1=this.head.z.coord;
-	x2=v.head.x.coord;
-	y2=v.head.y.coord;
-	z2=v.head.z.coord;
+	x1=this.head.getX();
+	y1=this.head.getY();
+	z1=this.head.getZ();
+	x2=v.head.getX();
+	y2=v.head.getY();
+	z2=v.head.getZ();
+	
 	return new Vector(y1*z2-z1*y2,
 					  z1*x2-x1*z2,
 					  x1*y2-y1*x2);
@@ -123,7 +136,8 @@ public Vector crossProduct(Vector v) {
 /**
  * The distance between two points(the to head of the vector) squares
  * Uses the Point3D function named:double distanceSquared(Point3D)
- * @return
+ * lengthSquared(x,y,z)=x^2+y^2+z^2
+ * @return double
  */
 public double lengthSquared() {
 	return this.head.distanceSquared(Point3D.ZERO);
@@ -131,7 +145,8 @@ public double lengthSquared() {
 /**
  * he distance between two points(the to head of the vector)
  * Uses the Point3D function named:double distance(Point3D)
- * @return length of the vector
+ * distance(x,y,z)=sqrt(x^2+y^2+z^2)
+ * @return double length of the vector
  */
 public double length() {
 	return this.head.distance(Point3D.ZERO);
@@ -139,22 +154,23 @@ public double length() {
 /**
  * Each component of the vector is divided by its length
  * This action is the only one that changes the vector itself !!!
+ * normalize(x,y,z)=(a/SizeVec,a/SizeVec,a/SizeVec)
  * @return it returns the object itself (this)
  */
 public Vector normalize() {
 	double length=this.length();
-	this.head=new Point3D(this.head.x.coord/length,
-						  this.head.y.coord/length,
-						  this.head.z.coord/length);
+	this.head=new Point3D(this.head.getX()/length,
+						  this.head.getY()/length,
+						  this.head.getZ()/length);
 	return this;
 	}
 /**
  * the same like normalize()
  * but return a new vector
- * @return new vector
+ * @return Vector(new)
  */
 public Vector normalized() {
-	return new Vector(this.normalize().getHead());
+	return new Vector(this.getHead()).normalize();
 }
 
 

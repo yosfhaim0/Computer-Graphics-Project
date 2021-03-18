@@ -1,7 +1,14 @@
 package primitive;
-
+/**
+ * A point in three-dimensional space of this shape: (x,y,z)
+ * @author yosefHaim
+ *
+ */
 public class Point3D {
-	final Coordinate x,y,z;
+	final private Coordinate x,y,z;
+	/**
+	 * ZERO=(0,0,0)
+	 */
 	public static Point3D ZERO=new Point3D(0,0,0);
 	/**
 	 * point Represented bay three coordinate
@@ -28,21 +35,36 @@ public class Point3D {
 		this.y=new Coordinate(y);
 		this.z=new Coordinate(z);
 	}
-	
+	/**
+	 * 
+	 * @return double number*
+	 */
+	public double getX() {return this.x.coord;}
+	/**
+	 * 
+	 * @return double number*
+	 */
+	public double getY() {return this.y.coord;}
+	/**
+	 * 
+	 * @return double number*
+	 */
+	public double getZ() {return this.z.coord;}
+
 	@Override
-	 public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        //if (!super.equals(o)) return false;
-        Point3D that = (Point3D) o;
-        return x.equals(that.x) && y.equals(that.y) && z.equals(that.z);
-    }
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null) return false;
+	    if (!(obj instanceof Point3D)) return false;
+	    Point3D other = (Point3D)obj;
+        return x.equals(other.x) && y.equals(other.y) && z.equals(other.z);
+	 }
 	@Override
 	public String toString() {
 		return "("+x+","+y+","+z+")";
 	}
 	/**
-	 * 
+	 *  subtract((x1,y1,z1),(x2,y2,z2))=(x1-x2,y1-y2,z1-z2)
 	 * @param p the head of the vector for subtract
 	 * @return vector (this point less given point)
 	 */
@@ -52,18 +74,19 @@ public class Point3D {
 						  this.z.coord-p.z.coord);
 	}
 	/**
-	 * 
+	 * add((x1,y1,z1),(x2,y2,z2))=(x1+x2,y1+y2,z1+z2)
 	 * @param v vector new Add to existing vector
 	 * @return new point the sum of the two point 3D 
 	 */
 	public Point3D add(Vector v) {
-		return new Point3D(this.x.coord+v.head.x.coord,
-				this.y.coord+v.head.y.coord,
-				this.z.coord+v.head.z.coord);
+		return new Point3D(this.x.coord+v.getHead().x.coord,
+				this.y.coord+v.getHead().y.coord,
+				this.z.coord+v.getHead().z.coord);
 		
 	}
 	/**
 	 * The distance between two points squares
+	 * distanceSquared(x,y,z)=x^2+y^2+z^2
 	 * @param other 
 	 * @return double
 	 */
@@ -75,8 +98,9 @@ public class Point3D {
 	/**
 	 * Distance between 2 points
 	 * Uses the previous function named: double distanceSquared(Point3D)
+	 * distance(x,y,z)=sqrt(x^2+y^2+z^2)
 	 * @param other Point3D
-	 * @return distance
+	 * @return double
 	 */
 	public double distance(Point3D other) {
 		return Math.sqrt(this.distanceSquared(other));

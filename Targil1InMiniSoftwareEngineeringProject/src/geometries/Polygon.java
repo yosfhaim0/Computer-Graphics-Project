@@ -1,8 +1,7 @@
 package geometries;
-import java.util.List;
 
-import primitive.Point3D;
-import primitive.Vector;
+import java.util.List;
+import primitive.*;
 import static primitive.Util.*;
 
 /**

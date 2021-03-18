@@ -2,7 +2,14 @@ package geometries;
 
 import primitive.Point3D;
 import primitive.Vector;
-
+/**
+ * plane is Unlimited surface
+ * The class contains a vector and point, 
+ * the vector is perpendicular to the Plane,
+ *  and the point is any point contained in the Plane
+ * @author yosefHaim
+ *
+ */
 public class Plane implements Geometry {
 	private Point3D q0;
 	private Vector normal;
@@ -15,9 +22,21 @@ public class Plane implements Geometry {
 		this.q0=p;
 		this.normal=v;
 	}
-	
+	/**
+	 * Constructor whit 3 point
+	 * Creates two vectors from the points,
+     *cross Product between them,
+     *And in addition normalizes the result,
+     *And selects one of the points as the q0
+	 * @param p1
+	 * @param p2
+	 * @param p3
+	 */
 	public Plane(Point3D p1,Point3D p2,Point3D p3) {
-		
+		Vector v1=p1.subtract(p2);
+		Vector v2=p1.subtract(p3);
+		this.normal=v1.crossProduct(v2).normalize();
+		this.q0=p1;
 	}
 	/**
 	 * q0 is the on of the par who present plane(there is a normal too)
@@ -26,14 +45,12 @@ public class Plane implements Geometry {
 	public Point3D getq0() {return this.q0;}
 	/**
 	 * Normal form the q0
-	 * @return the normal form the q0
-	 */
-	public Vector getNormal() {return this.normal;}
-	
+	 * @return Vector normal form the q0
+	 */	
 	@Override
 	public Vector getNormal(Point3D p) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+    return this.normal;
+}
+	
+	public Vector getNormal() {return this.normal;}
 }
