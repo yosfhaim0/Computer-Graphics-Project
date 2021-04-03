@@ -212,7 +212,8 @@ public class CylinderTests {
 		// TC39:ray intersect the sides and the base up (not in the center)(2 point)
 		result = cylinder2.findIntersections(new Ray(new Point3D(2.5, 3.5, 0), new Vector(-0.5, -1.5, 1)));
 		assertEquals("TC39: Ray starts inside the tube", List.of(new Point3D(2, 2, 1), new Point3D(1, -1, 3)), result);
-		// TC40:ray intersect the sides  (trohw in the center(not the start ray))(2 point)
+		// TC40:ray intersect the sides (trohw in the center(not the start ray))(2
+		// point)
 		result = cylinder2.findIntersections(new Ray(new Point3D(8, 0, 0), new Vector(-4, 0, 1)));
 		assertEquals("TC40: Ray starts inside the tube", List.of(new Point3D(4, 0, 1), new Point3D(0, 0, 2)), result);
 

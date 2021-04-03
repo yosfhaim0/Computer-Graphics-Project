@@ -7,8 +7,10 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 import unittests.VectorTests;
+
 /**
  * Triangle is a polygon whit only 3 vertices
+ * 
  * @author yosefHaim
  *
  */

@@ -116,7 +116,7 @@ public class PolygonTests {
 		// *********Three cases (the ray begins "before" the polygon)*****
 		// TC04: On edge(0 Point)
 		Ray ray4 = new Ray(new Point3D(0, 0, -1), new Vector(new Point3D(2, 0, 1)));
-		assertEquals("On edge", null,pl.findIntersections(ray4));
+		assertEquals("On edge", null, pl.findIntersections(ray4));
 		// TC05: In vertex(0 Point)
 		Ray ray5 = new Ray(new Point3D(0, 0, -1), new Vector(new Point3D(0, 3, 1)));
 		assertEquals("In vertex", null, pl.findIntersections(ray5));
