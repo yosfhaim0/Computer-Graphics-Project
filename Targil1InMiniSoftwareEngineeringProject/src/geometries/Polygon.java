@@ -90,7 +90,45 @@ public class Polygon implements Geometry {
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Point3D> result = plane.findIntersections(ray);
+		int verticesSize=vertices.size();
+		if (result == null) {
+			return null;
+		}
+		/**
+		 * arr_Subtract= arr of the vector to the vertices
+		 */
+		Vector[] arr_Subtract = new Vector[verticesSize];
+		/**
+		 * arr_crossProduct_normalize=normal form Sides
+		 */
+		Vector[] arr_crossProduct_normalize = new Vector[verticesSize];
+		//Create vector to the vertices
+		for (int i = 0; i < verticesSize; i++) {
+			arr_Subtract[i] = vertices.get(i).subtract(ray.getP0());
+		}
+		//Create normal form Sides
+		for (int i = 0; i < (verticesSize - 1); i++) {
+			arr_crossProduct_normalize[i] = arr_Subtract[i].crossProduct(arr_Subtract[i + 1]).normalize();
+		}
+		//for the lest crossProduct whit the first
+		arr_crossProduct_normalize[verticesSize-1] = arr_Subtract[verticesSize-1].crossProduct(arr_Subtract[0])
+				.normalize();
+		//arr_NdotProductDir= normal * direction of ray
+		double[] arr_NdotProductDir = new double[verticesSize];
+		for (int i = 0; i < verticesSize; i++) {
+			arr_NdotProductDir[i] = arr_crossProduct_normalize[i].dotProduct(ray.getDir());
+		}
+		
+		for (int i = 0; i < (verticesSize - 1); i++) {
+			// if one or more are 0.0 – no intersection
+			if(alignZero(arr_NdotProductDir[i])==0)
+				return null;
+			//The point is inside if all 𝒗 ∙ 𝑵𝒊 have the same sign (+/-)
+			if (!(checkSign(arr_NdotProductDir[i], arr_NdotProductDir[i + 1])))
+				return null;
+		}
+		return result;
+		
 	}
 }

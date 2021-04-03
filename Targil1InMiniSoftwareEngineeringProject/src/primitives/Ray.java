@@ -33,6 +33,7 @@ public class Ray {
 
 	/**
 	 * retunr the start of ray
+	 * 
 	 * @return the p0
 	 */
 	public Point3D getP0() {
@@ -40,11 +41,22 @@ public class Ray {
 	}
 
 	/**
-	 * direction 
+	 * direction
+	 * 
 	 * @return the direction
 	 */
 	public Vector getDir() {
 		return dir;
+	}
+
+	/**
+	 * P=P0+t*v
+	 * 
+	 * @param t = steps of v unit vector
+	 * @return Point3D
+	 */
+	public Point3D getPoint(double t) {
+		return p0.add(dir.scale(t));
 	}
 
 	@Override
@@ -58,24 +70,4 @@ public class Ray {
 		Ray other = (Ray) obj;
 		return p0.equals(other.p0) && dir.equals(other.dir);
 	}
-
-	/**
-	 * the fun chack if point are in ray
-	 * 
-	 * @param point
-	 * @return true if in false if no
-	 */
-//	public boolean chackIfPointInRay(Point3D point) {
-//		Vector p0ToPoint = point.subtract(getP0());
-//		try {
-//			p0ToPoint.crossProduct(getDir());
-//		} catch (IllegalArgumentException e) {
-//			/**
-//			 * if angle ==0 the point in the ray if angle ==180(pi) the point behind the ray
-//			 */
-//			if (isZero(getDir().angleBetweenTowVector(p0ToPoint)))
-//				return true;
-//		}
-//		return false;
-//	}
 }

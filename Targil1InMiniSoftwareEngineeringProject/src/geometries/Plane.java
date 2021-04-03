@@ -18,7 +18,13 @@ import primitives.*;
  *
  */
 public class Plane implements Geometry {
+	/**
+	 * q0 one of the point plane
+	 */
 	private Point3D q0;
+	/**
+	 * normal form q0
+	 */
 	private Vector normal;
 
 	/**
@@ -29,9 +35,7 @@ public class Plane implements Geometry {
 	 */
 	public Plane(Point3D p, Vector v) {
 		this.q0 = p;
-		this.normal = v;
-		if (!(isZero(normal.length() - 1)))
-			normal.normalize();
+		this.normal = v.normalized();
 	}
 
 	/**
@@ -82,15 +86,26 @@ public class Plane implements Geometry {
 		return this.normal;
 	}
 
+	/**
+	 * the normal present plane
+	 * 
+	 * @return Vector
+	 */
 	public Vector getNormal() {
 		return this.normal;
 	}
 
 	@Override
-
 	public List<Point3D> findIntersections(Ray ray) {
+		double nQMinusP0;
 		double nv = normal.dotProduct(ray.getDir());
-		double nQMinusP0 = normal.dotProduct(q0.subtract(ray.getP0()));
+		try {
+			nQMinusP0 = normal.dotProduct(q0.subtract(ray.getP0()));
+		} catch (Exception e) {
+			// if q0 == p0 there are no intersection
+			return null;
+		}
+
 		if (isZero(nv))
 			/**
 			 * Because nv is equal to 0 it means that: 1. plane and the ray are parallel ->
@@ -98,13 +113,12 @@ public class Plane implements Geometry {
 			 * -> infinite intersection points
 			 */
 			return null;
-		double t = alignZero(nQMinusP0 / nv);
-		if (t > 0) {
-			List<Point3D> arr = Arrays.asList(ray.getP0().add(ray.getDir().scale(t)));
-			return arr;
-		}
 		// if t<0 it mean there are no intersection whit the ray
 		// if t==0 it mean the begin of the ray are contained in the plane
+		double t = alignZero(nQMinusP0 / nv);
+		if (t > 0) {
+			return List.of(ray.getPoint(t));
+		}
 		return null;
 	}
 }

@@ -13,13 +13,19 @@ import primitives.Vector;
 import static primitives.Util.*;
 
 /**
- * Sphere = ball
- * 
+ * Sphere = ball 3D
+ * Sphere represent by point and radius
  * @author yosefHaim
  *
  */
 public class Sphere implements Geometry {
+	/**
+	 * the center of Sphere
+	 */
 	private Point3D center;
+	/**
+	 * the radius of Sphere
+	 */
 	private double radius;
 
 	/**
@@ -66,46 +72,50 @@ public class Sphere implements Geometry {
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
-		double tm,d;
+		/**
+		 * all the names is like the Instructions in a booklet 
+		 * d= distance center form the ray(ortegonal line..)
+		 * u= vector form the ray.p0 to center
+		 */
+		double tm, d, uLength;
 		Vector u;
-		try{
+		/**
+		 * if center - getP0 =vector zero ERROR!!
+		 */
+		try {
 			u = center.subtract(ray.getP0());
 			tm = ray.getDir().dotProduct(u);
-			d = alignZero(Math.sqrt(u.length() * u.length() - (tm * tm)));
-		}catch (Exception e) {
-			tm=0;
+			uLength=u.length();
+			d = alignZero(Math.sqrt(uLength * uLength - (tm * tm)));
+		} catch (Exception e) {
+			tm = 0;
 			d = alignZero(Math.sqrt(tm * tm));
 		}
+		/**
+		 * if distance center form the ray(ortegonal line..) > radius 
+		 * there are no intersections
+		 */
 		if (d >= radius)
 			return null;
+		/**
+		 * the point are t1,2 = tm+-th
+		 * p = p0 + ti*v
+		 */
 		double th = Math.sqrt(radius * radius - d * d);
 		if (alignZero(tm - th) <= 0 && alignZero(tm + th) <= 0) {
 			return null;
 		}
-		//i konw ther are point  i craet list
-		List<Point3D> arr= new LinkedList<>();
-		
-		if(alignZero(tm - th) > 0)
+		// i konw ther are point i craet list
+		List<Point3D> arr = new LinkedList<>();
+
+		if (alignZero(tm - th) > 0)
 			arr.add(ray.getP0().add(ray.getDir().scale(tm - th)));
-		if(alignZero(tm + th) > 0)
+		if (alignZero(tm + th) > 0)
 			arr.add(ray.getP0().add(ray.getDir().scale(tm + th)));
 
 		return arr;
-		
 
 	}
 
 }
-/*
- * Vector u; if(ray.chackIfPointInRay(center))
- * 
- * if(center.equals(ray.getP0())) returnS
- * List.of(ray.getDir().scale(radius).getHead());
- * u=center.subtract(ray.getP0()); double tm=ray.getDir().dotProduct(u);
- * if(u.length()<radius&&radius!=u.scale(tm).length()) {} double
- * d=Math.sqrt((u.length()*u.length())-(tm*tm)); if(d>=radius) return null;
- * double th=Math.sqrt((radius*radius)-(d*d)); double t1=tm+th; double t2=tm-th;
- * if(t1<=0&&t2<=0) return null; List<Point3D> arr = new ArrayList<Point3D>();
- * if(t1>0) arr.add(ray.getP0().add(ray.getDir().scale(t1))); if(t2>0)
- * arr.add(ray.getP0().add(ray.getDir().scale(t2))); return arr;
- */
+

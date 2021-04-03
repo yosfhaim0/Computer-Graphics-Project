@@ -160,23 +160,5 @@ public class VectorTests{
 		Vector v=v3.normalized();
 		assertEquals("Normalizd() Does not normalize", 1,v.length(),0.000000000001);
 	}
-	/**
-	 * Test method for {@link primitives.Vector#angleBetweenTowVector()}.
-	 */
-	@Test
-	public void testAngalBetweenTowVector() {
-		Vector v1 =new Vector(new Point3D(1, 0, 0));
-		Vector v2 =new Vector(new Point3D(-1, 0, 0));
-		Vector v4 =new Vector(new Point3D(0, 1, 0));
-		Vector v3 =new Vector(new Point3D(3, 0, 0));
-		// ============ Equivalence Partitions Tests ==============
-		//TC01:				The vectors in opposite directions
-		assertEquals("Angal Between Tow Vector opposite directions bad",Math.PI,v1.angleBetweenTowVector(v2),0.0001);
-		// ============ Equivalence Partitions Tests ==============
-		//TC01:		The vectors are in exactly the same direction
-		assertEquals("Angal Between Tow Vector same direction bad",0,v1.angleBetweenTowVector(v3),0.0001);
-		// ============ Equivalence Partitions Tests ==============
-		//TC01: 		The vectors are perpendicular
-		assertEquals("Angal Between Tow Vector perpendicular bad",Math.PI/2,v1.angleBetweenTowVector(v4),0.0001);
-	}
+
 }
