@@ -13,7 +13,7 @@ import primitives.Ray;
 /**
  * Geometries represent collection of Geometries shape
  * 
- * @author yosefHaim
+ * @author yosefHaim amrusi
  *
  */
 public class Geometries implements Intersectable {
