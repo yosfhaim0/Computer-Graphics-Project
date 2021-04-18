@@ -92,6 +92,15 @@ public class Camera {
 		return this;
 	}
 
+	/**
+	 * construct Ray Through Pixel form location of camera
+	 * 
+	 * @param nX depend hoe pixel we wont
+	 * @param nY depend hoe pixel we wont
+	 * @param j Rows
+	 * @param i Columns
+	 * @return Ray form location towards the center of pixel
+	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
 		Point3D Pc;
 		Pc = locationPoint3d;
