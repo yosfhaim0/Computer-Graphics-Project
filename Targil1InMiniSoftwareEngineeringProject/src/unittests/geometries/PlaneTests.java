@@ -101,7 +101,7 @@ public class PlaneTests {
 
 		// *******Special cases*******
 		// TC08: Ray is neither orthogonal nor parallel to and begins at the plane
-		// (𝑃0 is in the plane, but not the ray) (0 Point)
+		// (נ�‘ƒ0 is in the plane, but not the ray) (0 Point) 
 		Ray ray8 = new Ray(new Point3D(0, 1, 0), new Vector(new Point3D(1, 3, -2)));
 		assertEquals("Ray is neither orthogonal nor parallel to and begins at the plane", null,
 				p.findIntersections(ray8));

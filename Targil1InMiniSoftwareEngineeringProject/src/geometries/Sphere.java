@@ -14,7 +14,7 @@ import static primitives.Util.*;
 
 /**
  * Sphere = ball 3D Sphere represent by point and radius
- * 
+ * CTOR args: point3d,radius
  * @author yosefHaim
  *
  */

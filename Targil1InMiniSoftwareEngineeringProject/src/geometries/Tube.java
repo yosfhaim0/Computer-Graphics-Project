@@ -42,7 +42,7 @@ public class Tube implements Geometry {
 		Vector v = this.axisRay.getDir();
 		Point3D p0 = axisRay.getP0();
 		/**
-		 * 𝑡 = 𝑣 ∙ (𝑃 − 𝑃0)//distance between the level high of p0 and p
+		 * נ�‘¡ = נ�‘£ גˆ™ (נ�‘ƒ גˆ’ נ�‘ƒ0)//distance between the level high of p0 and p
 		 */
 
 		double t = alignZero(v.dotProduct(p.subtract(p0)));
@@ -50,12 +50,13 @@ public class Tube implements Geometry {
 		if (t != 0) {
 			/**
 			 * t =is the distance scalr whit unit vector v O = the center of the tube in the
-			 * level of the point p 𝑂 = 𝑃0 + 𝑡 ∙ 𝑣 if(t==0) vector 0 build=error
+			 * level of the point p נ�‘‚ = נ�‘ƒ0 + נ�‘¡ גˆ™ נ�‘£ if(t==0) vector 0
+			 * build=error
 			 */
 			o = axisRay.getPoint(t);
 		} else {
 			/**
-			 * if t=0 o and p in the same "level" and: 𝑂 = 𝑃0
+			 * if t=0 o and p in the same "level" and: נ�‘‚ = נ�‘ƒ0
 			 */
 			o = p0;
 		}

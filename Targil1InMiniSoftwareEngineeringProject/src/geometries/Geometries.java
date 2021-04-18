@@ -29,9 +29,9 @@ public class Geometries implements Intersectable {
 	public Geometries() {
 		super();
 		/**
-		 * Initializing the list to array list i wont the search to be O(1)...
+		 * Initializing the list to linked list
 		 */
-		this.geometries = new ArrayList<>();
+		this.geometries = new LinkedList<>();
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class Geometries implements Intersectable {
 	 */
 	public Geometries(Intersectable... geometries) {
 		super();
-		this.geometries = new ArrayList<>();// i dont sure about this line
+		this.geometries = new LinkedList<>();
 		for (Intersectable i : geometries) {
 			this.geometries.add(i);
 		}

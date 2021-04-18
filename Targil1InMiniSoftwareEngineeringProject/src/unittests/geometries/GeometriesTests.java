@@ -55,6 +55,7 @@ public class GeometriesTests {
 		List<Point3D> resultList5 = g2
 				.findIntersections(new Ray(new Point3D(2, 2, 1), new Vector(new Point3D(-2, -2, 0))));
 		assertEquals("all the shape are intersection : Wrong number of points ", 2, resultList5.size());
+
 	}
 
 }
