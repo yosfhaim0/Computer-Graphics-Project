@@ -57,5 +57,6 @@ public class GeometriesTests {
 		assertEquals("all the shape are intersection : Wrong number of points ", 2, resultList5.size());
 
 	}
+	
 
 }

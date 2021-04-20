@@ -40,7 +40,8 @@ public class Geometries implements Intersectable {
 	 * @param geometries shape are implement interface Intersectable
 	 */
 	public Geometries(Intersectable... geometries) {
-		super();
+		super(); 
+		//i don't need direct access
 		this.geometries = new LinkedList<>();
 		for (Intersectable i : geometries) {
 			this.geometries.add(i);

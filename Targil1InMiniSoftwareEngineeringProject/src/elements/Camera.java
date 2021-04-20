@@ -19,7 +19,9 @@ public class Camera {
 	 */
 	private Vector vTo, vUp, vRight;
 	/**
-	 * 
+	 * distance between camera and view plane
+	 * width of view plane
+	 * height of view plane
 	 */
 	private double distance = 0, width, height;
 
@@ -34,6 +36,8 @@ public class Camera {
 	public Camera(Point3D locatPoint, Vector vectorTo, Vector vectorUp) {
 		// if those vector are not orthogonal they throw exception form crossProduct
 		// function
+		if(vectorTo.dotProduct(vectorUp)!=0)
+			throw new RuntimeException("erorr!, the vector of camera not orthgonal!!");
 		vRight = vectorTo.crossProduct(vectorUp).normalize();
 		vUp = vectorUp.normalized();
 		vTo = vectorTo.normalized();
@@ -95,8 +99,8 @@ public class Camera {
 	/**
 	 * construct Ray Through Pixel form location of camera
 	 * 
-	 * @param nX depend hoe pixel we wont
-	 * @param nY depend hoe pixel we wont
+	 * @param nX depend hoe pixel we wont row
+	 * @param nY depend hoe pixel we wont column
 	 * @param j Rows
 	 * @param i Columns
 	 * @return Ray form location towards the center of pixel

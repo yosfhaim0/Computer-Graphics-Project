@@ -2,6 +2,8 @@ package primitives;
 
 import static primitives.Util.*;
 
+import java.util.List;
+
 /**
  * (ray) - A fundamental object in geometry - the group of points on a straight
  * line that are on one relative side To a given point on the line called the
@@ -69,5 +71,22 @@ public class Ray {
 			return false;
 		Ray other = (Ray) obj;
 		return p0.equals(other.p0) && dir.equals(other.dir);
+	}
+	/**
+	 * return the Closest Point to p0
+	 * @param list point 3D
+	 * @return point are the closest to p0
+	 */
+	public Point3D findClosestPoint(List<Point3D> list) {
+		if(list==null)
+			return null;
+		if(list.isEmpty())
+			return null;
+		Point3D closest = list.get(0);
+		for (Point3D point3d : list) {
+			closest = p0.distance(point3d) < p0.distance(closest) ? point3d : closest;
+		}
+		return closest;
+
 	}
 }
