@@ -59,9 +59,5 @@ public class TriangleTests {
 		// TC06: On edge's continuation(0 Point)
 		Ray ray6 = new Ray(new Point3D(0, 0, -1), new Vector(new Point3D(0, 4, 1)));
 		assertEquals("On edge's continuation", null, t.findIntersections(ray6));
-		
-		Triangle triangle = new Triangle(new Point3D(0, -1, 2), new Point3D(1, -1, -2), new Point3D(-1, -1, -2));
-		Ray r=new Ray(Point3D.ZERO,new Vector(new Point3D(0, -1, 0)));
-		assertEquals("On edge's continuation", List.of(new Point3D(0, -1, 0)), triangle.findIntersections(r));
 	}
 }

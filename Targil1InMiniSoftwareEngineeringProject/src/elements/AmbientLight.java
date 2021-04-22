@@ -10,7 +10,11 @@ import primitives.*;
  *
  */
 public class AmbientLight {
-	Color Ia, intensity;
+	private Color Ia, _intensity;
 	double Ka;
+	public Color getIntensity() {
+		return null;
+
+	}
 	
 }

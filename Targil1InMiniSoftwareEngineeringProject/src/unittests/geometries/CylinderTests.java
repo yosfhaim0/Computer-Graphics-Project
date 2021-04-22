@@ -111,7 +111,8 @@ public class CylinderTests {
 		assertEquals(" TC06: Ray starts at cylinder and goes outside(0 points)", null, result);
 
 		// **** Group: Ray's line goes through the center (ray start are same level
-		// q0(start of cylinder))*****
+		// q0(start of cylinder)(spaciel for
+		// cylinder ) *******
 		// TC07: Ray starts before the cylinder (2 points)
 		result = cylinder.findIntersections(new Ray(new Point3D(2, -4, 0), new Vector(0, 6, 0)));
 		assertEquals(" TC07: Ray starts before the cylinder (2 points)",
@@ -134,6 +135,7 @@ public class CylinderTests {
 
 		// **** Group: Ray's line is tangent to the cylinder (ray start are same level
 		// q0(start of cylinder)) (all tests 0 points)
+		// (spaciel for cylinder ) *******
 		// TC13: Ray starts before the tangent point
 		result = cylinder.findIntersections(new Ray(new Point3D(4, -2, 0), new Vector(-4, 0, 0)));
 		assertEquals(" TC13: Ray starts before the tangent point", null, result);

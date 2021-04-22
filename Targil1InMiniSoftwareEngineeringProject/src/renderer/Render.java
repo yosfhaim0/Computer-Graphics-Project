@@ -15,21 +15,19 @@ public class Render {
 	ImageWriter imageWriter;
 	Scene scene;
 	Camera camera;
-	RayTracerBasic rayTracerBasic;
+	RayTracerBasic rayTracerBase;
 	public void renderImage() {
-		if(imageWriter==null)
-			throw new MissingResourceException("Missing Resource", null, null);
-		if(scene==null)
-			throw new MissingResourceException("Missing Resource", null, null);
-		if(camera==null)
-			throw new MissingResourceException("Missing Resource", null, null);
-		if(rayTracerBasic==null)
-			throw new MissingResourceException("Missing Resource", null, null);
-		throw new NotImplementedException();
+		
+		imageWriter=new ImageWriter(null, 0, 0);
+		for (int i : ) {
+			
+		}
+		
 	}
 	public Render printGrid(int interval, Color color) {
 		return null;
 		
 	}
+	public void writeToImage() {}
 	
 }

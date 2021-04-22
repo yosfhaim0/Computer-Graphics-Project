@@ -100,7 +100,7 @@ public class Tube implements Geometry {
 		double vVa = alignZero(v.dotProduct(vAxis));
 		Vector vVaVa;
 		Vector vMinusVVaVa;
-		if (vVa == 0) // the ray is orthogonal to the axis
+		if (isZero(vVa)) // the ray is orthogonal to the axis
 			vMinusVVaVa = v;
 		else {
 			vVaVa = vAxis.scale(vVa);
@@ -117,7 +117,7 @@ public class Tube implements Geometry {
 		try {
 			deltaP = p0.subtract(axisRay.getP0());
 		} catch (IllegalArgumentException e1) { // the ray begins at axis P0
-			if (vVa == 0) // the ray is orthogonal to Axis
+			if (isZero(vVa)) // the ray is orthogonal to Axis
 				return List.of(ray.getPoint(radius));
 			return List.of(ray.getPoint(Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared())));
 		}
@@ -125,7 +125,7 @@ public class Tube implements Geometry {
 		double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
 		Vector dPVaVa;
 		Vector dPMinusdPVaVa;
-		if (dPVAxis == 0)
+		if (isZero(dPVAxis))
 			dPMinusdPVaVa = deltaP;
 		else {
 			dPVaVa = vAxis.scale(dPVAxis);
