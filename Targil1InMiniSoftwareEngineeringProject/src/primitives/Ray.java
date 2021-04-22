@@ -52,10 +52,9 @@ public class Ray {
 	}
 
 	/**
-	 * P=P0+t*v
-	 * 
-	 * @param t = steps of v unit vector
-	 * @return Point3D
+	 * Calculates point on the ray at certain distance from the ray head
+	 * @param t the distance from the ray head
+	 * @return the point at the distance
 	 */
 	public Point3D getPoint(double t) {
 		return p0.add(dir.scale(t));
@@ -73,20 +72,23 @@ public class Ray {
 		return p0.equals(other.p0) && dir.equals(other.dir);
 	}
 	/**
-	 * return the Closest Point to p0
-	 * @param list point 3D
+	 * Chooses the Closest Point to p0
+	 * If the list is empty or null - the function returns null
+	 * @param list of points in the ray
 	 * @return point are the closest to p0
 	 */
 	public Point3D getClosestPoint(List<Point3D> list) {
 		if(list==null)
 			return null;
-		if(list.isEmpty())
-			return null;
-		Point3D closest = list.get(0);
-		for (Point3D point3d : list) {
-			closest = p0.distance(point3d) < p0.distance(closest) ? point3d : closest;
+		double minDistance = Double.POSITIVE_INFINITY;
+		Point3D closest = null;
+		for (Point3D p : list) {
+			double d = p0.distance(p);
+			if (d < minDistance) {
+				minDistance = d;
+				closest = p;
+			}
 		}
 		return closest;
-
 	}
 }

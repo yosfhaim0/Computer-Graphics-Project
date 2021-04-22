@@ -18,7 +18,7 @@ public class Point3D {
 	public static Point3D ZERO = new Point3D(0, 0, 0);
 
 	/**
-	 * point Represented bay three coordinate in 3D world
+	 * point Represented by three coordinate in 3D world
 	 * 
 	 * @param x Axis
 	 * @param y Axis
