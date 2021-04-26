@@ -2,6 +2,7 @@ package unittests.elements;
 
 import org.junit.Test;
 
+
 import elements.*;
 import geometries.*;
 import primitives.*;
@@ -16,6 +17,9 @@ import scene.Scene;
 public class RenderTests {
 	private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)) //
 			.setVpDistance(100) //
+			.setViewPlaneSize(500, 500);
+	private Camera camera1 = new Camera(new Point3D(0, 0, 9), new Vector(0, 0, -1), new Vector(0, -1, 0)) //
+			.setVpDistance(5) //
 			.setViewPlaneSize(500, 500);
 
 	/**
@@ -45,6 +49,28 @@ public class RenderTests {
 		render.renderImage();
 		render.printGrid(100, new Color(java.awt.Color.YELLOW));
 		render.writeToImage();
+		//TC02: smail face test
+		Scene scene1 = new Scene("Test scene1")//
+				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
+				.setBackground(new Color(75, 127, 90));
+		scene1.geometries.add(new Sphere(new Point3D(2, 2, 0),1),new Sphere(new Point3D(-2, 2, 0), 1),
+				new Polygon(new Point3D(-3,0,0),new Point3D(-2, 0, 0),new Point3D(0, -2, 0) ,new Point3D(0, -3, 0)),
+				new Polygon(new Point3D(3,0,0),new Point3D(2, 0, 0),new Point3D(0, -2, 0) ,new Point3D(0, -3, 0)),
+				new Sphere(new Point3D(0,0,-5), 5));
+		
+		ImageWriter imageWriter1 = new ImageWriter("base render test", 10, 10);
+		Render render1 = new Render() //
+				.setImageWriter(imageWriter1) //
+				.setScene(scene1) //
+				.setCamera(camera1) //
+				.setRayTracer(new RayTracerBasic(scene1));
+
+		render1.renderImage();
+		render1.printGrid(100, new Color(java.awt.Color.YELLOW));
+		render1.writeToImage();
+		
+		
+		
 	}
 	
 	/**

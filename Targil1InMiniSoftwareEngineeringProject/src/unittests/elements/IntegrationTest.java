@@ -81,7 +81,12 @@ public class IntegrationTest {
 		triangle = new Triangle(new Point3D(0, 20, -2), new Point3D(1, -1, -2), new Point3D(-1, -1, -2));
 		assertEquals("TC02: worng number(triangel inetgration test)", 2, ezerFunFor(camera, triangle));
 	}
-
+	/**
+	 * fun for surtcut the code test
+	 * @param camera
+	 * @param shape
+	 * @return counter pointer
+	 */
 	public int ezerFunFor(Camera camera, Intersectable shape) {
 		int counter = 0;
 		for (int i = 0; i < 3; i++) {
