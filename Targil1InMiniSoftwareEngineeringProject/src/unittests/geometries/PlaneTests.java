@@ -10,11 +10,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import geometries.Plane;
-import geometries.Polygon;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import geometries.*;
+import primitives.*;
 
 /**
  * @author yosefHaim
@@ -28,20 +25,14 @@ public class PlaneTests {
 	@Test
 	public void testConstructor() {
 		// =============== Boundary Values Tests ==================
-		// assertThrows("failure text", IllegalArgumentException.class, new Plane(new
-		// Point3D(0, 2, 0),new Point3D(0, 3, 0),new Point3D(0, 4, 0)));
 		// TC01:All The point on the same line
-		try {
-			new Plane(new Point3D(0, 2, 0), new Point3D(0, 3, 0), new Point3D(0, 4, 0));
-			fail("Failed constructing a Illegal -All The point on the same line- Plane");
-		} catch (IllegalArgumentException e) {
-		}
+			assertThrows("Failed constructing a Illegal -All The point on the same line- Plane",
+					IllegalArgumentException.class,
+					() -> new Plane(new Point3D(0, 2, 0), new Point3D(0, 3, 0), new Point3D(0, 4, 0)));
 		// TC02: tow point are metlacdot(hebrw)
-		try {
-			new Plane(new Point3D(0, 2, 0), new Point3D(0, 2, 0), new Point3D(0, 4, 0));
-			fail("Failed constructing a Illegal -tow point are same- Plane");
-		} catch (IllegalArgumentException e) {
-		}
+			assertThrows("Failed constructing a Illegal -tow point are same- Plane",
+					IllegalArgumentException.class,
+					() -> new Plane(new Point3D(0, 2, 0), new Point3D(0, 2, 0), new Point3D(0, 4, 0)));
 	}
 
 	/**

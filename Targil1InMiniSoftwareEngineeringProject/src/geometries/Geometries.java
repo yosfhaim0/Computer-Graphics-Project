@@ -3,7 +3,6 @@
  */
 package geometries;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -20,32 +19,22 @@ public class Geometries implements Intersectable {
 	/**
 	 * list of geometries like sphere, triangle, tube, plane,polygon, cylinder
 	 */
-	private List<Intersectable> geometries;
+	private List<Intersectable> geometries = new LinkedList<>();
 
 	/**
 	 * Default ctor
 	 * 
 	 */
 	public Geometries() {
-		super();
-		/**
-		 * Initializing the list to linked list
-		 */
-		this.geometries = new LinkedList<>();
 	}
 
 	/**
-	 * ctor whit list
+	 * ctor with list
 	 * 
 	 * @param geometries shape are implement interface Intersectable
 	 */
 	public Geometries(Intersectable... geometries) {
-		super(); 
-		//i don't need direct access
-		this.geometries = new LinkedList<>();
-		for (Intersectable i : geometries) {
-			this.geometries.add(i);
-		}
+		add(geometries);
 	}
 
 	/**
@@ -53,22 +42,23 @@ public class Geometries implements Intersectable {
 	 * 
 	 * @param geometries
 	 */
-	public void Add(Intersectable... geometries) {
-		for (Intersectable i : geometries) {
-			// i chack if i are exsist
-			if (!this.geometries.contains(i))
-				this.geometries.add(i);
-		}
+	public void add(Intersectable... geometries) {
+		for (Intersectable i : geometries)
+			this.geometries.add(i);
 	}
 
 	@Override
 	public List<Point3D> findIntersections(Ray ray) {
 		// linked because you don't now how much der is...
-		List<Point3D> resultList = new LinkedList<>();
+		if(ray==null)return null;
+		List<Point3D> resultList = null;
 		for (Intersectable i : geometries) {
 			List<Point3D> arr = i.findIntersections(ray);
 			if (arr != null)
-				resultList.addAll(arr);
+				if (resultList == null)
+					resultList = new LinkedList<>(arr);
+				else
+					resultList.addAll(arr);
 		}
 		return resultList;
 	}

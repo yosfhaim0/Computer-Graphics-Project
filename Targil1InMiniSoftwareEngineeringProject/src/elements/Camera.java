@@ -6,6 +6,7 @@ package elements;
 import primitives.*;
 
 /**
+ * present camera, point of view in three diminution 
  * @author yosefHaim
  *
  */
@@ -52,7 +53,7 @@ public class Camera {
 	}
 
 	/**
-	 * @return the vTo
+	 * @return the vTo 
 	 */
 	public Vector getvTo() {
 		return vTo;
@@ -91,14 +92,14 @@ public class Camera {
 	 * @param distance double number
 	 * @return this (Builder pattern)
 	 */
-	public Camera setDistance(double distance) {
+	public Camera setVpDistance(double distance) {
 		this.distance = distance;
 		return this;
 	}
 
 	/**
 	 * construct Ray Through Pixel form location of camera
-	 * 
+	 * F
 	 * @param nX depend hoe pixel we wont row
 	 * @param nY depend hoe pixel we wont column
 	 * @param j Rows

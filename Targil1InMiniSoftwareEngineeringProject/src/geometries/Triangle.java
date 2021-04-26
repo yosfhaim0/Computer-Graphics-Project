@@ -1,12 +1,10 @@
 package geometries;
 
-import java.util.List;
 import static primitives.Util.*;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
-import unittests.VectorTests;
+import java.util.List;
+
+import primitives.*;
 
 /**
  * Triangle is a polygon whit only 3 vertices
@@ -29,6 +27,38 @@ public class Triangle extends Polygon implements Geometry {
 	@Override
 	public String toString() {
 		return "Triangle [vertices=" + vertices + ", plane=" + plane + "]";
+	}
+
+	@Override
+	public List<Point3D> findIntersections(Ray ray) {
+		List<Point3D> result = plane.findIntersections(ray);
+		if (result == null) {
+			return null;
+		}
+		Point3D p = ray.getP0();
+		Vector v=ray.getDir();
+		// Create vector to the vertices
+		Vector Subtract0 = vertices.get(0).subtract(p);
+		Vector Subtract1 = vertices.get(1).subtract(p);
+		Vector Subtract2 = vertices.get(2).subtract(p);
+
+		// Create normal form Sides
+		Vector crossProduct_normalize0 = Subtract0.crossProduct(Subtract1).normalized();
+		Vector crossProduct_normalize1 = Subtract1.crossProduct(Subtract2).normalized();
+		Vector crossProduct_normalize2 = Subtract2.crossProduct(Subtract0).normalized();
+
+		// arr_NdotProductDir= normal * direction of ray
+		double NdotProductDir0 = crossProduct_normalize0.dotProduct(v);
+		double NdotProductDir1 = crossProduct_normalize1.dotProduct(v);
+		double NdotProductDir2 = crossProduct_normalize2.dotProduct(v);
+		if (isZero(NdotProductDir0) || isZero(NdotProductDir1) || isZero(NdotProductDir2))
+			return null;
+
+		// The point is inside if all
+		if (!(checkSign(NdotProductDir0, NdotProductDir1)) || !(checkSign(NdotProductDir1, NdotProductDir2))
+				|| !(checkSign(NdotProductDir2, NdotProductDir0)))
+			return null;
+		return result;
 	}
 
 }

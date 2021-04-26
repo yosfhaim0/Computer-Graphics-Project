@@ -41,11 +41,11 @@ public class GeometriesTests {
 		Geometries g1 = new Geometries();
 		List<Point3D> resultList2 = g1
 				.findIntersections(new Ray(new Point3D(2, 2, 1), new Vector(new Point3D(-2, -2, 0))));
-		assertEquals("Geometries it empty list : Wrong number of points ", 0, resultList2.size());
+		assertNull("Geometries it empty list : Wrong number of points ", resultList2);
 		// TC02: no shape are cutting(0 point)
 		List<Point3D> resultList3 = g
 				.findIntersections(new Ray(new Point3D(2, 2, 1), new Vector(new Point3D(2, 2, 0))));
-		assertEquals("no shape are cutting : Wrong number of points ", 0, resultList3.size());
+		assertNull("no shape are cutting : Wrong number of points ", resultList3);
 		// TC03 one shape are intersection(0<point)
 		List<Point3D> resultList0 = g
 				.findIntersections(new Ray(new Point3D(2, 2, 1), new Vector(new Point3D(-1, -3, 0))));
