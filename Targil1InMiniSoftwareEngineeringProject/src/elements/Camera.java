@@ -2,18 +2,19 @@
  * 
  */
 package elements;
-
-
+import static primitives.Util.*;
 import primitives.*;
 
 /**
- * present camera, point of view in three diminution 
- * @author yosefHaim
+ * present camera, point of view in three diminution
+ * 
+ * @author yosefHaim <br>
+ *         JavaDocs reviewed by Alexandre
  *
  */
 public class Camera {
 	/**
-	 * location Point3d of Camera
+	 * location of the Camera
 	 */
 	private Point3D locationPoint3d;
 	/**
@@ -21,25 +22,25 @@ public class Camera {
 	 */
 	private Vector vTo, vUp, vRight;
 	/**
-	 * distance between camera and view plane
-	 * width of view plane
-	 * height of view plane
+	 * distance between camera and view plane width of view plane height of view
+	 * plane
 	 */
 	private double distance = 0, width, height;
 
 	/**
-	 * ctor for camera the ctor get to vector up and to and generate the right
-	 * vector
+	 * camera constructor: receive two orthogonal vectors and build a third one
 	 * 
-	 * @param locatPoint point3d
-	 * @param vectorTo   vector
-	 * @param vectorUp   vector
+	 * @param locatPoint our point of view
+	 * @param vectorTo   pointing where we look
+	 * @param vectorUp   up to our looking direction
+	 * 
+	 * @throws IllegalArgumentException if vectorUp and vectorTo are not orthogonal
 	 */
 	public Camera(Point3D locatPoint, Vector vectorTo, Vector vectorUp) {
-		// if those vector are not orthogonal they throw exception form crossProduct
-		// function
-		if(vectorTo.dotProduct(vectorUp)!=0)
-			throw new RuntimeException("erorr!, the vector of camera not orthgonal!!");
+		// if vTo and vUp are not orthogonal
+		if (vectorTo.dotProduct(vectorUp) != 0) {
+			throw new IllegalArgumentException("Error !, vTo and vUp are not orthogonal");
+		}
 		vRight = vectorTo.crossProduct(vectorUp).normalize();
 		vUp = vectorUp.normalized();
 		vTo = vectorTo.normalized();
@@ -47,14 +48,14 @@ public class Camera {
 	}
 
 	/**
-	 * @return the locationPoint3d
+	 * @return the center of the camera: our point of view
 	 */
 	public Point3D getLocationPoint3d() {
 		return locationPoint3d;
 	}
 
 	/**
-	 * @return the vTo 
+	 * @return the direction where we look
 	 */
 	public Vector getvTo() {
 		return vTo;
@@ -88,7 +89,7 @@ public class Camera {
 	}
 
 	/**
-	 * Method set for the distance view plane form camera
+	 * Set distance between our camera and the view plane
 	 * 
 	 * @param distance double number
 	 * @return this (Builder pattern)
@@ -99,45 +100,33 @@ public class Camera {
 	}
 
 	/**
-	 * construct Ray Through Pixel form location of camera
-	 * F
+	 * construct Ray Through Pixel form location of camera F
+	 * 
 	 * @param nX depend hoe pixel we wont row
 	 * @param nY depend hoe pixel we wont column
-	 * @param j Rows
-	 * @param i Columns
+	 * @param j  Rows
+	 * @param i  Columns
 	 * @return Ray form location towards the center of pixel
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
 		Point3D Pc;
 		Pc = locationPoint3d;
-		if (!primitives.Util.isZero(distance)) {
-
+		if (!isZero(distance)) {
 			Pc = locationPoint3d.add(vTo.scale(distance));
-
 		}
 
 		double Ry = height / nY, Rx = width / nX;
 		double xj = (j - (nX - 1) / 2d) * Rx;
 		double yi = -(i - (nY - 1) / 2d) * Ry;
 		Point3D pij = Pc;
-		if (!primitives.Util.isZero(xj)) {
+		if (!isZero(xj)) {
 			pij = pij.add(vRight.scale(xj));
 		}
-		if (!primitives.Util.isZero(yi)) {
+		if (!isZero(yi)) {
 			pij = pij.add(vUp.scale(yi));
 		}
 		Vector vij = pij.subtract(locationPoint3d);
 		return new Ray(locationPoint3d, vij);
-	}
-	public int fun(java.util.List<Integer> arr) {
-		int num=0;
-		int sum=1;
-		for (Integer integer : arr) {
-			integer*=sum;
-			num+=integer;
-			sum*=10;
-		}
-		return num;
 	}
 
 }
