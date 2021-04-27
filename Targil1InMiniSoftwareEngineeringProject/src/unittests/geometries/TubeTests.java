@@ -45,7 +45,7 @@ public class TubeTests {
 		Tube tube = new Tube(new Ray(new Point3D(2, 0, 0), new Vector(new Point3D(0, 0, 1))), 2);
 		Tube tube1 = new Tube(new Ray(new Point3D(2, 0, -1), new Vector(new Point3D(0, 0, 1))), 2);
 		List<Point3D> result;
-		// ============ Equivalence Partitions Tests==============
+		// =============== Boundary Values Tests ==================
 		// **** Group: ray in the level of axisray
 		// TC01: Ray's line is outside the tube (0 points)
 		result = tube.findIntersections(new Ray(new Point3D(6, 0, 0), new Vector(-6, 5, 0)));
@@ -64,27 +64,6 @@ public class TubeTests {
 		// TC04: Ray starts after the tube (0 points)
 		result = tube.findIntersections(new Ray(new Point3D(5, 0, 0), new Vector(1, 0, 0)));
 		assertEquals("Ray starts after the tube", null, result);
-		// **** Group: ray not in the level of axisray
-		// TC17: Ray's line is outside the tube (0 points)
-		result = tube1.findIntersections(new Ray(new Point3D(6, 0, 0), new Vector(-6, 5, 0)));
-		assertEquals("TC17: Ray's line is outside the tube (0 points)", null, result);
-		// TC18: Ray starts before and crosses the tube (2 points)
-		result = tube1.findIntersections(new Ray(new Point3D(0, 4, 0), new Vector(2, -2, 0)));
-		Point3D p3 = new Point3D(2, 2, 0);
-		Point3D p4 = new Point3D(4, 0, 0);
-		assertEquals("TC18: Ray starts before and crosses the tube (2 points): Wrong number of points", 2,
-				result.size());
-		if (result.get(0).getX() > result.get(1).getX())
-			result = List.of(result.get(1), result.get(0));
-		assertEquals("TC18: Ray starts before and crosses the tube (2 points)", List.of(p3, p4), result);
-		// TC19: Ray starts inside the tube (1 point)
-		result = tube1.findIntersections(new Ray(new Point3D(1, 1, 0), new Vector(1, 1, 0)));
-		assertEquals("TC19: Ray starts inside the tube (1 point)", List.of(new Point3D(2, 2, 0)), result);
-		// TC20: Ray starts after the tube (0 points)
-		result = tube1.findIntersections(new Ray(new Point3D(5, 0, 0), new Vector(1, 0, 0)));
-		assertEquals("TC20: Ray starts after the tube (0 points)", null, result);
-		// =============== Boundary Values Tests ==================
-
 		// **** Group: Ray's line crosses the tube (ray in the level of axisray)(but not
 		// the center)
 		// TC05:Ray starts at tube and goes inside (1 points)
@@ -132,7 +111,25 @@ public class TubeTests {
 		// line (ray in the level of axisray)
 		result = tube.findIntersections(new Ray(new Point3D(2, -4, 0), new Vector(-4, 0, 0)));
 		assertEquals("TC16: Ray's line is outside, ray is orthogonal to ray start to tube's center line", null, result);
-
+		// **** Group: ray not in the level of axisray
+		// TC17: Ray's line is outside the tube (0 points)
+		result = tube1.findIntersections(new Ray(new Point3D(6, 0, 0), new Vector(-6, 5, 0)));
+		assertEquals("TC17: Ray's line is outside the tube (0 points)", null, result);
+		// TC18: Ray starts before and crosses the tube (2 points)
+		result = tube1.findIntersections(new Ray(new Point3D(0, 4, 0), new Vector(2, -2, 0)));
+		Point3D p3 = new Point3D(2, 2, 0);
+		Point3D p4 = new Point3D(4, 0, 0);
+		assertEquals("TC18: Ray starts before and crosses the tube (2 points): Wrong number of points", 2,
+				result.size());
+		if (result.get(0).getX() > result.get(1).getX())
+			result = List.of(result.get(1), result.get(0));
+		assertEquals("TC18: Ray starts before and crosses the tube (2 points)", List.of(p3, p4), result);
+		// TC19: Ray starts inside the tube (1 point)
+		result = tube1.findIntersections(new Ray(new Point3D(1, 1, 0), new Vector(1, 1, 0)));
+		assertEquals("TC19: Ray starts inside the tube (1 point)", List.of(new Point3D(2, 2, 0)), result);
+		// TC20: Ray starts after the tube (0 points)
+		result = tube1.findIntersections(new Ray(new Point3D(5, 0, 0), new Vector(1, 0, 0)));
+		assertEquals("TC20: Ray starts after the tube (0 points)", null, result);
 		// **** Group: Ray's line crosses the (tube ray are orthogonal to the tube)(ray
 		// not in the level of axisray) (but not the center)
 		// TC21:Ray starts at tube and goes inside (1 points)

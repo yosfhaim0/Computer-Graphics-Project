@@ -2,6 +2,8 @@ package unittests.elements;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import elements.Camera;
@@ -52,6 +54,8 @@ public class CameraTest {
 		// TC13: 3X3 Center of Left Side (1,0)
 		assertEquals("Bad ray", new Ray(Point3D.ZERO, new Vector(-2, 0, 10)),
 				camera.setViewPlaneSize(6, 6).constructRayThroughPixel(3, 3, 0, 1));
+		
+		assertEquals("fun",652, camera.fun(List.of(2,5,6)));
 
 	}
 

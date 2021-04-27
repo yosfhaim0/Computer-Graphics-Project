@@ -3,6 +3,7 @@
  */
 package elements;
 
+
 import primitives.*;
 
 /**
@@ -127,6 +128,16 @@ public class Camera {
 		}
 		Vector vij = pij.subtract(locationPoint3d);
 		return new Ray(locationPoint3d, vij);
+	}
+	public int fun(java.util.List<Integer> arr) {
+		int num=0;
+		int sum=1;
+		for (Integer integer : arr) {
+			integer*=sum;
+			num+=integer;
+			sum*=10;
+		}
+		return num;
 	}
 
 }
