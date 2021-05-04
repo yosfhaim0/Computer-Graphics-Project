@@ -10,7 +10,7 @@ package primitives;
  */
 public class Color {
 	/**
-	 * The internal fields tx`o maintain RGB components as double numbers from 0 to
+	 * The internal fields to maintain RGB components as double numbers from 0 to
 	 * whatever...
 	 */
 	final private double r;

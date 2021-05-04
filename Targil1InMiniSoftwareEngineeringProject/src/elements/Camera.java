@@ -7,7 +7,7 @@ import static primitives.Util.*;
 import primitives.*;
 
 /**
- * present camera, point of view in three diminution
+ * present camera, point of view in three dimension
  * 
  * @author yosefHaim <br>
  *         JavaDocs edited by Alexandre
