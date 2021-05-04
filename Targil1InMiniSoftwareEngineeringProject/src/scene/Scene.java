@@ -12,7 +12,8 @@ import elements.*;
 import geometries.*;
 
 /**
- * Scene is Contains all the components that <br>exist in the space we want to photograph
+ * Scene is Contains all the components that <br>
+ * exist in the space we want to photograph
  * 
  * @author yosefHaim
  */
@@ -22,7 +23,7 @@ public class Scene {
 	 */
 	public String name;
 	/**
-	 * background of the scene (all the ray how dont <br>
+	 * background of the scene (all the ray how don't <br>
 	 * intersect whit body will get the color of background)<br>
 	 * Default=black color
 	 */

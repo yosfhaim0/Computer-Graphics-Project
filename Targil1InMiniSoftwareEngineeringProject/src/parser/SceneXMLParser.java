@@ -1,24 +1,10 @@
 package parser;
 
-import java.io.File;
-import java.io.IOException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-
 import elements.AmbientLight;
-import geometries.Geometries;
-import geometries.Geometry;
-import geometries.Sphere;
-import geometries.Triangle;
-import primitives.Color;
-import primitives.Point3D;
+import geometries.*;
+import primitives.*;
 import scene.Scene;
 
 /**
@@ -26,51 +12,29 @@ import scene.Scene;
  */
 public class SceneXMLParser {
 	/**
-	 * build scene form xml file
+	 * build scene form Document file
 	 * 
-	 * @param path to the xml file
 	 * @param name name of the scene
+	 * @param root Element contain the scene
 	 * @return scene whit all the components form xml file
 	 */
-	public static Scene sceneXMLParser(String path, String name) {
-		// sceneDescriptor = new SceneDescriptor();
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	public static Scene sceneXMLParser(String name, Element root) {
 		Scene scene = null;
-		try {
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			File file = new File(path);
-			Document document;
-			document = builder.parse(file);
-			document.getDocumentElement().normalize();
-			Element root = document.getDocumentElement();
-			Color backGroundColor = getColor(root.getAttribute("background-color"));
-			AmbientLight ambientLight = getAmbientLight(root);
-			Geometries geometries = getGeometries(root);
-			scene = new Scene(name).setAmbientLight(ambientLight).setBackground(backGroundColor)
-					.setGeometries(geometries);
-
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Color backGroundColor = getColor(root.getAttribute("background-color"));
+		AmbientLight ambientLight = getAmbientLight(root);
+		Geometries geometries = getGeometries(root);
+		scene = new Scene(name).setAmbientLight(ambientLight).setBackground(backGroundColor).setGeometries(geometries);
 		return scene;
-
 	}
 
 	/**
 	 * parser color form the element
 	 * 
-	 * @param element form the xml contain the color
+	 * @param string form the xml contain the color
 	 * @return color called from the element
 	 */
-	private static Color getColor(String element) {
-		String[] value = element.split(" ");
+	private static Color getColor(String string) {
+		String[] value = string.split(" ");
 		Color returnNewColor = new Color(Double.parseDouble(value[0]), Double.parseDouble(value[1]),
 				Double.parseDouble(value[2]));
 		return returnNewColor;
@@ -115,6 +79,14 @@ public class SceneXMLParser {
 			var p1 = getPoint(element.getAttribute("p1"));
 			var p2 = getPoint(element.getAttribute("p2"));
 			result = new Triangle(p0, p1, p2);
+			break;
+		case "tube":
+			break;
+		case "cylinder":
+			break;
+		case "plane":
+			break;
+		case "polygon":
 			break;
 		default:
 			break;

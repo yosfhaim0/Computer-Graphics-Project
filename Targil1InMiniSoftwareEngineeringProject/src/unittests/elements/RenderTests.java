@@ -8,6 +8,7 @@ import parser.SceneXMLParser;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+import scene.SceneBuilder;
 
 /**
  * Test rendering a basic image
@@ -56,9 +57,10 @@ public class RenderTests {
 	 */
 	@Test
 	public void basicRenderXml() {
-		Scene scene = SceneXMLParser.sceneXMLParser(
+		SceneBuilder sceneBuilder = new SceneBuilder(
 				"\\Users\\Public\\GPC\\Computer-Graphics-Project\\Targil1InMiniSoftwareEngineeringProject\\xmlFiles\\basicRenderTestTwoColors.xml",
 				"XML Test scene");
+		Scene scene=sceneBuilder.getScene();
 		ImageWriter imageWriter = new ImageWriter("xml render test", 1000, 1000);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //

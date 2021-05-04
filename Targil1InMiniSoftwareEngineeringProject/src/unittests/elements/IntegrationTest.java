@@ -18,7 +18,7 @@ import primitives.*;
 public class IntegrationTest {
 
 	/**
-	 * 
+	 * test Integration With Sphere
 	 */
 	@Test
 	public void testIntegrationWithSphere() {
@@ -51,7 +51,9 @@ public class IntegrationTest {
 		assertEquals("TC05: worng number", 0, intersectionCounter(camera, sphere));
 
 	}
-
+	/**
+	 * test Integration With Plane
+	 */
 	@Test
 	public void testIntegrationWithPlane() {
 		// TC01: (9 point)
@@ -69,7 +71,9 @@ public class IntegrationTest {
 		assertEquals("TC03: worng number(plane inetgration test)", 6, intersectionCounter(camera, plane));
 
 	}
-
+	/**
+	 * test Integration With Triangel
+	 */
 	@Test
 	public void testIntegrationWithTriangel() {
 		// TC01: (1 point)
