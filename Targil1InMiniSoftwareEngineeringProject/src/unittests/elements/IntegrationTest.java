@@ -14,11 +14,15 @@ import geometries.Triangle;
 import primitives.*;
 
 /**
- * @author yosefHaim Integration Test for findIntersections and
- *         constructRayThroughPixel funcs
+ * Integration Test for findIntersections and constructRayThroughPixel funcs
+ * 
+ * @author yosefHaim
  */
 public class IntegrationTest {
 
+	/**
+	 * 
+	 */
 	@Test
 	public void testIntegrationWithSphere() {
 		// TC01 r=1 (1 point)
@@ -81,8 +85,10 @@ public class IntegrationTest {
 		triangle = new Triangle(new Point3D(0, 20, -2), new Point3D(1, -1, -2), new Point3D(-1, -1, -2));
 		assertEquals("TC02: worng number(triangel inetgration test)", 2, ezerFunFor(camera, triangle));
 	}
+
 	/**
 	 * fun for surtcut the code test
+	 * 
 	 * @param camera
 	 * @param shape
 	 * @return counter pointer

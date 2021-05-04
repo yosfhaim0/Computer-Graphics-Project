@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 import static primitives.Util.*;
 
@@ -12,7 +13,7 @@ import static primitives.Util.*;
  * @author yosefHaim
  *
  */
-public class Sphere implements Geometry {
+public class Sphere extends Geometry {
 	/**
 	 * the center of Sphere
 	 */
@@ -67,7 +68,7 @@ public class Sphere implements Geometry {
 	}
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 
 		// all the names is like the Instructions in a booklet d= distance center form
 		// the ray(ortegonal line..) u= vector form the ray.p0 to center
@@ -79,7 +80,7 @@ public class Sphere implements Geometry {
 		try {
 			u = center.subtract(ray.getP0());
 		} catch (IllegalArgumentException e) {
-			return List.of(ray.getPoint(radius));
+			return List.of(new GeoPoint(this,ray.getPoint(radius)));
 		}
 
 		double tm = ray.getDir().dotProduct(u);
@@ -100,7 +101,8 @@ public class Sphere implements Geometry {
 
 		if (t2 <= 0)
 			return null;
-		return t1 <= 0 ? List.of(ray.getPoint(t2)) : List.of(ray.getPoint(t1), ray.getPoint(t2));
+		return t1 <= 0 ? List.of(new GeoPoint(this, ray.getPoint(t2)))
+				: List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)));
 	}
 
 }

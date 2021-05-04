@@ -2,6 +2,7 @@
  * 
  */
 package elements;
+
 import static primitives.Util.*;
 import primitives.*;
 
@@ -9,7 +10,7 @@ import primitives.*;
  * present camera, point of view in three diminution
  * 
  * @author yosefHaim <br>
- *         JavaDocs reviewed by Alexandre
+ *         JavaDocs edited by Alexandre
  *
  */
 public class Camera {
@@ -128,5 +129,4 @@ public class Camera {
 		Vector vij = pij.subtract(locationPoint3d);
 		return new Ray(locationPoint3d, vij);
 	}
-
 }

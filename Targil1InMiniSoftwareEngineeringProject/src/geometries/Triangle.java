@@ -4,6 +4,7 @@ import static primitives.Util.*;
 
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 /**
@@ -12,7 +13,7 @@ import primitives.*;
  * @author yosefHaim
  *
  */
-public class Triangle extends Polygon implements Geometry {
+public class Triangle extends Polygon {
 	/**
 	 * ctor with three vertices (Points3D)
 	 * 
@@ -30,13 +31,13 @@ public class Triangle extends Polygon implements Geometry {
 	}
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
-		List<Point3D> result = plane.findIntersections(ray);
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
+		List<GeoPoint> result = plane.findGeoIntersections(ray);
 		if (result == null) {
 			return null;
 		}
 		Point3D p = ray.getP0();
-		Vector v=ray.getDir();
+		Vector v = ray.getDir();
 		// Create vector to the vertices
 		Vector Subtract0 = vertices.get(0).subtract(p);
 		Vector Subtract1 = vertices.get(1).subtract(p);
@@ -58,6 +59,7 @@ public class Triangle extends Polygon implements Geometry {
 		if (!(checkSign(NdotProductDir0, NdotProductDir1)) || !(checkSign(NdotProductDir1, NdotProductDir2))
 				|| !(checkSign(NdotProductDir2, NdotProductDir0)))
 			return null;
+		result.get(0).geometry=this;
 		return result;
 	}
 

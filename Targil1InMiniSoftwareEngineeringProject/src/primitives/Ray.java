@@ -1,9 +1,8 @@
 package primitives;
 
-import static primitives.Util.*;
-
 import java.util.List;
 
+import geometries.Intersectable.GeoPoint;
 /**
  * (ray) - A fundamental object in geometry - the group of points on a straight
  * line that are on one relative side To a given point on the line called the
@@ -53,6 +52,7 @@ public class Ray {
 
 	/**
 	 * Calculates point on the ray at certain distance from the ray head
+	 * 
 	 * @param t the distance from the ray head
 	 * @return the point at the distance
 	 */
@@ -72,18 +72,19 @@ public class Ray {
 		return p0.equals(other.p0) && dir.equals(other.dir);
 	}
 	/**
-	 * Chooses the Closest Point to p0
-	 * If the list is empty or null - the function returns null
+	 * Chooses the Closest GeoPoint to p0 
+	 * 
 	 * @param list of points in the ray
-	 * @return point are the closest to p0
+	 * @return point are the closest to p0, <br>If the list is empty or null - the function
+	 * returns null
 	 */
-	public Point3D getClosestPoint(List<Point3D> list) {
-		if(list==null)
+	public GeoPoint getClosestGeoPoint(List<GeoPoint> list) {
+		if (list == null)
 			return null;
 		double minDistance = Double.POSITIVE_INFINITY;
-		Point3D closest = null;
-		for (Point3D p : list) {
-			double d = p0.distance(p);
+		GeoPoint closest = null;
+		for (GeoPoint p : list) {
+			double d = p0.distance(p.point);
 			if (d < minDistance) {
 				minDistance = d;
 				closest = p;
@@ -91,4 +92,5 @@ public class Ray {
 		}
 		return closest;
 	}
+
 }

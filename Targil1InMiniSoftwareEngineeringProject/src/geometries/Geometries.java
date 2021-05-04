@@ -12,7 +12,7 @@ import primitives.Ray;
 /**
  * Geometries represent collection of Geometries shape
  * 
- * @author yosefHaim amrusi
+ * @author yosefHaim
  *
  */
 public class Geometries implements Intersectable {
@@ -23,7 +23,7 @@ public class Geometries implements Intersectable {
 
 	/**
 	 * Default ctor
-	 * 
+	 * for geometries 
 	 */
 	public Geometries() {
 	}
@@ -48,19 +48,19 @@ public class Geometries implements Intersectable {
 	}
 
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		// linked because you don't now how much der is...
-		if(ray==null)return null;
-		List<Point3D> resultList = null;
-		for (Intersectable i : geometries) {
-			List<Point3D> arr = i.findIntersections(ray);
-			if (arr != null)
-				if (resultList == null)
-					resultList = new LinkedList<>(arr);
-				else
-					resultList.addAll(arr);
-		}
-		return resultList;
+				if(ray==null)return null;
+				List<GeoPoint> resultList = null;
+				for (Intersectable i : geometries) {
+					List<GeoPoint> arr = i.findGeoIntersections(ray);
+					if (arr != null)
+						if (resultList == null)
+							resultList = new LinkedList<>(arr);
+						else
+							resultList.addAll(arr);
+				}
+				return resultList;
 	}
 
 }

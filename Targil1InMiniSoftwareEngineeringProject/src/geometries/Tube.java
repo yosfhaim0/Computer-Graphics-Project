@@ -14,7 +14,7 @@ import primitives.Vector;
  * @author yosefHaim
  *
  */
-public class Tube implements Geometry {
+public class Tube extends Geometry {
 	/**
 	 * the ray of the tube he present the direction of tube
 	 */
@@ -74,8 +74,9 @@ public class Tube implements Geometry {
 		return "AxisRay: " + this.axisRay.toString() + " Radius: " + this.radius + "\n";
 	}
 
+	
 	@Override
-	public List<Point3D> findIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		Vector vAxis = axisRay.getDir();
 		Vector v = ray.getDir();
 		Point3D p0 = ray.getP0();
@@ -106,8 +107,8 @@ public class Tube implements Geometry {
 			deltaP = p0.subtract(axisRay.getP0());
 		} catch (IllegalArgumentException e1) { // the ray begins at axis P0
 			if (isZero(vVa)) // the ray is orthogonal to Axis
-				return List.of(ray.getPoint(radius));
-			return List.of(ray.getPoint(Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared())));
+				return List.of(new GeoPoint(this, ray.getPoint(radius)));
+			return List.of(new GeoPoint(this,ray.getPoint(Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared()))));
 		}
 
 		double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
@@ -120,7 +121,7 @@ public class Tube implements Geometry {
 			try {
 				dPMinusdPVaVa = deltaP.subtract(dPVaVa);
 			} catch (IllegalArgumentException e1) {
-				return List.of(ray.getPoint(Math.sqrt(radius * radius / a)));
+				return List.of(new GeoPoint(this,ray.getPoint(Math.sqrt(radius * radius / a))));
 			}
 		}
 
@@ -143,7 +144,7 @@ public class Tube implements Geometry {
 		double t2 = alignZero(tm + th); // always: t2 > t1
 		if (t2 <= 0)
 			return null;
-		return t1 > 0 ? List.of(ray.getPoint(t1), ray.getPoint(t2)) : List.of(ray.getPoint(t2));
+		return t1 > 0 ? List.of(new GeoPoint(this,ray.getPoint(t1)), new GeoPoint(this,ray.getPoint(t2))) : List.of(new GeoPoint(this,ray.getPoint(t2)));
 	}
 
 }

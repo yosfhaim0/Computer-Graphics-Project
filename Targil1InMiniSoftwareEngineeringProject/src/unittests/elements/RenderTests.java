@@ -2,9 +2,9 @@ package unittests.elements;
 
 import org.junit.Test;
 
-
 import elements.*;
 import geometries.*;
+import parser.SceneXMLParser;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
@@ -15,11 +15,8 @@ import scene.Scene;
  * @author Dan
  */
 public class RenderTests {
-	private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)) //
+	private Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
 			.setVpDistance(100) //
-			.setViewPlaneSize(500, 500);
-	private Camera camera1 = new Camera(new Point3D(0, 0, 9), new Vector(0, 0, -1), new Vector(0, -1, 0)) //
-			.setVpDistance(5) //
 			.setViewPlaneSize(500, 500);
 
 	/**
@@ -28,16 +25,19 @@ public class RenderTests {
 	 */
 	@Test
 	public void basicRenderTwoColorTest() {
-
 		Scene scene = new Scene("Test scene")//
 				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
 				.setBackground(new Color(75, 127, 90));
 
-		scene.geometries.add(new Sphere( new Point3D(0, 0, -100),50),
-				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
-				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
-				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left
-				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down right
+		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up
+																													// left
+				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up
+																													// right
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down
+																														// left
+				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down
+																													// right
 
 		ImageWriter imageWriter = new ImageWriter("base render test", 1000, 1000);
 		Render render = new Render() //
@@ -49,39 +49,16 @@ public class RenderTests {
 		render.renderImage();
 		render.printGrid(100, new Color(java.awt.Color.YELLOW));
 		render.writeToImage();
-		//TC02: smail face test
-		Scene scene1 = new Scene("Test scene1")//
-				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
-				.setBackground(new Color(75, 127, 90));
-		scene1.geometries.add(new Sphere(new Point3D(2, 2, 0),1),new Sphere(new Point3D(-2, 2, 0), 1),
-				new Polygon(new Point3D(-3,0,0),new Point3D(-2, 0, 0),new Point3D(0, -2, 0) ,new Point3D(0, -3, 0)),
-				new Polygon(new Point3D(3,0,0),new Point3D(2, 0, 0),new Point3D(0, -2, 0) ,new Point3D(0, -3, 0)),
-				new Sphere(new Point3D(0,0,-5), 5));
-		
-		ImageWriter imageWriter1 = new ImageWriter("base render test", 10, 10);
-		Render render1 = new Render() //
-				.setImageWriter(imageWriter1) //
-				.setScene(scene1) //
-				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
-
-		render1.renderImage();
-		render1.printGrid(100, new Color(java.awt.Color.YELLOW));
-		render1.writeToImage();
-		
-		
-		
 	}
-	
+
 	/**
 	 * Test for XML based scene - for bonus
 	 */
 	@Test
 	public void basicRenderXml() {
-		Scene scene = new Scene("XML Test scene");
-		// enter XML file name and parse from XML file into scene object
-		// ...
-		
+		Scene scene = SceneXMLParser.sceneXMLParser(
+				"\\Users\\Public\\GPC\\Computer-Graphics-Project\\Targil1InMiniSoftwareEngineeringProject\\xmlFiles\\basicRenderTestTwoColors.xml",
+				"XML Test scene");
 		ImageWriter imageWriter = new ImageWriter("xml render test", 1000, 1000);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
@@ -94,5 +71,33 @@ public class RenderTests {
 		render.writeToImage();
 	}
 
-	
+	@Test
+	public void basicRenderMultiColorTest() {
+		Scene scene = new Scene("Test scene")//
+				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
+
+		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50), //
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up
+																													// left
+						.setEmission(new Color(java.awt.Color.GREEN)),
+				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up
+																													// right
+				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)) // down
+																													// left
+						.setEmission(new Color(java.awt.Color.RED)),
+				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100)) // down
+																													// right
+						.setEmission(new Color(java.awt.Color.BLUE)));
+
+		ImageWriter imageWriter = new ImageWriter("color render test", 1000, 1000);
+		Render render = new Render() //
+				.setImageWriter(imageWriter) //
+				.setScene(scene) //
+				.setCamera(camera) //
+				.setRayTracer(new RayTracerBasic(scene));
+
+		render.renderImage();
+		render.printGrid(100, new Color(java.awt.Color.WHITE));
+		render.writeToImage();
+	}
 }
