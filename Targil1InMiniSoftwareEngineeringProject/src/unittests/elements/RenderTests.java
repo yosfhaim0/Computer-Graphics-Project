@@ -71,6 +71,9 @@ public class RenderTests {
 		render.writeToImage();
 	}
 
+	/**
+	 * render picture whit mult color
+	 */
 	@Test
 	public void basicRenderMultiColorTest() {
 		Scene scene = new Scene("Test scene")//

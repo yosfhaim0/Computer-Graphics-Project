@@ -12,7 +12,9 @@ import elements.*;
 import geometries.*;
 
 /**
- * @author yosefHaim Scene is collection present a snapshot/image
+ * Scene is Contains all the components that <br>exist in the space we want to photograph
+ * 
+ * @author yosefHaim
  */
 public class Scene {
 	/**
@@ -21,11 +23,13 @@ public class Scene {
 	public String name;
 	/**
 	 * background of the scene (all the ray how dont <br>
-	 * intersect whit body will get the color of background)
+	 * intersect whit body will get the color of background)<br>
+	 * Default=black color
 	 */
 	public Color background = Color.BLACK;
 	/**
-	 * ambient Light of scene
+	 * ambient Light of scene <br>
+	 * Default=black color
 	 */
 	public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 1);
 	/**
@@ -33,12 +37,13 @@ public class Scene {
 	 */
 	public Geometries geometries;
 	/**
-	 * list of source light in scene
+	 * list of source light in scene <br>
+	 * Default= empty list
 	 */
 	public List<LightSource> LightSourceList = new LinkedList<LightSource>();
 
 	/**
-	 * ctur
+	 * ctur for scene
 	 * 
 	 * @param name of scene
 	 */
@@ -81,9 +86,16 @@ public class Scene {
 		this.geometries = geometr;
 		return this;
 	}
+
+	/**
+	 * setter for LightSourceList
+	 * 
+	 * @param LightSourc List of light
+	 * @return this (scene)
+	 */
 	public Scene setLightSourceList(List<LightSource> LightSourc) {
-	this.LightSourceList=LightSourc;
-	return this;
+		this.LightSourceList = LightSourc;
+		return this;
 	}
 
 }

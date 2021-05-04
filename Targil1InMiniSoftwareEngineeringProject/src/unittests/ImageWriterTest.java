@@ -18,7 +18,8 @@ import renderer.ImageWriter;
 public class ImageWriterTest {
 
 	/**
-	 * Test method for
+	 * base picture test 
+	 * Test method for 
 	 * {@link renderer.ImageWriter#ImageWriter(java.lang.String, int, int)}.
 	 */
 	@Test

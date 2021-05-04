@@ -22,14 +22,14 @@ import primitives.Point3D;
 import scene.Scene;
 
 /**
- * build scene form xml file
- * .@author yosefHaim
+ * build scene form xml file .@author yosefHaim
  */
 public class SceneXMLParser {
 	/**
 	 * build scene form xml file
+	 * 
 	 * @param path to the xml file
-	 * @param name name of the scene 
+	 * @param name name of the scene
 	 * @return scene whit all the components form xml file
 	 */
 	public static Scene sceneXMLParser(String path, String name) {
@@ -62,8 +62,10 @@ public class SceneXMLParser {
 		return scene;
 
 	}
+
 	/**
 	 * parser color form the element
+	 * 
 	 * @param element form the xml contain the color
 	 * @return color called from the element
 	 */
@@ -73,8 +75,10 @@ public class SceneXMLParser {
 				Double.parseDouble(value[2]));
 		return returnNewColor;
 	}
+
 	/**
 	 * parser ambientLight form element
+	 * 
 	 * @param element form the xml contain the ambientLight
 	 * @return ambientLight called from the element
 	 */
@@ -90,9 +94,11 @@ public class SceneXMLParser {
 		return new AmbientLight(color, ka);
 
 	}
+
 	/**
-	 * parser geometry (triangle, plane,sphere, tube, cylinder...)
-	 * <br>form element
+	 * parser geometry (triangle, plane,sphere, tube, cylinder...) <br>
+	 * form element
+	 * 
 	 * @param element form the xml contain the geometry shape
 	 * @return geometry called from the element
 	 */
@@ -116,9 +122,11 @@ public class SceneXMLParser {
 		return result;
 
 	}
+
 	/**
-	 * parser point form string 
-	 * @param str string contain the coordinates of the point 
+	 * parser point form string
+	 * 
+	 * @param str string contain the coordinates of the point
 	 * @return point called from the string
 	 */
 	private static Point3D getPoint(String str) {
@@ -127,9 +135,11 @@ public class SceneXMLParser {
 				Double.parseDouble(value[2]));
 		return returnNewColor;
 	}
+
 	/**
-	 * parser Geometries form Element 
-	 * @param element form the xml contain the Geometries object 
+	 * parser Geometries form Element
+	 * 
+	 * @param element form the xml contain the Geometries object
 	 * @return Geometries (collection of shape) called from the Element
 	 */
 	private static Geometries getGeometries(Element element) {

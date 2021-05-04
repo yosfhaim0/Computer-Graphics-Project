@@ -10,7 +10,7 @@ import primitives.*;
 import scene.*;
 
 /**
- * collect all the needs for get a image
+ * The render job is to create the color matrix of the image from the scene
  * 
  * @author yosefHaim
  *
@@ -34,17 +34,20 @@ public class Render {
 	RayTracerBasic rayTracerBase;
 
 	/**
-	 * void method for active the write pixel fun given for each pixel is color
+	 * void method for active the writePixel() <br>
+	 * given for each pixel is color
 	 */
 	public void renderImage() {
 		if (imageWriter == null)
-			throw new MissingResourceException("one of the args of Render is null", "Render", "imageWriter");
+			throw new MissingResourceException("one of the args of Render is null", ImageWriter.class.getName(),
+					"imageWriter");
 		if (scene == null)
-			throw new MissingResourceException("one of the args of Render is null", "Render", "scene");
+			throw new MissingResourceException("one of the args of Render is null", Scene.class.getName(), "scene");
 		if (camera == null)
-			throw new MissingResourceException("one of the args of Render is null", "Render", "camera");
+			throw new MissingResourceException("one of the args of Render is null", Camera.class.getName(), "camera");
 		if (rayTracerBase == null)
-			throw new MissingResourceException("one of the args of Render is null", "Render", "rayTracerBase");
+			throw new MissingResourceException("one of the args of Render is null", RayTracerBasic.class.getName(),
+					"rayTracerBase");
 		int Nx = imageWriter.getNx(), Ny = imageWriter.getNy();
 		Ray ray;
 		Color color;
@@ -65,6 +68,9 @@ public class Render {
 	 * @param Color    the color of the grid
 	 */
 	public void printGrid(int interval, Color color) {
+		if (imageWriter == null)
+			throw new MissingResourceException("one of the args of Render is null", ImageWriter.class.getName(),
+					"imageWriter");
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
 		for (int i = 0; i < Ny; i++) {
