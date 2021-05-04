@@ -23,7 +23,6 @@ public abstract class RayTracerBase {
 	 * @param scene
 	 */
 	public RayTracerBase(Scene scene) {
-		super();
 		this.scene = scene;
 	}
 

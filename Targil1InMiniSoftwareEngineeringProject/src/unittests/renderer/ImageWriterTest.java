@@ -1,7 +1,7 @@
 /**
  * 
  */
-package unittests;
+package unittests.renderer;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class ImageWriterTest {
 	 */
 	@Test
 	public void writeToImage() {
-		ImageWriter imageWriter = new ImageWriter("My picture", 500, 800);
+		ImageWriter imageWriter = new ImageWriter("My picture", 800, 500);
 		int Nx = imageWriter.getNx();
 		int Ny = imageWriter.getNy();
 		for (int i = 0; i < Ny; i++) {

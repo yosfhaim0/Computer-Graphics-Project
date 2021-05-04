@@ -20,8 +20,7 @@ public class AmbientLight extends Light {
 	 * @param ka Coefficient of attenuation of AmbientLight
 	 */
 	public AmbientLight(Color intens, double ka) {
-		super(intens);
-		this.intensity = intens.scale(ka);
+		super(intens.scale(ka));
 	}
 
 }

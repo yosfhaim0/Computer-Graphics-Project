@@ -1,7 +1,7 @@
 /**
  * 
  */
-package unittests;
+package unittests.primitives;
 
 import static org.junit.Assert.*;
 import static primitives.Util.isZero;

@@ -66,7 +66,7 @@ public class SceneBuilder {
 			document = builder.parse(file);
 			document.getDocumentElement().normalize();
 			Element root = document.getDocumentElement();
-			scene = parser.SceneXMLParser.sceneXMLParser(name, root);
+			scene = SceneXMLParser.sceneXMLParser(name, root);
 
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();

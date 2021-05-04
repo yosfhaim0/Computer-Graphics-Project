@@ -1,14 +1,14 @@
-package unittests.elements;
+package unittests.renderer;
 
 import org.junit.Test;
 
 import elements.*;
 import geometries.*;
-import parser.SceneXMLParser;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
 import scene.SceneBuilder;
+import scene.SceneXMLParser;
 
 /**
  * Test rendering a basic image

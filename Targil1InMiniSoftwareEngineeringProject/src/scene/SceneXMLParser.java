@@ -1,11 +1,10 @@
-package parser;
+package scene;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import elements.AmbientLight;
 import geometries.*;
 import primitives.*;
-import scene.Scene;
 
 /**
  * build scene form xml file .@author yosefHaim
