@@ -36,6 +36,17 @@ public abstract class Geometry implements Intersectable {
     }
 
     /**
+     * setter for material component of Geometry
+     * 
+     * @param materialToSet
+     * @return this (Geometry) - builder pattern
+     */
+    public Geometry setMaterial(Material materialToSet) {
+	this.material = materialToSet;
+	return this;
+    }
+
+    /**
      * getter for emission color
      * 
      * @return the emission color of the geometry
