@@ -3,6 +3,7 @@
  */
 package elements;
 
+import static primitives.Util.*;
 import primitives.*;
 
 /**
@@ -27,6 +28,15 @@ public class SpotLight extends PointLight {
 		super(intensity1, positi, kc, kl, kq);
 		this.direction = direct;
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public Color getIntensity(Point3D p) {
+		Color iL = super.getIntensity(p);
+		double dirDotL = alignZero(direction.dotProduct(getL(p)));
+		if (dirDotL > 0)
+			return iL.scale(dirDotL);
+		return Color.BLACK;
 	}
 
 }

@@ -6,27 +6,36 @@ package elements;
 import primitives.*;
 
 /**
+ * light source is far away - like sun
+ * 
  * @author yosefHaim
  *
  */
-public class DirectionalLight extends Light implements LightSource{
+public class DirectionalLight extends Light implements LightSource {
+	/**
+	 * direction of the light
+	 */
 	private Vector direction;
 
-	protected DirectionalLight(Color intensity1) {
-		super(intensity1);
-		// TODO Auto-generated constructor stub
+	/**
+	 * ctor for DirectionalLight
+	 * 
+	 * @param intens intensity of the light
+	 * @param dir    Directional of Light
+	 */
+	public DirectionalLight(Color intens, Vector dir) {
+		super(intens);
+		this.direction = dir;
 	}
 
 	@Override
 	public Color getIntensity(Point3D p) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.intensity;
 	}
 
 	@Override
 	public Vector getL(Point3D p) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.direction;
 	}
 
 }

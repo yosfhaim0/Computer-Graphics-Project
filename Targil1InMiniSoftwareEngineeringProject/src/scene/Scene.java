@@ -41,7 +41,7 @@ public class Scene {
      * list of source light in scene <br>
      * Default= empty list
      */
-    public List<LightSource> LightSourceList = new LinkedList<LightSource>();
+    public List<LightSource> lights = new LinkedList<LightSource>();
 
     /**
      * ctor for scene
@@ -95,7 +95,7 @@ public class Scene {
      * @return this (scene)
      */
     public Scene setLightSourceList(List<LightSource> LightSourc) {
-	this.LightSourceList = LightSourc;
+	this.lights = LightSourc;
 	return this;
     }
 

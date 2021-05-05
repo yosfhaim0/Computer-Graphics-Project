@@ -18,10 +18,10 @@ abstract class Light {
 	protected Color intensity;
 	/**
 	 * ctor for light
-	 * @param intensity1 Light intensity by Color
+	 * @param intens Light intensity by Color
 	 */
-	protected Light(Color intensity1) {
-		this.intensity = intensity1;
+	protected Light(Color intens) {
+		this.intensity = intens;
 	}
 
 	/**
