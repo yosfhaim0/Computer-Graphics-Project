@@ -18,13 +18,15 @@ public class PointLight extends Light implements LightSource {
 	 * Fixed, linear, and square Respectively
 	 */
 	private double kC, kL, kQ;
+
 	/**
-	 * ctor for point light 
+	 * ctor for point light
+	 * 
 	 * @param intens intensity of light
-	 * @param positi location 
-	 * @param kc Discount coefficients Fixed
-	 * @param kl Discount coefficients linear
-	 * @param kq Discount coefficients square
+	 * @param positi location
+	 * @param kc     Discount coefficients Fixed
+	 * @param kl     Discount coefficients linear
+	 * @param kq     Discount coefficients square
 	 */
 	public PointLight(Color intens, Point3D positi, double kc, double kl, double kq) {
 		super(intens);
@@ -38,15 +40,14 @@ public class PointLight extends Light implements LightSource {
 	@Override
 	public Color getIntensity(Point3D p) {
 		// TODO Auto-generated method stub
-		double d=position.distance(p);
-		Color iL=this.intensity.scale(1/(kC+kL*d+kQ*d*d));
+		double d = position.distance(p);
+		Color iL = this.intensity.reduce(kC + kL * d + kQ * d * d);
 		return iL;
 	}
 
 	@Override
 	public Vector getL(Point3D p) {
-		// TODO Auto-generated method stub
-		return null;
+		return p.subtract(position).normalize();
 	}
 
 }

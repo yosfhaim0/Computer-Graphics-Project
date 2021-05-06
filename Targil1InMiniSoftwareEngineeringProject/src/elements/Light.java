@@ -11,7 +11,7 @@ import primitives.*;
  * @author yosefHaim
  *
  */
-abstract class Light {
+public abstract class Light {
 	/**
 	 * intensity = how much the light strong Light intensity by components
 	 */
