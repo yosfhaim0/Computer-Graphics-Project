@@ -17,7 +17,7 @@ public class PointLight extends Light implements LightSource {
 	 * Discount coefficients <br>
 	 * Fixed, linear, and square Respectively
 	 */
-	private double kC, kL, kQ;
+	private double kC=1, kL=0, kQ=0;
 
 	/**
 	 * ctor for point light

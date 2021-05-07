@@ -44,7 +44,7 @@ public class Ray {
 	/**
 	 * direction
 	 * 
-	 * @return the direction
+	 * @return the direction (unit vector)
 	 */
 	public Vector getDir() {
 		return dir;

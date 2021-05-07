@@ -13,6 +13,10 @@ import scene.Scene;
  * 
  * @author Dan
  */
+/**
+ * @author yosefHaim
+ *
+ */
 public class LightsTests {
 	private Scene scene1 = new Scene("Test scene");
 	private Scene scene2 = new Scene("Test scene") //
