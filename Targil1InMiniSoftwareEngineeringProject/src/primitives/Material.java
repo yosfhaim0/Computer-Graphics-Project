@@ -12,18 +12,18 @@ public class Material {
      * kD - the diffusive coefficient<br>
      * kS - the specular coefficient
      */
-    public double kD=0d, kS = 0d;
+    public double kD = 0d, kS = 0d;
     public int nShininess = 0;
 
     /**
-	 * @param nShininess the nShininess to set
-	 */
-	public Material setShininess(int nShininess) {
-		this.nShininess = nShininess;
-		return this;
-	}
+     * @param nShininess the nShininess to set
+     */
+    public Material setShininess(int nShininess) {
+	this.nShininess = nShininess;
+	return this;
+    }
 
-	/**
+    /**
      * set the kD coef.
      * 
      * @param kD diffusive coefficient
