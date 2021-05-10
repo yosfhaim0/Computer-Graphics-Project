@@ -34,12 +34,34 @@ public class PointLight extends Light implements LightSource {
 		kC = kc;
 		kL = kl;
 		kQ = kq;
-		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @param kC the kC to set
+	 */
+	public PointLight setkC(double kC) {
+		this.kC = kC;
+		return this;
+	}
+
+	/**
+	 * @param kL the kL to set
+	 */
+	public PointLight setkL(double kL) {
+		this.kL = kL;
+		return this;
+	}
+
+	/**
+	 * @param kQ the kQ to set
+	 */
+	public PointLight setkQ(double kQ) {
+		this.kQ = kQ;
+		return this;
 	}
 
 	@Override
 	public Color getIntensity(Point3D p) {
-		// TODO Auto-generated method stub
 		double d = position.distance(p);
 		Color iL = this.intensity.reduce(kC + kL * d + kQ * d * d);
 		return iL;

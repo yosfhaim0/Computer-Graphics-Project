@@ -4,10 +4,12 @@
 package elements;
 
 import static primitives.Util.*;
+
 import primitives.*;
 
 /**
- * spot light are point light Without scattering
+ * spot light are point light Without scattering <br>
+ * With the possibility of becoming a "flashlight"
  * 
  * @author yosefHaim
  *
@@ -18,31 +20,57 @@ public class SpotLight extends PointLight {
 	 */
 	private Vector direction;
 	/**
-	 * For a narrower beam of light
+	 * For a narrower beam of light,<br>
+	 * The larger it is, the narrower the beam of light
+	 * 
 	 */
 	private int sharp = 1;
 
 	/**
-	 * ctor for spot light
 	 * 
-	 * @param intensity1 color of intensity of spot light
-	 * @param direct     direction of spot light
+	 * @param intens color of intensity of spot light
+	 * @param positi
+	 * @param direct direction of spot light
+	 * @param kc
+	 * @param kl
+	 * @param kq
+	 * @param sha
 	 */
-	public SpotLight(Color intensity1, Point3D positi, Vector direct, double kc, double kl, double kq, int sha) {
-		super(intensity1, positi, kc, kl, kq);
+	public SpotLight(Color intens, Point3D positi, Vector direct, double kc, double kl, double kq, int sha) {
+		super(intens, positi, kc, kl, kq);
 		this.direction = direct.normalized();
 		this.sharp = sha;
 	}
 
 	/**
-	 * ctor for spot light
 	 * 
-	 * @param intensity1 color of intensity of spot light
+	 * @param intens color of intensity of spot light
+	 * @param positi
 	 * @param direct     direction of spot light
+	 * @param kc
+	 * @param kl
+	 * @param kq
 	 */
-	public SpotLight(Color intensity1, Point3D positi, Vector direct, double kc, double kl, double kq) {
-		super(intensity1, positi, kc, kl, kq);
+	public SpotLight(Color intens, Point3D positi, Vector direct, double kc, double kl, double kq) {
+		super(intens, positi, kc, kl, kq);
 		this.direction = direct.normalized();
+	}
+	/**
+	 * 
+	 * @param intens
+	 * @param positi
+	 * @param direct
+	 */
+	public SpotLight(Color intens, Point3D positi, Vector direct) {
+		super(intens, positi, kC, kC, kC);
+		this.direction = direct.normalized();
+	}
+	/**
+	 * @param sharp the sharp to set
+	 */
+	public SpotLight setSharp(int sharp) {
+		this.sharp = sharp;
+		return this;
 	}
 
 	@Override
@@ -51,7 +79,7 @@ public class SpotLight extends PointLight {
 		double dirDotL = alignZero(direction.dotProduct(getL(p)));
 		if (dirDotL < 0)
 			return Color.BLACK;
-		dirDotL=Math.pow(dirDotL, sharp);
+		dirDotL = Math.pow(dirDotL, sharp);
 		return iL.scale(dirDotL);
 
 	}

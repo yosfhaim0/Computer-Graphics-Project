@@ -8,7 +8,6 @@ import primitives.*;
 import renderer.*;
 import scene.Scene;
 import scene.SceneBuilder;
-import scene.SceneXMLParser;
 
 /**
  * Test rendering a basic image

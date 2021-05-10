@@ -6,7 +6,7 @@ package elements;
 import primitives.*;
 
 /**
- * present light
+ * abstract class for light Mutations ,Types of light
  * 
  * @author yosefHaim
  *
@@ -16,8 +16,10 @@ public abstract class Light {
 	 * intensity = how much the light strong Light intensity by components
 	 */
 	protected Color intensity;
+
 	/**
 	 * ctor for light
+	 * 
 	 * @param intens Light intensity by Color
 	 */
 	protected Light(Color intens) {
