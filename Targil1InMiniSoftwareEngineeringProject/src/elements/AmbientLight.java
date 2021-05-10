@@ -6,21 +6,22 @@ package elements;
 import primitives.*;
 
 /**
- * Ambient Light= like sun in cloudy day
- * Lighting without specific direction or source
+ * Ambient Light= like sun in cloudy day Lighting without specific direction or
+ * source
+ * 
  * @author yosefHaim
  *
  */
 public class AmbientLight extends Light {
 
-	/**
-	 * ctor for AmbientLight
-	 * 
-	 * @param intens Light intensity by components
-	 * @param ka Coefficient of attenuation of AmbientLight
-	 */
-	public AmbientLight(Color intens, double ka) {
-		super(intens.scale(ka));
-	}
+    /**
+     * ctor for AmbientLight
+     * 
+     * @param intens Light intensity by components
+     * @param ka     Coefficient of attenuation of AmbientLight
+     */
+    public AmbientLight(Color intens, double ka) {
+	super(intens.scale(ka));
+    }
 
 }
