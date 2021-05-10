@@ -62,7 +62,7 @@ public class SpotLight extends PointLight {
 	 * @param direct
 	 */
 	public SpotLight(Color intens, Point3D positi, Vector direct) {
-		super(intens, positi, kC, kC, kC);
+		super(intens, positi, 1, 0, 0);
 		this.direction = direct.normalized();
 	}
 	/**
