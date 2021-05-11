@@ -87,15 +87,20 @@ public class Cylinder extends Tube {
 			if (alignZero(o2.distance(p.point) - radius) <= 0)
 				p2 = p;
 		}
-		if (p1 != null && p2 != null)
+		if (p1 != null && p2 != null) {
+			p1.geometry=this;
+			p2.geometry=this;
 			return List.of(p1, p2);
+			}
 
 		List<GeoPoint> pointIntersectTube = super.findGeoIntersections(ray);
 		if (pointIntersectTube == null) {
-			if (p1 != null)
-				return List.of(p1);
-			if (p2 != null)
-				return List.of(p2);
+			if (p1 != null) {
+				p1.geometry=this;
+				return List.of(p1);}
+			if (p2 != null) {
+				p2.geometry=this;
+				return List.of(p2);}
 			return null;
 		}
 
@@ -109,6 +114,9 @@ public class Cylinder extends Tube {
 				if (distanceFromLowBase <= 0 || alignZero(distanceFromLowBase - height) >= 0)
 					return null;
 			}
+			for (GeoPoint geoPoint : pointIntersectTube) {
+				geoPoint.geometry=this;
+			}
 			return pointIntersectTube;
 		}
 
@@ -119,6 +127,7 @@ public class Cylinder extends Tube {
 			if (distanceFromLowBase > 0 && alignZero(distanceFromLowBase - height) < 0)
 				resultList.add(p);
 		}
+		resultList.get(0).geometry=this;
 		return resultList;
 	}
 }

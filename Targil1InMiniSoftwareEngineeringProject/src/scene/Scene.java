@@ -58,7 +58,7 @@ public class Scene {
      * 
      * @param background the background to set
      * 
-     * @return this (builder design)
+     * @return this (scene)
      */
     public Scene setBackground(Color background) {
 	this.background = background;
@@ -70,7 +70,7 @@ public class Scene {
      * 
      * @param ambientLight the ambientLight to set
      * 
-     * @return this (builder design)
+     * @return this (scene)
      */
     public Scene setAmbientLight(AmbientLight ambientLight) {
 	this.ambientLight = ambientLight;
@@ -81,7 +81,7 @@ public class Scene {
      * setter for Geometries
      * 
      * @param geometr Geometries collection of 3d modulation
-     * @return this (builder design)
+     * @return this (scene)
      */
     public Scene setGeometries(Geometries geometr) {
 	this.geometries = geometr;

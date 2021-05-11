@@ -23,17 +23,11 @@ public class PointLight extends Light implements LightSource {
 	 * ctor for point light
 	 * 
 	 * @param intens intensity of light
-	 * @param positi location
-	 * @param kc     Discount coefficients Fixed
-	 * @param kl     Discount coefficients linear
-	 * @param kq     Discount coefficients square
+	 * @param positi Light body position
 	 */
-	public PointLight(Color intens, Point3D positi, double kc, double kl, double kq) {
+	public PointLight(Color intens, Point3D positi) {
 		super(intens);
 		position = positi;
-		kC = kc;
-		kL = kl;
-		kQ = kq;
 	}
 
 	/**

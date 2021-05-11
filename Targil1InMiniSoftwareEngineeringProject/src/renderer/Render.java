@@ -28,7 +28,7 @@ public class Render {
     /**
      * ray tracer for render
      */
-    private RayTracerBasic rayTracerBase;
+    private RayTracerBase rayTracerBase;
 
     /**
      * build a matrix - each case represent a pixel <br>
@@ -127,7 +127,7 @@ public class Render {
      * @param basicRayTr for change in the Render
      * @return this (Render) - builder pattern
      */
-    public Render setRayTracer(RayTracerBasic basicRayTr) {
+    public Render setRayTracer(RayTracerBase basicRayTr) {
 	this.rayTracerBase = basicRayTr;
 	return this;
     }

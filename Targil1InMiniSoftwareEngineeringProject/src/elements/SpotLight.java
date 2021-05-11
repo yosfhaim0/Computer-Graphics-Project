@@ -29,40 +29,11 @@ public class SpotLight extends PointLight {
 	/**
 	 * 
 	 * @param intens color of intensity of spot light
-	 * @param positi
-	 * @param direct direction of spot light
-	 * @param kc
-	 * @param kl
-	 * @param kq
-	 * @param sha
-	 */
-	public SpotLight(Color intens, Point3D positi, Vector direct, double kc, double kl, double kq, int sha) {
-		super(intens, positi, kc, kl, kq);
-		this.direction = direct.normalized();
-		this.sharp = sha;
-	}
-
-	/**
-	 * 
-	 * @param intens color of intensity of spot light
-	 * @param positi
-	 * @param direct     direction of spot light
-	 * @param kc
-	 * @param kl
-	 * @param kq
-	 */
-	public SpotLight(Color intens, Point3D positi, Vector direct, double kc, double kl, double kq) {
-		super(intens, positi, kc, kl, kq);
-		this.direction = direct.normalized();
-	}
-	/**
-	 * 
-	 * @param intens
-	 * @param positi
-	 * @param direct
+	 * @param positi Light body location
+	 * @param direct Lighting direction
 	 */
 	public SpotLight(Color intens, Point3D positi, Vector direct) {
-		super(intens, positi, 1, 0, 0);
+		super(intens, positi);
 		this.direction = direct.normalized();
 	}
 	/**
@@ -72,7 +43,7 @@ public class SpotLight extends PointLight {
 		this.sharp = sharp;
 		return this;
 	}
-
+	
 	@Override
 	public Color getIntensity(Point3D p) {
 		Color iL = super.getIntensity(p);
