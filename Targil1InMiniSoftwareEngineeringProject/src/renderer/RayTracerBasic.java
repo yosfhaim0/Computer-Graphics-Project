@@ -2,7 +2,6 @@ package renderer;
 
 import java.util.List;
 
-import elements.LightSource;
 import elements.*;
 import geometries.Intersectable.GeoPoint;
 import primitives.*;
@@ -58,9 +57,9 @@ public class RayTracerBasic extends RayTracerBase {
 		 * shininess)
 		 */
 		for (LightSource lightSource : scene.lights) {
-			Vector l = lightSource.getL(intersection.point).normalize();
+			Vector l = lightSource.getL(intersection.point);
 			double nl = alignZero(n.dotProduct(l));
-			if (checkSign(nl, nv)) { // sign(nl) == sing(nv)
+			if (nl != 0 && checkSign(nl, nv)) { // sign(nl) == sing(nv)
 				Color lightIntensity = lightSource.getIntensity(intersection.point);
 				color = color.add(calcDiffusive(kd, nl, lightIntensity),
 						calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));

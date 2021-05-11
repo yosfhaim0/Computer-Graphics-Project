@@ -12,27 +12,27 @@ import primitives.*;
  *
  */
 public abstract class Light {
-    /**
-     * intensity: the Light intensity of a light source
-     * 
-     */
-    protected Color intensity;
+	/**
+	 * intensity: the Light intensity of a light source
+	 * 
+	 */
+	protected Color intensity;
 
-    /**
-     * ctor for light
-     * 
-     * @param intens Light intensity by Color
-     */
-    protected Light(Color intens) {
-	this.intensity = intens;
-    }
+	/**
+	 * ctor for light
+	 * 
+	 * @param intens Light intensity by Color
+	 */
+	protected Light(Color intens) {
+		this.intensity = intens;
+	}
 
-    /**
-     * getter for intensity
-     * 
-     * @return intensity Color of Ambient Light
-     */
-    public Color getIntensity() {
-	return this.intensity;
-    }
+	/**
+	 * getter for intensity
+	 * 
+	 * @return intensity Color of Ambient Light
+	 */
+	public Color getIntensity() {
+		return this.intensity;
+	}
 }

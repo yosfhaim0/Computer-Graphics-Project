@@ -32,7 +32,7 @@ public class Scene {
      * ambient Light of scene <br>
      * Default=black color
      */
-    public AmbientLight ambientLight = new AmbientLight(Color.BLACK, 1);
+    public AmbientLight ambientLight = new AmbientLight();
     /**
      * collection of geometries shape
      */

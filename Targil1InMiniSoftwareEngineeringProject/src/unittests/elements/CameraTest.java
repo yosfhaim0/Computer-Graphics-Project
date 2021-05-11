@@ -46,7 +46,6 @@ public class CameraTest {
 		ImageWriter imageWriter = new ImageWriter("rotet test", 1000, 1000);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
-				.setScene(scene) //
 				.setCamera(camera) //
 				.setRayTracer(new RayTracerBasic(scene));
 

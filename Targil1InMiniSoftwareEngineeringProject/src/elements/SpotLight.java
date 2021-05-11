@@ -36,6 +36,7 @@ public class SpotLight extends PointLight {
 		super(intens, positi);
 		this.direction = direct.normalized();
 	}
+
 	/**
 	 * @param sharp the sharp to set
 	 */
@@ -43,16 +44,18 @@ public class SpotLight extends PointLight {
 		this.sharp = sharp;
 		return this;
 	}
-	
+
 	@Override
 	public Color getIntensity(Point3D p) {
-		Color iL = super.getIntensity(p);
 		double dirDotL = alignZero(direction.dotProduct(getL(p)));
 		if (dirDotL < 0)
 			return Color.BLACK;
-		dirDotL = Math.pow(dirDotL, sharp);
-		return iL.scale(dirDotL);
 
+		if (sharp != 1)
+			dirDotL = Math.pow(dirDotL, sharp);
+		
+		Color iL = super.getIntensity(p);
+		return iL.scale(dirDotL);
 	}
 
 }
