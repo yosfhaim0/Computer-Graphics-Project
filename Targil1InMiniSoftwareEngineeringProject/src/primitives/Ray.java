@@ -33,7 +33,7 @@ public class Ray {
 	}
 
 	/**
-	 * retunr the start of ray
+	 * Return the start of ray
 	 * 
 	 * @return the p0
 	 */
