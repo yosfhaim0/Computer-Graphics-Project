@@ -56,7 +56,7 @@ public class RenderTests {
 	@Test
 	public void basicRenderXml() {
 		SceneBuilder sceneBuilder = new SceneBuilder(
-				"\\Users\\Public\\GPC\\Computer-Graphics-Project\\Targil1InMiniSoftwareEngineeringProject\\xmlFiles\\basicRenderTestTwoColors.xml",
+				".\\xmlFiles\\basicRenderTestTwoColors.xml",
 				"XML Test scene");
 		Scene scene=sceneBuilder.getScene();
 		ImageWriter imageWriter = new ImageWriter("xml render test", 1000, 1000);
