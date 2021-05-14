@@ -53,7 +53,7 @@ public class SpotLight extends PointLight {
 
 		if (sharp != 1)
 			dirDotL = Math.pow(dirDotL, sharp);
-		
+
 		Color iL = super.getIntensity(p);
 		return iL.scale(dirDotL);
 	}
