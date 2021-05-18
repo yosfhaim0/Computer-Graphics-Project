@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import geometries.*;
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 /**
@@ -123,6 +124,24 @@ public class PolygonTests {
 		// TC06: On edge's continuation(0 Point)
 		Ray ray6 = new Ray(new Point3D(0, 0, -1), new Vector(new Point3D(0, 4, 1)));
 		assertEquals("On edge's continuation", null, pl.findIntersections(ray6));
+	}
+
+	/**
+	 * Checks whether the function returns correct points along with a distance
+	 * limit Test method for
+	 * {@link geometries.cylinder#findGeoIntersections(primitives.Ray,double)}.
+	 */
+
+	@Test
+	public void testFindGeoIntersections() {
+		Polygon pl = new Polygon(new Point3D(0, 0, 0), new Point3D(0, 3, 0), new Point3D(2, 2, 0),
+				new Point3D(2, -1, 0));
+		// TC01: Inside polygon(0 Point)
+		Ray ray1 = new Ray(new Point3D(0, 0, -1), new Vector(new Point3D(1, 1, 1)));
+		List<GeoPoint> resulet = pl.findGeoIntersections(ray1,0.5);
+		assertEquals("Inside polygon(1 Point)", null, resulet);
+		
+	
 	}
 
 }

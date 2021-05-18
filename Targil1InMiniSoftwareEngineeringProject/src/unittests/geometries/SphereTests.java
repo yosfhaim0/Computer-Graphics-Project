@@ -114,4 +114,17 @@ public class SphereTests {
 		assertEquals("ray is orthogonal and ray start to sphere's center line", null, result13);
 	}
 
+	/**
+	 * Checks whether the function returns correct points along with a distance
+	 * limit Test method for
+	 * {@link geometries.cylinder#findGeoIntersections(primitives.Ray,double)}.
+	 */
+
+	@Test
+	public void testFindGeoIntersections() {
+		// TC01:Limit to 700 ray cross sphere, expected 1 point
+		Sphere sphere = new Sphere(new Point3D(0, 1, 0), 500);
+		assertEquals("TC01: Wrong return", new Point3D(0, 501, 0),
+				sphere.findGeoIntersections(new Ray(new Point3D(0, 1000, 0), new Vector(0, -1, 0)), 700).get(0).point);
+	}
 }

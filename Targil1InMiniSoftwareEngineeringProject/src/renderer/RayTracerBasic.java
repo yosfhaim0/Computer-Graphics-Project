@@ -146,7 +146,7 @@ public class RayTracerBasic extends RayTracerBase {
 		}
 		return ktr;
 	}
-
+//ברפלקטד צריך לשלוח נורמל מינוס?
 	/**
 	 * calc Local Effects like specular and diffusive effects
 	 * 
