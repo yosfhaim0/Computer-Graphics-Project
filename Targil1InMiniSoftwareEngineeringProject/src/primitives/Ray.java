@@ -39,10 +39,16 @@ public class Ray {
 		this.p0 = p;
 	}
 
+	/**
+	 * 
+	 * @param head
+	 * @param direction
+	 * @param normal
+	 */
 	public Ray(Point3D head, Vector direction, Vector normal) {
 		this.dir = direction.normalized();
 		double sign = alignZero(dir.dotProduct(normal));
-		head = head.add(normal.scale(sign >= 0?DELTA:-DELTA));
+		head = head.add(normal.scale(sign > 0?DELTA:-DELTA));
 		this.p0 = head;
 	}
 
