@@ -38,6 +38,27 @@ public class SpotLight extends PointLight {
 	}
 
 	/**
+	 * @param kC the kC to set
+	 */
+	public SpotLight setkC(double kC) {
+		return (SpotLight)super.setkC(kC);
+	}
+
+	/**
+	 * @param kL the kL to set
+	 */
+	public SpotLight setkL(double kL) {
+		return (SpotLight)super.setkL(kL);
+	}
+
+	/**
+	 * @param kQ the kQ to set
+	 */
+	public SpotLight setkQ(double kQ) {
+		return (SpotLight)super.setkQ(kQ);
+	}
+
+	/**
 	 * @param sharp the sharp to set
 	 */
 	public SpotLight setSharp(int sharp) {

@@ -74,9 +74,8 @@ public class Tube extends Geometry {
 		return "AxisRay: " + this.axisRay.toString() + " Radius: " + this.radius + "\n";
 	}
 
-	
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 		Vector vAxis = axisRay.getDir();
 		Vector v = ray.getDir();
 		Point3D p0 = ray.getP0();
@@ -106,14 +105,20 @@ public class Tube extends Geometry {
 		try {
 			deltaP = p0.subtract(axisRay.getP0());
 		} catch (IllegalArgumentException e1) { // the ray begins at axis P0
-			if (isZero(vVa)) // the ray is orthogonal to Axis
-				return List.of(new GeoPoint(this, ray.getPoint(radius)));
-			return List.of(new GeoPoint(this,ray.getPoint(Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared()))));
+			if (isZero(vVa)) { // the ray is orthogonal to Axis
+				return (alignZero(radius - maxDistance) <= 0) ? List.of(new GeoPoint(this, ray.getPoint(radius)))
+						: null;// for unshaded
+			}
+			double rSlasVminusV = Math.sqrt(radius * radius / vMinusVVaVa.lengthSquared());
+			return (alignZero(rSlasVminusV - maxDistance) <= 0)
+					? List.of(new GeoPoint(this, ray.getPoint(rSlasVminusV)))
+					: null;// for unshaded
 		}
 
 		double dPVAxis = alignZero(deltaP.dotProduct(vAxis));
 		Vector dPVaVa;
 		Vector dPMinusdPVaVa;
+		double rrSlasA;
 		if (isZero(dPVAxis))
 			dPMinusdPVaVa = deltaP;
 		else {
@@ -121,7 +126,9 @@ public class Tube extends Geometry {
 			try {
 				dPMinusdPVaVa = deltaP.subtract(dPVaVa);
 			} catch (IllegalArgumentException e1) {
-				return List.of(new GeoPoint(this,ray.getPoint(Math.sqrt(radius * radius / a))));
+				rrSlasA = Math.sqrt(radius * radius / a);
+				return (alignZero(rrSlasA - maxDistance) <= 0) ? List.of(new GeoPoint(this, ray.getPoint(rrSlasA)))
+						: null;
 			}
 		}
 
@@ -144,7 +151,10 @@ public class Tube extends Geometry {
 		double t2 = alignZero(tm + th); // always: t2 > t1
 		if (t2 <= 0)
 			return null;
-		return t1 > 0 ? List.of(new GeoPoint(this,ray.getPoint(t1)), new GeoPoint(this,ray.getPoint(t2))) : List.of(new GeoPoint(this,ray.getPoint(t2)));
+		if (alignZero(t2 - maxDistance) <= 0)
+			return t1 > 0 ? List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)))
+					: List.of(new GeoPoint(this, ray.getPoint(t2)));
+		return alignZero(t1 - maxDistance) <= 0 && t1 > 0 ? List.of(new GeoPoint(this, ray.getPoint(t1))) : null;
 	}
 
 }

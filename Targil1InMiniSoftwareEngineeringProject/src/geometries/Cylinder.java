@@ -70,37 +70,39 @@ public class Cylinder extends Tube {
 	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
 		GeoPoint p1 = null;
 		GeoPoint p2 = null;
 		Point3D o1 = base1.getq0();
-		var ints = base1.findGeoIntersections(ray);
+		var ints = base1.findGeoIntersections(ray, maxDistance);
 		if (ints != null) {
 			GeoPoint p = ints.get(0);
 			if (alignZero(o1.distance(p.point) - radius) <= 0)
 				p1 = p;
 		}
 		Point3D o2 = base2.getq0();
-		ints = base2.findGeoIntersections(ray);
+		ints = base2.findGeoIntersections(ray, maxDistance);
 		if (ints != null) {
 			GeoPoint p = ints.get(0);
 			if (alignZero(o2.distance(p.point) - radius) <= 0)
 				p2 = p;
 		}
 		if (p1 != null && p2 != null) {
-			p1.geometry=this;
-			p2.geometry=this;
+			p1.geometry = this;
+			p2.geometry = this;
 			return List.of(p1, p2);
-			}
+		}
 
-		List<GeoPoint> pointIntersectTube = super.findGeoIntersections(ray);
+		List<GeoPoint> pointIntersectTube = super.findGeoIntersections(ray, maxDistance);
 		if (pointIntersectTube == null) {
 			if (p1 != null) {
-				p1.geometry=this;
-				return List.of(p1);}
+				p1.geometry = this;
+				return List.of(p1);
+			}
 			if (p2 != null) {
-				p2.geometry=this;
-				return List.of(p2);}
+				p2.geometry = this;
+				return List.of(p2);
+			}
 			return null;
 		}
 
@@ -115,7 +117,7 @@ public class Cylinder extends Tube {
 					return null;
 			}
 			for (GeoPoint geoPoint : pointIntersectTube) {
-				geoPoint.geometry=this;
+				geoPoint.geometry = this;
 			}
 			return pointIntersectTube;
 		}
@@ -127,7 +129,7 @@ public class Cylinder extends Tube {
 			if (distanceFromLowBase > 0 && alignZero(distanceFromLowBase - height) < 0)
 				resultList.add(p);
 		}
-		resultList.get(0).geometry=this;
+		resultList.get(0).geometry = this;
 		return resultList;
 	}
 }

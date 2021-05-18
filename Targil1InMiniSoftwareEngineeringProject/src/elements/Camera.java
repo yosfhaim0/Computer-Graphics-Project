@@ -5,6 +5,8 @@ package elements;
 
 import static primitives.Util.*;
 
+import java.util.List;
+
 import primitives.*;
 
 /**
@@ -151,9 +153,9 @@ public class Camera {
      */
     public Camera rotateXYZ(double x, double y, double z) {
 	// convert from degrees to radian
-	z = (x / 180) * Math.PI;
+	x = (x / 180) * Math.PI;
 	y = (y / 180) * Math.PI;
-	x = (z / 180) * Math.PI;
+	z = (z / 180) * Math.PI;
 
 	double cos = Math.cos(x);
 	double sin = Math.sin(x);
@@ -190,4 +192,36 @@ public class Camera {
 	return new Vector(x * met[0][0] + y * met[0][1] + z * met[0][2], x * met[1][0] + y * met[1][1] + z * met[1][2],
 		x * met[2][0] + y * met[2][1] + z * met[2][2]).normalize();
     }
+    /*
+     * This method serves changeAngleAndPosition, and it changes and angle of plane XY by a received number
+     * @param angle The angle you want to tilt the plane XY
+     * @return This camera with the updated values.
+     */
+    public Camera changeAngle(double angle) {
+
+        // thinking
+        // x = p0(x)+sin(90-alpha)
+        // y = p0(y)+cos(90-alpha)
+        // z = sqrt(1-x^2-y^2)
+
+        double cosAlpha = Math.cos((angle * Math.PI) / 180);
+        //for calc vRight new position
+        double coeff[][] = {{vRight.getHead().getX(), vRight.getHead().getY(), vRight.getHead().getZ(), cosAlpha},
+                {vUp.getHead().getX(), vUp.getHead().getY(), vUp.getHead().getZ(), Math.cos(((90 - angle) * Math.PI) / 180)},
+                {vTo.getHead().getX(), vTo.getHead().getY(), vTo.getHead().getZ(), 0}};
+
+        vRight = Util.findSolution(coeff);
+
+        //for calc vUp new position
+        coeff = new double[][]{{vUp.getHead().getX(), vUp.getHead().getY(), vUp.getHead().getZ(), cosAlpha},
+                {vRight.getHead().getX(), vRight.getHead().getY(), vRight.getHead().getZ(), 0},
+                {vTo.getHead().getX(), vTo.getHead().getY(), vTo.getHead().getZ(), 0}};
+
+        vUp = Util.findSolution(coeff);
+
+        //no changes for vTo
+
+        return this;
+    }
+   
 }

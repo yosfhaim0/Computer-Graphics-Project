@@ -74,6 +74,10 @@ public interface Intersectable {
 	 *         else<br>
 	 *         if there are no Intersections: null
 	 */
-	public List<GeoPoint> findGeoIntersections(Ray ray);
+	default List<GeoPoint> findGeoIntersections(Ray ray) {
+		return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+	}
+
+	List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
 }

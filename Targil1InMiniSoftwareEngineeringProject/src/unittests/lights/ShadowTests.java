@@ -173,6 +173,88 @@ public class ShadowTests {
 		render.renderImage();
 		render.writeToImage();
 	}
-	
+	/**
+	 * Picture for test shadow on cylinder 
+	 */
+	@Test
+	public void cylinderShdowTest() {
+		Scene scene2 = new Scene("Test scene") //
+				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+		Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setViewPlaneSize(200, 200) //
+				.setVpDistance(1000);
+		Cylinder cylinder=new Cylinder(new Ray(new Point3D(-30, 0, 0), new Vector(1,0,1)), 50, 50);
+		Cylinder cylinder2=new Cylinder(new Ray(new Point3D(90, 0, 0), new Vector(-1,0,1)), 50, 50);
+
+		scene2.geometries.add(cylinder.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
+				cylinder2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
+		scene2.lights.add(
+				((SpotLight) new SpotLight(new Color(800, 400, 400), new Point3D(0, 0, 100), new Vector(0, 0, -1))
+						.setkL(0.00005).setkQ(0.0000025)).setSharp(5));
+
+		ImageWriter imageWriter = new ImageWriter("cylinderShdowTest", 500, 500);
+		Render render = new Render()//
+				.setImageWriter(imageWriter) //
+				.setCamera(camera2) //
+				.setRayTracer(new RayTracerBasic(scene2));
+		render.renderImage();
+		render.writeToImage();
+	}
+	/**
+	 * Picture for test shadow on tube 
+	 */
+	@Test
+	public void tubeShdowTest() {
+		Scene scene2 = new Scene("Test scene") //
+				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+		Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setViewPlaneSize(200, 200) //
+				.setVpDistance(1000);
+		Tube tube2=new Tube(new Ray(new Point3D(0, 0, 0), new Vector(100,50,20)), 20);
+		Plane plane=new Plane(new Point3D(0, 0, -30), new Vector(1,0,1));
+
+		scene2.geometries.add(tube2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
+				plane.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300))
+				);
+		scene2.lights.add(
+				((SpotLight) new SpotLight(new Color(800, 400, 400), new Point3D(0, -100, 200),  new Point3D(0, 0, 0).subtract(new Point3D(0, -100, 200)))
+						.setkL(0.00005).setkQ(0.0000025)).setSharp(5));
+
+		ImageWriter imageWriter = new ImageWriter("tubeShdowTest", 500, 500);
+		Render render = new Render()//
+				.setImageWriter(imageWriter) //
+				.setCamera(camera2) //
+				.setRayTracer(new RayTracerBasic(scene2));
+		render.renderImage();
+		render.writeToImage();
+	}
+	/**
+	 * Picture for test shadow on sphere 
+	 */
+	@Test
+	public void sphereShdowTest() {
+		Scene scene2 = new Scene("Test scene") //
+				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
+		Camera camera2 = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setViewPlaneSize(200, 200) //
+				.setVpDistance(1000);
+		Sphere sphere=new Sphere(new Point3D(0, 0, 0), 60);
+		Plane plane=new Plane(new Point3D(0, 0, -100), new Vector(-1,1,3));
+
+		scene2.geometries.add(sphere.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
+				plane.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300))
+				);
+		scene2.lights.add(
+				 (new SpotLight(new Color(800, 400, 400), new Point3D(100, 100, 0),new Point3D(167, -138, 0).subtract(new Point3D(100, 100, 0)))
+						.setkL(0.00005).setkQ(0.0000025)));
+
+		ImageWriter imageWriter = new ImageWriter("sphereShdowTest", 500, 500);
+		Render render = new Render()//
+				.setImageWriter(imageWriter) //
+				.setCamera(camera2) //
+				.setRayTracer(new RayTracerBasic(scene2));
+		render.renderImage();
+		render.writeToImage();
+	}
 
 }

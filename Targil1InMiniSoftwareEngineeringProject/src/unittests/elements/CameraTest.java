@@ -1,6 +1,7 @@
 package unittests.elements;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import elements.AmbientLight;
@@ -19,6 +20,13 @@ import scene.Scene;
  *
  */
 public class CameraTest {
+	@Test
+	public void rotetCamera() {
+		Camera camera =new Camera(Point3D.ZERO,new Vector(1,0,0),new Vector(0,0,1));
+		camera.rotateXYZ(0, 0, 180);
+		assertEquals("rotet not good",new Vector(1,0,0),camera.getvTo() );
+
+	}
 	/**
 	 * Produce a scene with basic 3D model and render it into a jpeg image with a
 	 * grid

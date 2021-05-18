@@ -75,7 +75,7 @@ public class Plane extends Geometry {
 	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
 		double nQMinusP0;
 		double nv = normal.dotProduct(ray.getDir());
 		try {
@@ -93,6 +93,7 @@ public class Plane extends Geometry {
 		// if t<0 it mean there are no intersection whit the ray
 		// if t==0 it mean the begin of the ray are contained in the plane
 		double t = alignZero(nQMinusP0 / nv);
-		return t > 0 ? List.of(new GeoPoint(this, ray.getPoint(t))) : null;
+		
+		return t > 0 && alignZero(t-maxDistance)<=0 ? List.of(new GeoPoint(this, ray.getPoint(t))) : null;
 	}
 }
