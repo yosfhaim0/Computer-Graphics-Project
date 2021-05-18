@@ -3,6 +3,8 @@ package primitives;
 import java.util.List;
 
 import geometries.Intersectable.GeoPoint;
+import static primitives.Util.*;
+
 /**
  * (ray) - A fundamental object in geometry - the group of points on a straight
  * line that are on one relative side To a given point on the line called the
@@ -13,8 +15,18 @@ import geometries.Intersectable.GeoPoint;
  */
 
 public class Ray {
+	/**
+	 * p0 is the start of ray
+	 */
 	private Point3D p0;
+	/**
+	 * the direction of ray
+	 */
 	private Vector dir;
+	/**
+	 * const for move head ray shadow
+	 */
+	private static final double DELTA = 0.1;
 
 	/**
 	 * ray ctor need point & vector
@@ -25,6 +37,13 @@ public class Ray {
 	public Ray(Point3D p, Vector v) {
 		this.dir = v.normalized();
 		this.p0 = p;
+	}
+
+	public Ray(Point3D head, Vector direction, Vector normal) {
+		this.dir = direction.normalized();
+		double sign = alignZero(dir.dotProduct(normal));
+		head = head.add(normal.scale(sign >= 0?DELTA:-DELTA));
+		this.p0 = head;
 	}
 
 	@Override
@@ -71,12 +90,13 @@ public class Ray {
 		Ray other = (Ray) obj;
 		return p0.equals(other.p0) && dir.equals(other.dir);
 	}
+
 	/**
-	 * Chooses the Closest GeoPoint to p0 
+	 * Chooses the Closest GeoPoint to p0
 	 * 
 	 * @param list of points in the ray
-	 * @return point are the closest to p0, <br>If the list is empty or null - the function
-	 * returns null
+	 * @return point are the closest to p0, <br>
+	 *         If the list is empty or null - the function returns null
 	 */
 	public GeoPoint getClosestGeoPoint(List<GeoPoint> list) {
 		if (list == null)
