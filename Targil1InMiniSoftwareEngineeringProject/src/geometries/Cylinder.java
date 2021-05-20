@@ -18,7 +18,13 @@ public class Cylinder extends Tube {
 	 * the height of tube more parm for cylinder is height
 	 */
 	private double height;
+	/**
+	 * base1 is the plane contain the low base of cylinder
+	 */
 	private Plane base1;
+	/**
+	 * base2 is the plane contain the up base of cylinder
+	 */
 	private Plane base2;
 
 	/**

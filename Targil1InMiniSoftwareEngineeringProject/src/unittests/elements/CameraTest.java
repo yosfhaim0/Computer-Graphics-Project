@@ -21,12 +21,55 @@ import scene.Scene;
  */
 public class CameraTest {
 	@Test
-	public void rotetCamera() {
-		Camera camera =new Camera(Point3D.ZERO,new Vector(1,0,0),new Vector(0,0,1));
-		camera.rotateXYZ(0, 0, 180);
-		assertEquals("rotet not good",new Vector(1,0,0),camera.getvTo() );
+	public void setVupAndVtoTest() {
+		Camera camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setVto(new Point3D(0, 0, -1));
+		// simpel test for set Vup And Vto
+		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvUp());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setVto(new Point3D(1, 0, -1));
+		// test for set Vup And Vto
+		assertEquals("rotet not good", new Vector(Math.sqrt(2) / 2, 0, Math.sqrt(2) / 2), camera.getvUp());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setVto(new Point3D(1, 1, 1));
+		// test for set Vup And Vto
+		assertEquals("rotet not good", new Vector(-1, -1, 2).normalize(), camera.getvUp());
 
 	}
+
+	/**
+	 * Rotate camera test for camera.rotateVrightAndVto(double degree)
+	 */
+	@Test
+	public void rotetCamera() {
+		Camera camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		assertEquals("rotet not good", new Vector(0, -1, 0), camera.getvRight());
+
+		camera.rotateVrightAndVto(180);
+		// TC01:camera rotate 180 degree
+		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvUp());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.rotateVrightAndVto(90);
+		// rotet 90 degree
+		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvRight());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.rotateVrightAndVto(90);
+		// test for set Vup And Vto
+		assertEquals("rotet not good", new Vector(0, -1, 0).normalize(), camera.getvUp());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.rotateVrightAndVto(90);
+		// test for set Vup And Vto
+		assertEquals("rotet not good", new Vector(0, 0, -1).normalize(), camera.getvRight());
+
+	}
+
 	/**
 	 * Produce a scene with basic 3D model and render it into a jpeg image with a
 	 * grid

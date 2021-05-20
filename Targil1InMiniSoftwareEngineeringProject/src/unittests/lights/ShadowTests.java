@@ -229,7 +229,7 @@ public class ShadowTests {
 		render.writeToImage();
 	}
 	/**
-	 * Picture for test shadow on sphere 
+	 * Picture for test shadow on s 
 	 */
 	@Test
 	public void sphereShdowTest() {

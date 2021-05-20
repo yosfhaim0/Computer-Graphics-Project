@@ -39,10 +39,17 @@ public class Ray {
 		this.p0 = p;
 	}
 
+	/**
+	 * ctor for for ray tracer(class)
+	 * 
+	 * @param head      of the ray
+	 * @param direction dir of ray
+	 * @param normal    normal for find the delta
+	 */
 	public Ray(Point3D head, Vector direction, Vector normal) {
 		this.dir = direction.normalized();
 		double sign = alignZero(dir.dotProduct(normal));
-		head = head.add(normal.scale(sign >= 0?DELTA:-DELTA));
+		head = head.add(normal.scale(sign > 0 ? DELTA : -DELTA));
 		this.p0 = head;
 	}
 

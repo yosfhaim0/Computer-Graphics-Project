@@ -21,7 +21,10 @@ public class Sphere extends Geometry {
 	 * the radius of Sphere
 	 */
 	private double radius;
-	private double rSquared; // squared radius
+	/**
+	 * squared radius
+	 */
+	private double rSquared;
 
 	/**
 	 * ctor of Sphere The center = Point3D center

@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import elements.*;
 import geometries.*;
 import primitives.*;
@@ -176,9 +178,8 @@ public class LightsTests {
 	public void trianglesSpotSharp() {
 		scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
 				triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
-		scene2.lights.add(
-				(new SpotLight(new Color(800, 400, 400), new Point3D(10, -10, -130), new Vector(-2, -2, -1))
-						.setkL(0.00005).setkQ(0.0000025)).setSharp(5));
+		scene2.lights.add((new SpotLight(new Color(800, 400, 400), new Point3D(10, -10, -130), new Vector(-2, -2, -1))
+				.setkL(0.00005).setkQ(0.0000025)).setSharp(5));
 
 		ImageWriter imageWriter = new ImageWriter("trianglesSpotSharp", 500, 500);
 		Render render = new Render()//
@@ -273,10 +274,10 @@ public class LightsTests {
 	}
 
 	/**
-	 * Newton's cradle
+	 * Newton's cradle picture 10+ body bonus of targil 7
 	 */
 	@Test
-	public void body10pictuer() {
+	public void NewtonsCradle() {
 		Scene scene = new Scene("test case");
 		Camera cam = new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
 				.setVpDistance(13900.13562).setViewPlaneSize(2000, 2000);
@@ -302,7 +303,7 @@ public class LightsTests {
 				new Sphere(new Point3D(-120, 0, 150), 60).setEmission(new Color(java.awt.Color.DARK_GRAY))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(5)),
 				new Sphere(new Point3D(-414.9996, 0, 226.567), 60).setEmission(new Color(java.awt.Color.DARK_GRAY))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(5)),
+						.setMaterial(new Material().setKd(0).setKs(0.5).setShininess(100).setkR(0.5)),
 
 				new Cylinder(new Ray(new Point3D(-240, 0, 500), new Vector(-Math.sqrt(3) / 3, 0, -1)), 5, 350)
 						.setEmission(new Color(java.awt.Color.black))
@@ -333,7 +334,10 @@ public class LightsTests {
 								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)),
 				new Polygon(new Point3D(550, 50, 0), new Point3D(550, -50, 0), new Point3D(-550, -50, 0),
 						new Point3D(-550, 50, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)));
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)),
+				new Polygon(new Point3D(1000, -500, 1000), new Point3D(1000, -500, 0), new Point3D(-1000, -500, 0),
+						new Point3D(-1000, -500, 1000)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1)));
 
 		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
 				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-400, 1000, 1000),
@@ -344,9 +348,25 @@ public class LightsTests {
 		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene));
 
 		render.renderImage();
-		// render.printGrid(50, new Color(java.awt.Color.green));
 		render.writeToImage();
-
+		render = render
+				.setCamera(cam.setPosition(new Point3D(0, 100000, 100000)).setVto(new Point3D(0, 0, 0))
+						.setVpDistance(Math.sqrt(10000 * 10000) * 2 * 2 * 2 * 2).rotateVrightAndVto(0))
+				.setImageWriter(new ImageWriter("Newton's cradle position 2b", 500, 500));
+		render.renderImage();
+		render.writeToImage();
+		render = render
+				.setCamera(cam.setPosition(new Point3D(-7000, -100000, 40000)).setVto(new Point3D(0, 0, 0))
+						.setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2 * 2 * 2).rotateVrightAndVto(180))
+				.setImageWriter(new ImageWriter("Newton's cradle position 3", 500, 500));
+		render.renderImage();
+		render.writeToImage();
+		render = render
+				.setCamera(cam.setPosition(new Point3D(-10000, -2000, 40000)).setVto(new Point3D(0, 0, 0))
+						.setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2).rotateVrightAndVto(0))
+				.setImageWriter(new ImageWriter("Newton's cradle position 4", 500, 500));
+		render.renderImage();
+		render.writeToImage();
 	}
 
 	/**
@@ -397,6 +417,83 @@ public class LightsTests {
 				.setRayTracer(new RayTracerBasic(scene));
 		// .setMultithreading(3);
 
+		render.renderImage();
+		render.writeToImage();
+	}
+
+	@Test
+	public void tank() {
+		Scene scene = new Scene("test case");
+		Camera cam = new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
+				.setVpDistance(13900.13562).setViewPlaneSize(2000, 2000);
+		scene.setBackground(new Color(java.awt.Color.blue));
+		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), 0.15));
+		scene.geometries.add(
+				new Polygon(new Point3D(-500, -500, 500), new Point3D(500, -500, 500), new Point3D(500, -700, 250),
+						new Point3D(-500, -700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // SIDE BACK
+				new Polygon(new Point3D(-500, 500, 500), new Point3D(500, 500, 500), new Point3D(500, 700, 250),
+						new Point3D(-500, 700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // side front
+				new Polygon(new Point3D(500, -500, 500), new Point3D(500, 500, 500), new Point3D(500, 700, 250),
+						new Point3D(500, -700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // side RIGHT
+				new Polygon(new Point3D(-500, -500, 500), new Point3D(-500, -700, 250), new Point3D(-500, 700, 250),
+						new Point3D(-500, 500, 500)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // side left
+				new Polygon(new Point3D(-500, -500, 500), new Point3D(500, -500, 500), new Point3D(500, 500, 500),
+						new Point3D(-500, 500, 500)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // up side
+
+				new Polygon(new Point3D(-400, 500, 0), new Point3D(-400, 700, 250), new Point3D(-400, -700, 250),
+						new Point3D(-400, -500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // LEFT SIDE DOWN
+				new Polygon(new Point3D(400, -700, 250), new Point3D(400, 700, 250), new Point3D(400, 500, 0),
+						new Point3D(400, -500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // RIGTH SIDE DOWN
+				new Polygon(new Point3D(400, 700, 250), new Point3D(-400, 700, 250), new Point3D(-400, 500, 0),
+						new Point3D(400, 500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // front down
+				new Polygon(new Point3D(-400, -700, 250), new Point3D(400, -700, 250), new Point3D(400, -500, 0),
+						new Point3D(-400, -500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // back down
+
+				new Cylinder(new Ray(new Point3D(490, -350, 150), new Vector(-1, 0, 0)), 150, 980)
+						.setEmission(new Color(java.awt.Color.blue))
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // lest while
+				new Cylinder(new Ray(new Point3D(490, 0, 150), new Vector(-1, 0, 0)), 150, 980)
+						.setEmission(new Color(java.awt.Color.blue))
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // midel while
+				new Cylinder(new Ray(new Point3D(490, 350, 150), new Vector(-1, 0, 0)), 150, 980)
+						.setEmission(new Color(java.awt.Color.blue))
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // first while
+
+				new Sphere(new Point3D(0, 0, 500), 350).setEmission(new Color(java.awt.Color.DARK_GRAY))
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // the chriach
+				new Cylinder(new Ray(new Point3D(0, 0, 700), new Vector(0, 1, 0)), 30, 1000)
+						.setEmission(new Color(java.awt.Color.DARK_GRAY))
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // BOMBER
+				new Plane(new Point3D(0, 0, 0), new Vector(0, 0, 1)).setEmission(new Color(100, 100, 100))
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500))// flor
+
+		);
+		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
+				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-400, 1000, 1000),
+						new Vector(400, -1000, -1500)) //
+								.setkL(1E-5).setkQ(1.5E-7)).setSharp(3),
+				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(0, 1001, 700),
+						new Vector(0, -1,0)) //
+								.setkL(1E-5).setkQ(1.5E-7)).setSharp(3)));
+
+		ImageWriter imageWriter = new ImageWriter("tank", 500, 500);
+		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene));
+
+		render.renderImage();
+		render.writeToImage();
+		render = render
+				.setCamera(cam.setPosition(new Point3D(2000, 5000, 5000)).setVto(new Point3D(0, 0, 500))
+						.setVpDistance(Math.sqrt(10000 * 5000)).rotateVrightAndVto(0))
+				.setImageWriter(new ImageWriter("tank 2", 500, 500));
 		render.renderImage();
 		render.writeToImage();
 	}
