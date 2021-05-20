@@ -20,9 +20,13 @@ import scene.Scene;
  *
  */
 public class CameraTest {
+	/**
+	 * test for set vto camera vector (and vup)
+	 */
 	@Test
-	public void setVupAndVtoTest() {
+	public void setVtoTest() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		// ============ Equivalence Partitions Tests ==============
 
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
 		camera.setVto(new Point3D(0, 0, -1));
@@ -48,61 +52,30 @@ public class CameraTest {
 	public void rotetCamera() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
 		assertEquals("rotet not good", new Vector(0, -1, 0), camera.getvRight());
+		// ============ Equivalence Partitions Tests ==============
 
 		camera.rotateVrightAndVto(180);
 		// TC01:camera rotate 180 degree
 		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvUp());
+		assertEquals("rotet not good", new Vector(0, 1, 0), camera.getvRight());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.rotateVrightAndVto(-90);
+		// test for set Vup And Vright -90 degree
+		assertEquals("rotet not good", new Vector(0, 1, 0).normalize(), camera.getvUp());
+		assertEquals("rotet not good", new Vector(0, 0, 1).normalize(), camera.getvRight());
 
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
 		camera.rotateVrightAndVto(90);
-		// rotet 90 degree
-		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvRight());
-
-		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
-		camera.rotateVrightAndVto(90);
-		// test for set Vup And Vto
-		assertEquals("rotet not good", new Vector(0, -1, 0).normalize(), camera.getvUp());
-
-		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
-		camera.rotateVrightAndVto(90);
-		// test for set Vup And Vto
+		// test for set Vup And Vright 90 degree
 		assertEquals("rotet not good", new Vector(0, 0, -1).normalize(), camera.getvRight());
+		assertEquals("rotet not good", new Vector(0, -1, 0).normalize(), camera.getvUp());
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.rotateVrightAndVto(45);
+		// test for set Vup And Vright 45 degree
+		assertEquals("rotet not good", new Vector(0, -Math.sqrt(0.5), -Math.sqrt(0.5)).normalize(), camera.getvRight());
+		assertEquals("rotet not good", new Vector(0, -Math.sqrt(0.5), Math.sqrt(0.5)).normalize(), camera.getvUp());
 
-	}
-
-	/**
-	 * Produce a scene with basic 3D model and render it into a jpeg image with a
-	 * grid
-	 */
-	@Test
-	public void rotetCameraTest() {
-		Camera camera = new Camera(new Point3D(0, 200, -80), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setVpDistance(100) //
-				.setViewPlaneSize(500, 500).rotateXYZ(0, 0, 180);
-
-		Scene scene = new Scene("Test scene")//
-				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
-				.setBackground(new Color(75, 127, 90));
-
-		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
-				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up
-																													// left
-				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up
-																													// right
-				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down
-																														// left
-				new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100)) // down
-																													// right
-		);
-		ImageWriter imageWriter = new ImageWriter("rotet test", 1000, 1000);
-		Render render = new Render() //
-				.setImageWriter(imageWriter) //
-				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
-
-		render.renderImage();
-		render.printGrid(100, new Color(java.awt.Color.YELLOW));
-		render.writeToImage();
 	}
 
 	/**
