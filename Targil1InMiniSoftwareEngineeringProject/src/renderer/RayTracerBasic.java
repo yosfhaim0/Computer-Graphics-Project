@@ -26,7 +26,7 @@ public class RayTracerBasic extends RayTracerBase {
     private static final double MIN_CALC_COLOR_K = 0.001;
 
     /**
-     * 
+     * default coefficient
      */
     private static final double INITIAL_K = 1.0;
 
@@ -46,9 +46,10 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * calcColor for point
+     * calcColor for point<br>
+     * wrapper function
      * 
-     * @param intersection point for calc color for her
+     * @param intersection point
      * @param ray          the ray are intersect whit the point
      * @return return the intensity of the ambientLight of scene
      */
@@ -57,12 +58,13 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
+     * compute the color of a given point
      * 
-     * @param intersection
-     * @param ray
-     * @param level
+     * @param intersection point on the body
+     * @param ray          direction of the light
+     * @param level        stop condition
      * @param k
-     * @return
+     * @return color of the point
      */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
 	Color color = intersection.geometry.getEmission();
@@ -72,7 +74,7 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * 
+     * find the closest intersection point between the ray and the body
      * 
      * @param ray
      * @return closest point from the geometry bodies and the ray
@@ -82,22 +84,24 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
+     * construct the refracted ray
      * 
-     * @param n
-     * @param point
-     * @param inRay
-     * @return
+     * @param n     vector "on" the solid
+     * @param point pointed by the vector n, on the solid to
+     * @param inRay direction of the refracted vector
+     * @return refracted ray
      */
     private Ray constructRefractedRay(Vector n, Point3D point, Ray inRay) {
 	return new Ray(point, inRay.getDir(), n);
     }
 
     /**
+     * construct the reflected ray
      * 
-     * @param n
-     * @param point
-     * @param inRay
-     * @return
+     * @param n     vector "on" the solid
+     * @param point pointed by the vector n, on the solid to
+     * @param inRay direction of the reflected vector
+     * @return reflected ray
      */
     private Ray constructReflectedRay(Vector n, Point3D point, Ray inRay) {
 	Vector v = inRay.getDir();
@@ -107,40 +111,44 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
+     * compute reflections and refractions effects in a point
      * 
-     * @param geopoint
-     * @param ray
+     * @param geopoint point on the body
+     * @param ray      direction of the light
      * @param level
-     * @param k
-     * @return
+     * @param k        coefficient
+     * @return color of the point
      */
     private Color calcGlobalEffects(GeoPoint geopoint, Ray ray, int level, double k) {
 	Color color = Color.BLACK;
 	Material material = geopoint.geometry.getMaterial();
+
 	double kr = material.kR, kkr = k * kr;
 	if (kkr > MIN_CALC_COLOR_K) {
 	    Ray reflectedRay = constructReflectedRay(geopoint.geometry.getNormal(geopoint.point), geopoint.point, ray);
 	    GeoPoint reflectedPoint = findClosestIntersection(reflectedRay);
-	    color = (reflectedPoint == null) ? color.add(Color.BLACK) // maybe return color ?
+	    color = (reflectedPoint == null) ? color.add(Color.BLACK)
 		    : color.add(calcColor(reflectedPoint, reflectedRay, level - 1, kkr).scale(kr));
 	}
+
 	double kt = material.kT, kkt = k * kt;
 	if (kkt > MIN_CALC_COLOR_K) {
 	    Ray refractedRay = constructRefractedRay(geopoint.geometry.getNormal(geopoint.point), geopoint.point, ray);
 	    GeoPoint refractedPoint = findClosestIntersection(refractedRay);
-	    color = (refractedPoint == null) ? color.add(Color.BLACK) // maybe return color ?
+	    color = (refractedPoint == null) ? color.add(Color.BLACK)
 		    : color.add(calcColor(refractedPoint, refractedRay, level - 1, kkt).scale(kt));
 	}
 	return color;
     }
 
     /**
+     * compute the transparency coefficient
      * 
-     * @param light
-     * @param l
-     * @param n
-     * @param geopoint
-     * @return
+     * @param light    the light source
+     * @param l        direction of the light
+     * @param n        normal to the body
+     * @param geopoint intersection point
+     * @return transparency coefficient
      */
     private double transparency(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
 	Vector lightDirection = l.scale(-1);// from point to light source
@@ -154,17 +162,17 @@ public class RayTracerBasic extends RayTracerBase {
 		ktr *= gp.geometry.getMaterial().kT;
 		if (ktr < MIN_CALC_COLOR_K) return 0.0;
 	    }
-
 	}
 	return ktr;
     }
 
     /**
-     * calc Local Effects like specular and diffusive effects
+     * calculate Local Effects specular and diffusive effects<br>
      * 
-     * @param intersection point for calc color for her
-     * @param ray          the ray are intersect whit the point
-     * @return calc color form specular and diffusive effects
+     * @param intersection point on the body
+     * @param ray          intersect whit the point
+     * @param k            coefficient
+     * @return color of the intersection point
      */
     private Color calcLocalEffects(GeoPoint intersection, Ray ray, double k) {
 	Vector v = ray.getDir();
@@ -186,7 +194,7 @@ public class RayTracerBasic extends RayTracerBase {
 	    double nl = alignZero(n.dotProduct(l));
 	    if (nl != 0 && checkSign(nl, nv)) { // sign(nl) == sing(nv)
 		double ktr = transparency(lightSource, l, n, intersection);
-		if (ktr * k >= MIN_CALC_COLOR_K) {// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!this not like the lecture
+		if (ktr * k >= MIN_CALC_COLOR_K) { // different from the lecture
 		    Color lightIntensity = lightSource.getIntensity(intersection.point).scale(ktr);
 		    color = color.add(calcDiffusive(kd, nl, lightIntensity),
 			    calcSpecular(ks, l, n, nl, v, nShininess, lightIntensity));
@@ -233,12 +241,13 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
+     * check if a point is unshaded
      * 
-     * @param light
+     * @param light    light source
      * @param l
      * @param n
      * @param geopoint
-     * @return
+     * @return true if the point is enlighten
      */
     private boolean unshaded(LightSource light, Vector l, Vector n, GeoPoint geopoint) {
 	Vector lightDirection = l.scale(-1); // from point to light source
