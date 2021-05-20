@@ -40,11 +40,13 @@ public class Ray {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * ctor for for ray tracer(class)
 	 * 
 	 * @param head      of the ray
 	 * @param direction dir of ray
 	 * @param normal    normal for find the delta
+	 * 
 	 */
 	public Ray(Point3D head, Vector direction, Vector normal) {
 		this.dir = direction.normalized();
