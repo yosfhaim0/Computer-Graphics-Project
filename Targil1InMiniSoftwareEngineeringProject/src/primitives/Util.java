@@ -69,18 +69,4 @@ public abstract class Util {
 		return Math.random() * (max - min) + min;
 	}
 
-	/**
-	 * multiply vector and matrix
-	 * 
-	 * @param v   vector to multiply form left
-	 * @param met matrix to multiply form right
-	 * @return vector are result of vector multiply matrix
-	 */
-	public static Vector mectrixMolt(Vector v, double[][] met) {
-		double x = v.getHead().getX(), y = v.getHead().getY(), z = v.getHead().getZ();
-
-		return new Vector(x * met[0][0] + y * met[0][1] + z * met[0][2], x * met[1][0] + y * met[1][1] + z * met[1][2],
-				x * met[2][0] + y * met[2][1] + z * met[2][2]).normalize();
-	}
-
 }

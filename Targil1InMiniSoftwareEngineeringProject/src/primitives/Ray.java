@@ -40,7 +40,6 @@ public class Ray {
 	}
 
 	/**
-<<<<<<< HEAD
 	 * ctor for for ray tracer(class)
 	 * 
 	 * @param head      of the ray

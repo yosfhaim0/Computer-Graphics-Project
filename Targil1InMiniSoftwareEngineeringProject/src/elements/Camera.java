@@ -5,8 +5,6 @@ package elements;
 
 import static primitives.Util.*;
 
-import java.util.List;
-
 import primitives.*;
 
 /**
@@ -146,102 +144,67 @@ public class Camera {
 	}
 
 	/**
-	 * Changing the direction of camera
+	 * Changing the direction of camera Head it mean the vto vector
 	 * 
 	 * @param target point to direct the vTo of camera<br>
 	 *               In fact, this is the point you want the camera to take
 	 * @return this the camera itself for builder design
 	 */
-	public Camera setVto(Point3D target) {
+	public Camera setCameraHead(Point3D target) {
 		Vector v1 = target.subtract(locationPoint3d).normalize();
 		try {
 			vRight = v1.crossProduct(new Vector(0, 0, 1)).normalize();
 		} catch (Exception e) {
 			vRight = new Vector(0, -1, 0);
 		}
-
 		vUp = vRight.crossProduct(v1).normalize();
 		vTo = v1;
 		return this;
 	}
 
 	/**
-	 * Change the horizontal position of the camera in degrees
+	 * Rotate the camera Horizontally Builder pattern This <br>
+	 * function change the angle of vRight & vUp along vTo direction the angle
+	 * change Counterclockwise by the vTo axis!
 	 * 
-	 * @param angel The amount of degrees<br>
-	 *              for changing the horizontal position, <br>
-	 *              180 for reversing 90 degrees for a vertical <br>
-	 *              image to the source
+	 * @param angle the angle to change by Degrees,for Rotate the camera
+	 *              Horizontally
 	 * @return this the camera itself for builder design
 	 */
-	public Camera rotateVrightAndVto(double angel) {
-		// convert from degrees to radian
-		angel = (angel / 180) * Math.PI;
-
-		double cos;
-		double sin;
-		cos = Math.cos(angel);
-		sin = Math.sin(angel);
-		double matrixZ[][] = new double[][] { { 1, 0, 0 }, { 0, cos, -sin }, { 0, sin, cos } };
-		vRight = Util.mectrixMolt(vRight, matrixZ);
-		vUp = Util.mectrixMolt(vUp, matrixZ);
+	public Camera rotateHorizontally(double angle) {
+		// change to degrees
+		double cosAngle = Math.cos((angle * Math.PI) / 180);
+		double sinAngle = Math.sin((angle * Math.PI) / 180);
+		vRight = rotateHorizontallyHelp(vRight, cosAngle, sinAngle);
+		vUp = rotateHorizontallyHelp(vUp, cosAngle, sinAngle);
 		return this;
 	}
 
 	/**
-	 * rotate the camera
+	 * rotate Horizontally Help function
 	 * 
-	 * @param x degrees on the x
-	 * @param y degrees on the y
-	 * @param z degrees on the z
+	 * @param v        vector for return rotated by the degree
+	 * @param cosAngle cos Angle in radian
+	 * @param sinAngle sin Angle in radian
+	 * @return vector rotated by the degree
 	 */
-	public Camera rotateXYZ(double x, double y, double z) {
-		// convert from degrees to radian
-		x = (x / 180) * Math.PI;
-		y = (y / 180) * Math.PI;
-		z = (z / 180) * Math.PI;
-
-		double cos = Math.cos(x);
-		double sin = Math.sin(x);
-		double matrixX[][] = new double[][] { { cos, -sin, 0 }, { sin, cos, 0 }, { 0, 0, 1 } };
-
-		cos = Math.cos(y);
-		sin = Math.sin(y);
-		double matrixY[][] = new double[][] { { cos, 0, sin }, { 0, 1, 0 }, { -sin, 0, cos } };
-
-		cos = Math.cos(z);
-		sin = Math.sin(z);
-		double matrixZ[][] = new double[][] { { 1, 0, 0 }, { 0, cos, -sin }, { 0, sin, cos } };
-
-		double matrix[][] = mectrixMolt(mectrixMolt(matrixX, matrixY), matrixZ);
-
-		vRight = Util.mectrixMolt(vRight, matrix);
-		vTo = Util.mectrixMolt(vTo, matrix);
-		vUp = Util.mectrixMolt(vUp, matrix);
-		return this;
-	}
-
-	/**
-	 * 
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public static double[][] mectrixMolt(double[][] x, double[][] y) {
-		double z[][] = new double[3][3];
-		for (int j = 0; j < 3; j++) {
-			for (int w = 0; w < 3; w++) {
-				z[j][w] = 0.0;
+	private Vector rotateHorizontallyHelp(Vector v, double cosAngle, double sinAngle) {
+		// we use this formula to do it:
+		// Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 -
+		// cos(angle))
+		boolean cosZero = Util.isZero(cosAngle);
+		boolean sinZero = Util.isZero(sinAngle);
+		Vector vFinal;
+		if (cosZero) {
+			vFinal = vTo.crossProduct(v).scale(sinAngle);
+		} else {
+			vFinal = v.scale(cosAngle);
+			if (!sinZero) {
+				vFinal = vFinal.add(vTo.crossProduct(v).scale(sinAngle));
 			}
 		}
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				for (int w = 0; w < 3; w++) {
-					z[i][j] += x[i][w] * y[w][j];
-				}
-			}
-		}
-		return z;
+		return vFinal.normalize();
+
 	}
 
 }

@@ -154,7 +154,7 @@ public class Tube extends Geometry {
 		if (alignZero(t2 - maxDistance) <= 0)
 			return t1 > 0 ? List.of(new GeoPoint(this, ray.getPoint(t1)), new GeoPoint(this, ray.getPoint(t2)))
 					: List.of(new GeoPoint(this, ray.getPoint(t2)));
-		return alignZero(t1 - maxDistance) <= 0 && t1 > 0 ? List.of(new GeoPoint(this, ray.getPoint(t1))) : null;
+		return alignZero(t1 - maxDistance) < 0 && t1 > 0 ? List.of(new GeoPoint(this, ray.getPoint(t1))) : null;
 	}
 
 }

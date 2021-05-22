@@ -253,18 +253,18 @@ public class CylinderTests {
 		// TC01: Ray starts befor the cylinder intersect whit the center down and
 				// Bounder up(2 point)
 		result = cylinder2.findGeoIntersections(new Ray(new Point3D(0, 0, -3), new Vector(2, 0, 3)),5);
-		assertEquals("TC01: Ray starts inside the tube", new Point3D(2, 0, 0), result.get(0).point);
+		assertEquals("TC01: Ray starts inside the cylinder", new Point3D(2, 0, 0), result.get(0).point);
 		// TC02: Ray starts up the cylinder intersect whit the base up and
 		// base down(2 point)
 		result = cylinder2.findGeoIntersections(new Ray(new Point3D(2, 2, 4.5), new Vector(0, -2, -3)),3);
-		assertEquals("TC02: Ray starts inside the tube", new Point3D(2, 1, 3), result.get(0).point);
+		assertEquals("TC02: Ray starts inside the cylinder", new Point3D(2, 1, 3), result.get(0).point);
 		// TC03:ray intersect the sides and the base up (not in the center)(2 point)
 		result = cylinder2.findGeoIntersections(new Ray(new Point3D(2.5, 3.5, 0), new Vector(-0.5, -1.5, 1)),2);
-		assertEquals("TC03: Ray starts inside the tube", new Point3D(2, 2, 1), result.get(0).point);
+		assertEquals("TC03: Ray starts inside the cylinder", new Point3D(2, 2, 1), result.get(0).point);
 		// TC04:ray intersect the sides (trohw in the center(not the start ray))(2
 		// point)
 		result = cylinder2.findGeoIntersections(new Ray(new Point3D(8, 0, 0), new Vector(-4, 0, 1)),5);
-		assertEquals("TC04: Ray starts inside the tube", new Point3D(4, 0, 1), result.get(0).point);
+		assertEquals("TC04: Ray starts inside the cylinder", new Point3D(4, 0, 1), result.get(0).point);
 	}
 
 }
