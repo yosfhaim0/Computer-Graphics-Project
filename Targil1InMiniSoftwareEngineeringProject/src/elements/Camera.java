@@ -182,6 +182,7 @@ public class Camera {
 
 	/**
 	 * rotate Horizontally Help function
+	 * for shortcut the code
 	 * 
 	 * @param v        vector for return rotated by the degree
 	 * @param cosAngle cos Angle in radian
@@ -189,9 +190,12 @@ public class Camera {
 	 * @return vector rotated by the degree
 	 */
 	private Vector rotateHorizontallyHelp(Vector v, double cosAngle, double sinAngle) {
-		// we use this formula to do it:
+		// formula :
 		// Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 -
 		// cos(angle))
+		// vfinal = the vector we want to turn by tta degree 
+		// K= the vector Axis of rotation(vector how dont change)
+		// V= vector are supusd to rotate and finely will changed
 		boolean cosZero = Util.isZero(cosAngle);
 		boolean sinZero = Util.isZero(sinAngle);
 		Vector vFinal;
