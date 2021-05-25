@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Test;
 
 import geometries.*;
+import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 /**
@@ -17,6 +18,35 @@ import primitives.*;
  *
  */
 public class TubeTests {
+	/**
+	 * Checks whether the function returns correct points along with a distance
+	 * limit Test method for
+	 * {@link geometries.Tube#findGeoIntersections(primitives.Ray,double)}.
+	 */
+
+	@Test
+	public void testFindGeoIntersections() {
+		List<GeoPoint> result;
+
+		Tube tube = new Tube(new Ray(Point3D.ZERO, new Vector(0, 0, 1)), 5);
+		// TC01:ray start out, level of the start ray
+		result = tube.findGeoIntersections(new Ray(new Point3D(8, 0, 0), new Vector(-1, 0, 0)), 4);
+		assertEquals("ray start out, level of the start ray", 1, result.size());
+		// TC02:ray start out
+		result = tube.findGeoIntersections(new Ray(new Point3D(8, 0, 0), new Vector(-1, 0, 0.5)), 4);
+		assertEquals("ray start out", 1, result.size());
+		// TC03:ray start inside 0 point
+		result = tube.findGeoIntersections(new Ray(new Point3D(5, 0, 0), new Vector(-1, 0, 0.5)), 4);
+		assertEquals("ray start inside", null, result);
+		// TC04:ray start inside, in start of ray
+		result = tube.findGeoIntersections(new Ray(Point3D.ZERO, new Vector(-1, 0, 0.5)), 4);
+		assertEquals("ray start inside", null, result);
+		// TC05:ray start inside, in start of ray, the maxDistanc is exactly 5 like the
+		// radius
+		result = tube.findGeoIntersections(new Ray(Point3D.ZERO, new Vector(-1, 0, 0)), 5);
+		assertEquals("ray start inside", 1, result.size());
+	}
+
 	/**
 	 * Test method for {@link geometries.Tube#getNormal(primitives.Point3D)}.
 	 */
