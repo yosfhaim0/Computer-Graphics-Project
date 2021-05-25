@@ -39,10 +39,10 @@ public class TenOrMoreShapesTests {
 	 * Newton's cradle picture 10+ body bonus of targil 7 4 position of camera
 	 */
 	@Test
-	public void NewtonsCradle() {
+	public void newtonsCradle() {
 		Scene scene = new Scene("test case");
 		Camera cam = new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
-				.setVpDistance(13900.13562).setViewPlaneSize(2000, 2000).setCameraHead(new Point3D(0, 0, 500))
+				.setVpDistance(13900.13562).setViewPlaneSize(3000, 3000).setCameraHead(new Point3D(0, 0, 500))
 				.rotateHorizontally(0);
 		scene.setBackground(new Color(java.awt.Color.blue));
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), 0.15));
@@ -101,12 +101,9 @@ public class TenOrMoreShapesTests {
 								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)),
 				new Polygon(new Point3D(1000, -1000, 1000), new Point3D(1000, -1000, 0), new Point3D(-1000, -1000, 0),
 						new Point3D(-1000, -1000, 1000)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1)),// miror
-								new Sphere(new Point3D(2000, 700, 2000),2000).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1))
-								
-				);
-		
+								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1))// miror
+
+		);
 
 		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
 				new SpotLight(new Color(255, 215, 0), new Point3D(-400, 1000, 1500), new Vector(400, -1000, -1500)) //
@@ -157,7 +154,7 @@ public class TenOrMoreShapesTests {
 	 * Produce a picture of a some spheres with light
 	 */
 	@Test
-	public void OurPicture2() {
+	public void spheres32() {
 		Scene scene = new Scene("Test scene");
 		Camera camera = new Camera(new Point3D(0, -620, -800), new Vector(0, 1, Math.sqrt(3)),
 				new Vector(0, -1 * Math.sqrt(3), 1));
@@ -196,7 +193,7 @@ public class TenOrMoreShapesTests {
 						.setkQ(2E-10),
 				new DirectionalLight(new Color(224, 255, 255), new Vector(1, 5, 0))));
 
-		ImageWriter imageWriter = new ImageWriter("pearl", 1000, 1000);
+		ImageWriter imageWriter = new ImageWriter("31 sphere and pearl", 1000, 1000);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
 				.setRayTracer(new RayTracerBasic(scene));
 		// .setMultithreading(3);
@@ -212,7 +209,7 @@ public class TenOrMoreShapesTests {
 	public void tank() {
 		Scene scene = new Scene("test case");
 		Camera cam = new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
-				.setVpDistance(13900.13562).setViewPlaneSize(2000, 2000);
+				.setVpDistance(13900.13562).setViewPlaneSize(5000, 5000);
 		scene.setBackground(new Color(java.awt.Color.blue));
 		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), 0.15));
 		scene.geometries.add(
@@ -246,13 +243,13 @@ public class TenOrMoreShapesTests {
 								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // back down
 
 				new Cylinder(new Ray(new Point3D(490, -350, 150), new Vector(-1, 0, 0)), 150, 980)
-						.setEmission(new Color(java.awt.Color.blue))
+						.setEmission(new Color(java.awt.Color.gray))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // lest while
 				new Cylinder(new Ray(new Point3D(490, 0, 150), new Vector(-1, 0, 0)), 150, 980)
-						.setEmission(new Color(java.awt.Color.blue))
+						.setEmission(new Color(java.awt.Color.gray))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // midel while
 				new Cylinder(new Ray(new Point3D(490, 350, 150), new Vector(-1, 0, 0)), 150, 980)
-						.setEmission(new Color(java.awt.Color.blue))
+						.setEmission(new Color(java.awt.Color.gray))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // first while
 
 				new Sphere(new Point3D(0, 0, 500), 350).setEmission(new Color(java.awt.Color.DARK_GRAY))
@@ -261,27 +258,30 @@ public class TenOrMoreShapesTests {
 						.setEmission(new Color(java.awt.Color.DARK_GRAY))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(5)), // BOMBER
 				new Plane(new Point3D(0, 0, 0), new Vector(0, 0, 1)).setEmission(new Color(100, 100, 100))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500))// flor
-
-		);
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500)), // flor
+				new Polygon(new Point3D(2000, -2000, 2000), new Point3D(2000, -2000, 0), new Point3D(-2000, -2000, 0),
+						new Point3D(-2000, -2000, 2000)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1)));
 		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
-				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-400, 1000, 1000),
-						new Vector(400, -1000, -1500)) //
+				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-500, -1000, 3000),
+						new Point3D(0, 0, 700)) //
 								.setkL(1E-5).setkQ(1.5E-7)).setSharp(3),
 				new SpotLight(new Color(1000, 1000, 1000), new Point3D(0, 1020, 700), new Vector(0, -1, 0)) //
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(5)));
 
-		ImageWriter imageWriter = new ImageWriter("tank", 1000, 1000);
+		ImageWriter imageWriter = new ImageWriter("Syria tank ", 1000, 1000);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene));
 
 		render.renderImage();
 		render.writeToImage();
+
 		render = render
 				.setCamera(cam.setPosition(new Point3D(2000, 5000, 5000)).setCameraHead(new Point3D(0, 0, 500))
 						.setVpDistance(Math.sqrt(10000 * 5000)))
-				.setImageWriter(new ImageWriter("tank position 2", 500, 500));
+				.setImageWriter(new ImageWriter("Syria tank position 2", 500, 500));
 		render.renderImage();
 		render.writeToImage();
+
 	}
 
 }

@@ -27,6 +27,7 @@ public class SpotLight extends PointLight {
 	private int sharp = 1;
 
 	/**
+	 * ctor for spot
 	 * 
 	 * @param intens color of intensity of spot light
 	 * @param positi Light body location
@@ -38,24 +39,36 @@ public class SpotLight extends PointLight {
 	}
 
 	/**
+	 * ctor for spot whit target
+	 * 
+	 * @param intens color of intensity of spot light
+	 * @param positi Light body location
+	 * @param target target for lighting
+	 */
+	public SpotLight(Color intens, Point3D positi, Point3D target) {
+		super(intens, positi);
+		this.direction = target.subtract(positi).normalized();
+	}
+
+	/**
 	 * @param kC the kC to set
 	 */
 	public SpotLight setkC(double kC) {
-		return (SpotLight)super.setkC(kC);
+		return (SpotLight) super.setkC(kC);
 	}
 
 	/**
 	 * @param kL the kL to set
 	 */
 	public SpotLight setkL(double kL) {
-		return (SpotLight)super.setkL(kL);
+		return (SpotLight) super.setkL(kL);
 	}
 
 	/**
 	 * @param kQ the kQ to set
 	 */
 	public SpotLight setkQ(double kQ) {
-		return (SpotLight)super.setkQ(kQ);
+		return (SpotLight) super.setkQ(kQ);
 	}
 
 	/**

@@ -144,7 +144,8 @@ public class Camera {
 	}
 
 	/**
-	 * Changing the direction of camera Head it mean the vto vector
+	 * Changing the direction of camera Head it mean the vto vector<br>
+	 * it is taken into account that the floor of the three axes is the plain xy
 	 * 
 	 * @param target point to direct the vTo of camera<br>
 	 *               In fact, this is the point you want the camera to take
@@ -172,43 +173,9 @@ public class Camera {
 	 * @return this the camera itself for builder design
 	 */
 	public Camera rotateHorizontally(double angle) {
-		// change to degrees
-		double cosAngle = Math.cos((angle * Math.PI) / 180);
-		double sinAngle = Math.sin((angle * Math.PI) / 180);
-		vRight = rotateHorizontallyHelp(vRight, cosAngle, sinAngle);
-		vUp = rotateHorizontallyHelp(vUp, cosAngle, sinAngle);
+		vRight = vRight.rotatingVectorOnAxis(vTo, angle);
+		vUp = vUp.rotatingVectorOnAxis(vTo, angle);
 		return this;
-	}
-
-	/**
-	 * rotate Horizontally Help function
-	 * for shortcut the code
-	 * 
-	 * @param v        vector for return rotated by the degree
-	 * @param cosAngle cos Angle in radian
-	 * @param sinAngle sin Angle in radian
-	 * @return vector rotated by the degree
-	 */
-	private Vector rotateHorizontallyHelp(Vector v, double cosAngle, double sinAngle) {
-		// formula :
-		// Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 -
-		// cos(angle))
-		// vfinal = the vector we want to turn by tta degree 
-		// K= the vector Axis of rotation(vector how dont change)
-		// V= vector are supusd to rotate and finely will changed
-		boolean cosZero = Util.isZero(cosAngle);
-		boolean sinZero = Util.isZero(sinAngle);
-		Vector vFinal;
-		if (cosZero) {
-			vFinal = vTo.crossProduct(v).scale(sinAngle);
-		} else {
-			vFinal = v.scale(cosAngle);
-			if (!sinZero) {
-				vFinal = vFinal.add(vTo.crossProduct(v).scale(sinAngle));
-			}
-		}
-		return vFinal.normalize();
-
 	}
 
 }
