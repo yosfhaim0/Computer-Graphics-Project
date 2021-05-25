@@ -30,6 +30,8 @@ public class RayTracerBasic extends RayTracerBase {
 	 */
 	private static final double INITIAL_K = 1.0;
 
+	private int numOfRay = 1;
+
 	/**
 	 * ctor RayTracerBasic
 	 * 
@@ -125,11 +127,15 @@ public class RayTracerBasic extends RayTracerBase {
 		double kr = material.kR, kkr = k * kr;
 		Vector normal = geopoint.geometry.getNormal(geopoint.point);
 		if (kkr > MIN_CALC_COLOR_K) {
-			color = calcGlobalEffect(constructReflectedRay(normal, geopoint.point, ray), level - 1, kr, kkr);
+			for (int i = 0; i < numOfRay; i++) {
+				color = calcGlobalEffect(constructReflectedRay(normal, geopoint.point, ray), level - 1, kr, kkr);
+			}
 		}
 		double kt = material.kT, kkt = k * kt;
 		if (kkt > MIN_CALC_COLOR_K) {
-			color = calcGlobalEffect(constructRefractedRay(normal, geopoint.point, ray), level - 1, kt, kkt);
+			for (int i = 0; i < numOfRay; i++) {
+				color = calcGlobalEffect(constructRefractedRay(normal, geopoint.point, ray), level - 1, kt, kkt);
+			}
 		}
 		return color;
 	}

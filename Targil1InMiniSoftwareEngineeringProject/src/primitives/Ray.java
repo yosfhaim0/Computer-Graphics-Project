@@ -120,5 +120,7 @@ public class Ray {
 		}
 		return closest;
 	}
+	public List<Ray> beamOfRays(){
+		return null;}
 
 }
