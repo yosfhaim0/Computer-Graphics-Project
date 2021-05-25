@@ -187,4 +187,36 @@ public class Vector {
 	public Vector normalized() {
 		return new Vector(this.getHead()).normalize();
 	}
+
+	/**
+	 * Rotating vector on axis
+	 * 
+	 * @param axis  vector axis rotated on him
+	 * @param angle the angle to change by Degrees,for Rotate the vector
+	 * @return vector rotated by the degree on the v(axis)<br>
+	 *         unit vector 
+	 */
+	public Vector rotatingVectorOnAxis(Vector axis, double angle) {
+		// change to degrees
+		double cosAngle = Math.cos((angle * Math.PI) / 180);
+		double sinAngle = Math.sin((angle * Math.PI) / 180);
+		// formula :
+		// Vfinal = V * cos(angle) + (K x V) * sin(angle) + K * (K dot V) * (1 -
+		// cos(angle))
+		// vfinal = the vector we want to turn by tta degree
+		// K= the vector Axis of rotation(vector how dont change)
+		// V= vector are supusd to rotate and finely will changed
+		boolean cosZero = Util.isZero(cosAngle);
+		boolean sinZero = Util.isZero(sinAngle);
+		Vector vFinal;
+		if (cosZero) {
+			vFinal = axis.crossProduct(this).scale(sinAngle);
+		} else {
+			vFinal = this.scale(cosAngle);
+			if (!sinZero) {
+				vFinal = vFinal.add(axis.crossProduct(this).scale(sinAngle));
+			}
+		}
+		return vFinal.normalize();
+	}
 }

@@ -24,7 +24,7 @@ public class CameraTest {
 	 * test for set vto camera vector (and vup)
 	 */
 	@Test
-	public void setVtoTest() {
+	public void setCameraHeadTests() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
 		// ============ Equivalence Partitions Tests ==============
 		// test for reset
@@ -83,7 +83,7 @@ public class CameraTest {
 	 * Rotate camera test for camera.rotateVrightAndVto(double degree)
 	 */
 	@Test
-	public void rotetCamera() {
+	public void rotateHorizontallyTests() {
 		Camera camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
 		assertEquals("rotet not good", new Vector(0, -1, 0), camera.getvRight());
 		// ============ Equivalence Partitions Tests ==============

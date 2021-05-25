@@ -258,12 +258,13 @@ public class TenOrMoreShapesTests {
 						.setEmission(new Color(java.awt.Color.DARK_GRAY))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(5)), // BOMBER
 				new Plane(new Point3D(0, 0, 0), new Vector(0, 0, 1)).setEmission(new Color(100, 100, 100))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500))// flor
-
-		);
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500)), // flor
+				new Polygon(new Point3D(2000, -2000, 2000), new Point3D(2000, -2000, 0), new Point3D(-2000, -2000, 0),
+						new Point3D(-2000, -2000, 2000)).setEmission(new Color(java.awt.Color.DARK_GRAY))
+								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1)));
 		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
-				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-5000, 2000, 2000),
-						new Vector(400, -1000, -1500)) //
+				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-500, -1000, 3000),
+						new Point3D(0, 0, 700)) //
 								.setkL(1E-5).setkQ(1.5E-7)).setSharp(3),
 				new SpotLight(new Color(1000, 1000, 1000), new Point3D(0, 1020, 700), new Vector(0, -1, 0)) //
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(5)));
@@ -273,12 +274,14 @@ public class TenOrMoreShapesTests {
 
 		render.renderImage();
 		render.writeToImage();
+
 		render = render
 				.setCamera(cam.setPosition(new Point3D(2000, 5000, 5000)).setCameraHead(new Point3D(0, 0, 500))
 						.setVpDistance(Math.sqrt(10000 * 5000)))
 				.setImageWriter(new ImageWriter("Syria tank position 2", 500, 500));
 		render.renderImage();
 		render.writeToImage();
+
 	}
 
 }
