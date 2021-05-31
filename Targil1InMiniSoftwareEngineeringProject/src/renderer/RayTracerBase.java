@@ -26,9 +26,9 @@ public abstract class RayTracerBase {
     /**
      * trace a ray and return the color of the intersection point
      * 
-     * @param ray to trace after in the scene
-     * @return color of the closest point of the ray;<br>or 
-     *         if there is no intersections return the background color
+     * @param ray to be launched in the scene
+     * @return color of the closest point of the ray;<br>
+     *         or, if there is no intersections return the background color
      */
     public abstract Color traceRay(Ray ray);
 }

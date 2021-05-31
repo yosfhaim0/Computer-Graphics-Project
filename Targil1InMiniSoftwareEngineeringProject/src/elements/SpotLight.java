@@ -92,4 +92,15 @@ public class SpotLight extends PointLight {
 		return iL.scale(dirDotL);
 	}
 
+	/**
+	 * setter for radius of light
+	 * 
+	 * @param rad radius to set
+	 * @return this for chaining
+	 */
+	public SpotLight setRadius(double rad) {
+		this.radius = rad;
+		return this;
+	}
+
 }

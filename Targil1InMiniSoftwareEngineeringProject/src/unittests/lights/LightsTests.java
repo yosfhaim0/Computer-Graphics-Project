@@ -187,32 +187,6 @@ public class LightsTests {
 	}
 
 	/**
-	 * Produce a picture of a sphere lighted by a point light and spot and direction
-	 * light
-	 */
-	@Test
-	public void spherePointMultiLights2() {
-		scene1.geometries.add(sphere.setMaterial(new Material().setKd(0).setKs(0.5).setShininess(300)));
-		scene1.lights.addAll(List.of(
-				new PointLight(new Color(500, 300, 0), new Point3D(-50, -50, 50)).setkL(0.00001).setkQ(0.000001),
-				new DirectionalLight(new Color(500, 300, 0), new Vector(-50, -50, -50)),
-				((SpotLight) new SpotLight(new Color(500, 300, 0), new Point3D(50, -50, 0), new Vector(-50, 50, -50))
-						.setkL(0.0001).setkQ(0.000005)).setSharp(100),
-				((SpotLight) new SpotLight(new Color(500, 300, 0), new Point3D(50, -50, 0), new Vector(-25, 75, -50))
-						.setkL(0.0001).setkQ(0.000005)).setSharp(100),
-				((SpotLight) new SpotLight(new Color(500, 300, 0), new Point3D(50, -50, 0), new Vector(-75, 25, -50))
-						.setkL(0.0001).setkQ(0.000005)).setSharp(100)));
-
-		ImageWriter imageWriter = new ImageWriter("spherePointMyTest", 500, 500);
-		Render render = new Render()//
-				.setImageWriter(imageWriter) //
-				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
-		render.renderImage();
-		render.writeToImage();
-	}
-
-	/**
 	 * Produce a picture of a sphere lighted by a multiple lights
 	 */
 	@Test
@@ -269,5 +243,4 @@ public class LightsTests {
 		render.writeToImage();
 	}
 
-	
 }

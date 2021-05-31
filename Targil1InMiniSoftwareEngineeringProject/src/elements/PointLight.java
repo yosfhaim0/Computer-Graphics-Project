@@ -12,7 +12,7 @@ public class PointLight extends Light implements LightSource {
 	/**
 	 * position of point light
 	 */
-	private Point3D position;
+	protected Point3D position;
 	/**
 	 * Discount coefficients <br>
 	 * Fixed, linear, and square Respectively
@@ -69,6 +69,20 @@ public class PointLight extends Light implements LightSource {
 	@Override
 	public double getDistance(Point3D point) {
 		return position.distance(point);
+	}
+
+	@Override
+	public double getRadius(Point3D p) {
+		return this.radius;
+	}
+	/**
+	 * setter for radius of light
+	 * @param rad radius to set
+	 * @return this for chaining
+	 */
+	public PointLight setRadius(double rad) {
+		this.radius=rad;
+		return this;
 	}
 
 }

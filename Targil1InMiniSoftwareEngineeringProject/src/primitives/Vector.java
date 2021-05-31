@@ -1,5 +1,6 @@
 package primitives;
 
+
 /**
  * A vector is an object with size and direction Vector from the beginning of
  * the axes to a certain point Builders : a) three coordinates, b) three
@@ -194,7 +195,7 @@ public class Vector {
 	 * @param axis  vector axis rotated on him
 	 * @param angle the angle to change by Degrees,for Rotate the vector
 	 * @return vector rotated by the degree on the v(axis)<br>
-	 *         unit vector 
+	 *         unit vector
 	 */
 	public Vector rotatingVectorOnAxis(Vector axis, double angle) {
 		// change to degrees
@@ -219,4 +220,28 @@ public class Vector {
 		}
 		return vFinal.normalize();
 	}
+
+	/**
+	 * This function return a Vertical Vector to "this" vector (this) most be
+	 * normalized!!!
+	 * 
+	 * @return normalized normal vector
+	 */
+	public Vector createVerticalVector() {
+		double x = head.getX(), y = head.getY(), z = head.getZ();
+		switch (head.findMinimumCoordinate()) {
+		case 'x': {
+			return new Vector(0, -z, y).normalize();
+		}
+		case 'y': {
+			return new Vector(-z, 0, x).normalize();
+		}
+		case 'z': {
+			return new Vector(y, -x, 0).normalize();
+		}
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + head.findMinimumCoordinate());
+		}
+	}
+
 }

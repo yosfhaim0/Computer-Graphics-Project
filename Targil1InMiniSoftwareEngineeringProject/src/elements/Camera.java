@@ -18,7 +18,7 @@ public class Camera {
 	/**
 	 * location of the Camera
 	 */
-	private Point3D locationPoint3d;
+	private Point3D location;
 	/**
 	 * vector Right Hand Coordinate System
 	 */
@@ -43,17 +43,17 @@ public class Camera {
 		if (vectorTo.dotProduct(vectorUp) != 0) {
 			throw new IllegalArgumentException("Error !, vTo and vUp are not orthogonal");
 		}
-		vRight = vectorTo.crossProduct(vectorUp).normalize();
 		vUp = vectorUp.normalized();
 		vTo = vectorTo.normalized();
-		locationPoint3d = locatPoint;
+		vRight = vectorTo.crossProduct(vectorUp).normalize();
+		location = locatPoint;
 	}
 
 	/**
 	 * @return the center of the camera: our point of view
 	 */
 	public Point3D getLocationPoint3d() {
-		return locationPoint3d;
+		return location;
 	}
 
 	/**
@@ -112,9 +112,9 @@ public class Camera {
 	 */
 	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
 		Point3D Pc;
-		Pc = locationPoint3d;
+		Pc = location;
 		if (!isZero(distance)) {
-			Pc = locationPoint3d.add(vTo.scale(distance));
+			Pc = location.add(vTo.scale(distance));
 		}
 
 		double Ry = height / nY, Rx = width / nX;
@@ -127,8 +127,8 @@ public class Camera {
 		if (!isZero(yi)) {
 			pij = pij.add(vUp.scale(yi));
 		}
-		Vector vij = pij.subtract(locationPoint3d);
-		return new Ray(locationPoint3d, vij);
+		Vector vij = pij.subtract(location);
+		return new Ray(location, vij);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class Camera {
 	 * @return this (camera itself )
 	 */
 	public Camera setPosition(Point3D posi) {
-		this.locationPoint3d = posi;
+		this.location = posi;
 		return this;
 	}
 
@@ -152,14 +152,13 @@ public class Camera {
 	 * @return this the camera itself for builder design
 	 */
 	public Camera setCameraHead(Point3D target) {
-		Vector v1 = target.subtract(locationPoint3d).normalize();
+		vTo = target.subtract(location).normalize();
 		try {
-			vRight = v1.crossProduct(new Vector(0, 0, 1)).normalize();
+			vRight = vTo.crossProduct(new Vector(0, -1, 0)).normalize();
 		} catch (Exception e) {
-			vRight = new Vector(0, -1, 0);
+			vRight = new Vector(-1, 0, 0);
 		}
-		vUp = vRight.crossProduct(v1).normalize();
-		vTo = v1;
+		vUp = vTo.crossProduct(vRight).normalize();
 		return this;
 	}
 

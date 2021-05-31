@@ -6,8 +6,8 @@ package elements;
 import primitives.*;
 
 /**
- * Ambient Light= like sun in cloudy day Lighting without<br>
- * specific direction or source
+ * Ambient Light= like sun in cloudy day Lighting without specific direction or
+ * source
  * 
  * @author yosefHaim
  *

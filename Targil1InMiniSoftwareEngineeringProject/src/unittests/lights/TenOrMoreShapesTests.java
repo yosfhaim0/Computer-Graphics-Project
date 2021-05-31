@@ -110,43 +110,51 @@ public class TenOrMoreShapesTests {
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(3)));
 
 		ImageWriter imageWriter = new ImageWriter("Newton's cradle position 1", 500, 500);
-		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene));
+		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene))
+				.setMultithreading(3).setDebugPrint();
 
 		render.renderImage();
 		render.writeToImage();
+		boolean flag = false;
+		if (flag) {
+			render = render
+					.setCamera(cam.setPosition(new Point3D(0, 100000, 100000)).setCameraHead(new Point3D(0, 0, 500))
+							.setVpDistance(Math.sqrt(10000 * 10000) * 2 * 2 * 2 * 2))
+					.setImageWriter(new ImageWriter("Newton's cradle position 2", 500, 500)).setMultithreading(3)
+					.setDebugPrint();
+			render.renderImage();
+			render.writeToImage();
 
-		render = render
-				.setCamera(cam.setPosition(new Point3D(0, 100000, 100000)).setCameraHead(new Point3D(0, 0, 500))
-						.setVpDistance(Math.sqrt(10000 * 10000) * 2 * 2 * 2 * 2))
-				.setImageWriter(new ImageWriter("Newton's cradle position 2", 500, 500));
-		render.renderImage();
-		render.writeToImage();
-
-		render = render
-				.setCamera(cam.setPosition(new Point3D(-7000, 20000, 40000)).setCameraHead(new Point3D(0, 0, 500))
-						.setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2 * 2))
-				.setImageWriter(new ImageWriter("Newton's cradle position 3", 500, 500));
-		render.renderImage();
-		render.writeToImage();
-		render = render
-				.setCamera(cam.setPosition(new Point3D(-10000, -10000, 40000)).setCameraHead(new Point3D(0, 0, 0))
-						.setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2))
-				.setImageWriter(new ImageWriter("Newton's cradle position 4", 500, 500));
-		render.renderImage();
-		render.writeToImage();
-		render = render
-				.setCamera(cam.setPosition(new Point3D(-10000, -10000, 40000)).setCameraHead(new Point3D(0, 0, 0))
-						.rotateHorizontally(-45).setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2))
-				.setImageWriter(new ImageWriter("Newton's cradle position 4 + rotate -45 degree", 500, 500));
-		render.renderImage();
-		render.writeToImage();
-		render = render
-				.setCamera(new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
-						.setVpDistance(13900.13562).setViewPlaneSize(2000, 2000).setCameraHead(new Point3D(0, 0, 500))
-						.rotateHorizontally(90))
-				.setImageWriter(new ImageWriter("Newton's cradle position 1 + rotate 90 degree", 500, 500));
-		render.renderImage();
-		render.writeToImage();
+			render = render
+					.setCamera(cam.setPosition(new Point3D(-7000, 20000, 40000)).setCameraHead(new Point3D(0, 0, 500))
+							.setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2 * 2))
+					.setImageWriter(new ImageWriter("Newton's cradle position 3", 500, 500)).setMultithreading(3)
+					.setDebugPrint();
+			render.renderImage();
+			render.writeToImage();
+			render = render
+					.setCamera(cam.setPosition(new Point3D(-10000, -10000, 40000)).setCameraHead(new Point3D(0, 0, 0))
+							.setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2))
+					.setImageWriter(new ImageWriter("Newton's cradle position 4", 500, 500)).setMultithreading(3)
+					.setDebugPrint();
+			render.renderImage();
+			render.writeToImage();
+			render = render
+					.setCamera(cam.setPosition(new Point3D(-10000, -10000, 40000)).setCameraHead(new Point3D(0, 0, 0))
+							.rotateHorizontally(-45).setVpDistance(Math.sqrt(10000 * 10000 + 2000 * 2000) * 2))
+					.setImageWriter(new ImageWriter("Newton's cradle position 4 + rotate -45 degree", 500, 500))
+					.setMultithreading(3).setDebugPrint();
+			render.renderImage();
+			render.writeToImage();
+			render = render
+					.setCamera(new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
+							.setVpDistance(13900.13562).setViewPlaneSize(2000, 2000)
+							.setCameraHead(new Point3D(0, 0, 500)).rotateHorizontally(90))
+					.setImageWriter(new ImageWriter("Newton's cradle position 1 + rotate 90 degree", 500, 500))
+					.setMultithreading(3).setDebugPrint();
+			render.renderImage();
+			render.writeToImage();
+		}
 
 	}
 
@@ -195,93 +203,11 @@ public class TenOrMoreShapesTests {
 
 		ImageWriter imageWriter = new ImageWriter("31 sphere and pearl", 1000, 1000);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3).setDebugPrint();
 		// .setMultithreading(3);
 
 		render.renderImage();
 		render.writeToImage();
-	}
-
-	/**
-	 * tank picture (look like soryan tank)
-	 */
-	@Test
-	public void tank() {
-		Scene scene = new Scene("test case");
-		Camera cam = new Camera(new Point3D(0, 10000, 5200), new Vector(0, -1, -0.5), new Vector(0, -0.5, 1))
-				.setVpDistance(13900.13562).setViewPlaneSize(5000, 5000);
-		scene.setBackground(new Color(java.awt.Color.blue));
-		scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.blue), 0.15));
-		scene.geometries.add(
-				new Polygon(new Point3D(-500, -500, 500), new Point3D(500, -500, 500), new Point3D(500, -700, 250),
-						new Point3D(-500, -700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // SIDE BACK
-				new Polygon(new Point3D(-500, 500, 500), new Point3D(500, 500, 500), new Point3D(500, 700, 250),
-						new Point3D(-500, 700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // side front
-				new Polygon(new Point3D(500, -500, 500), new Point3D(500, 500, 500), new Point3D(500, 700, 250),
-						new Point3D(500, -700, 250)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // side RIGHT
-				new Polygon(new Point3D(-500, -500, 500), new Point3D(-500, -700, 250), new Point3D(-500, 700, 250),
-						new Point3D(-500, 500, 500)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // side left
-				new Polygon(new Point3D(-500, -500, 500), new Point3D(500, -500, 500), new Point3D(500, 500, 500),
-						new Point3D(-500, 500, 500)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // up side
-
-				new Polygon(new Point3D(-400, 500, 0), new Point3D(-400, 700, 250), new Point3D(-400, -700, 250),
-						new Point3D(-400, -500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // LEFT SIDE DOWN
-				new Polygon(new Point3D(400, -700, 250), new Point3D(400, 700, 250), new Point3D(400, 500, 0),
-						new Point3D(400, -500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // RIGTH SIDE DOWN
-				new Polygon(new Point3D(400, 700, 250), new Point3D(-400, 700, 250), new Point3D(-400, 500, 0),
-						new Point3D(400, 500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // front down
-				new Polygon(new Point3D(-400, -700, 250), new Point3D(400, -700, 250), new Point3D(400, -500, 0),
-						new Point3D(-400, -500, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // back down
-
-				new Cylinder(new Ray(new Point3D(490, -350, 150), new Vector(-1, 0, 0)), 150, 980)
-						.setEmission(new Color(java.awt.Color.gray))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // lest while
-				new Cylinder(new Ray(new Point3D(490, 0, 150), new Vector(-1, 0, 0)), 150, 980)
-						.setEmission(new Color(java.awt.Color.gray))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // midel while
-				new Cylinder(new Ray(new Point3D(490, 350, 150), new Vector(-1, 0, 0)), 150, 980)
-						.setEmission(new Color(java.awt.Color.gray))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // first while
-
-				new Sphere(new Point3D(0, 0, 500), 350).setEmission(new Color(java.awt.Color.DARK_GRAY))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(900)), // the chriach
-				new Cylinder(new Ray(new Point3D(0, 0, 700), new Vector(0, 1, 0)), 30, 1000)
-						.setEmission(new Color(java.awt.Color.DARK_GRAY))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(5)), // BOMBER
-				new Plane(new Point3D(0, 0, 0), new Vector(0, 0, 1)).setEmission(new Color(100, 100, 100))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500)), // flor
-				new Polygon(new Point3D(2000, -2000, 2000), new Point3D(2000, -2000, 0), new Point3D(-2000, -2000, 0),
-						new Point3D(-2000, -2000, 2000)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0).setKs(0).setShininess(100).setkR(1)));
-		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
-				((SpotLight) new SpotLight(new Color(400, 240, 500), new Point3D(-500, -1000, 3000),
-						new Point3D(0, 0, 700)) //
-								.setkL(1E-5).setkQ(1.5E-7)).setSharp(3),
-				new SpotLight(new Color(1000, 1000, 1000), new Point3D(0, 1020, 700), new Vector(0, -1, 0)) //
-						.setkL(1E-5).setkQ(1.5E-7).setSharp(5)));
-
-		ImageWriter imageWriter = new ImageWriter("Syria tank ", 1000, 1000);
-		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene));
-
-		render.renderImage();
-		render.writeToImage();
-
-		render = render
-				.setCamera(cam.setPosition(new Point3D(2000, 5000, 5000)).setCameraHead(new Point3D(0, 0, 500))
-						.setVpDistance(Math.sqrt(10000 * 5000)))
-				.setImageWriter(new ImageWriter("Syria tank position 2", 500, 500));
-		render.renderImage();
-		render.writeToImage();
-
 	}
 
 }

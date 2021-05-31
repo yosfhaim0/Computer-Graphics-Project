@@ -131,4 +131,29 @@ public class Point3D {
 		return Math.sqrt(this.distanceSquared(other));
 	}
 
+	/**
+	 * find the minimum Coordinate
+	 * 
+	 * @return if Coordinate x is minimum return 'x'<br>
+	 *         if Coordinate y is minimum return 'y'<br>
+	 *         if Coordinate z is minimum return 'z'<br>
+	 *         if all Coordinates are equal return 'x'
+	 */
+	public char findMinimumCoordinate() {
+		double x = getX(), y = getY(), z = getZ();
+		double minimum = Math.abs(x);
+		char index = 'x';
+		y = Math.abs(y);
+		if (y < minimum) {
+			minimum = y;
+			index = 'y';
+		}
+		z = Math.abs(z);
+		if (z < minimum) {
+			minimum = z;
+			index = 'z';
+		}
+		return index;
+	}
+
 }

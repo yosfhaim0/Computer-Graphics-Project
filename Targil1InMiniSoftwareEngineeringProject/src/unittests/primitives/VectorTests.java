@@ -16,8 +16,8 @@ import primitives.*;
 public class VectorTests {
 
 	/**
-	 * tests for rotating Vector On Axis function
-	 * Test method for {@link primitives.Vector#rotatingVectorOnAxis(primitives.Vector,double)}.
+	 * tests for rotating Vector On Axis function Test method for
+	 * {@link primitives.Vector#rotatingVectorOnAxis(primitives.Vector,double)}.
 	 */
 	@Test
 	public void rotatingVectorOnAxis() {
@@ -178,6 +178,39 @@ public class VectorTests {
 		// test whether the length of a normal vector is really 1
 		Vector v = v3.normalized();
 		assertEquals("Normalizd() Does not normalize", 1, v.length(), 0.000000000001);
+	}
+
+	/**
+	 * test for check if the method return vertical vector
+	 * Test method for {@link primitives.Vector#CreateVerticalVector()}.
+	 */
+	@Test
+	public void testCreateVerticalVector() {
+		Vector v = new Vector(1, 1, 1);
+		double d = v.dotProduct(v.createVerticalVector());
+		// TC01: vector 1,1,1 all the same
+		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
+		
+		v = new Vector(-2, 8, -10).normalize();
+		d = v.dotProduct(v.createVerticalVector());
+		// TC02: component x is smallest
+		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
+		
+		v = new Vector(-10, 8, -5).normalize();
+		d = v.dotProduct(v.createVerticalVector());
+		// TC03: component z is smallest
+		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
+		
+		v = new Vector(-2, 8, -10).normalize();
+		d = v.dotProduct(v.createVerticalVector());
+		// TC04: component y is smallest
+		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
+		
+		v = new Vector(-7127, 5000, -9000).normalize();
+		d = v.dotProduct(v.createVerticalVector());
+		// TC01: vector (-7127, 5000, -9000).normalize()
+		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
+
 	}
 
 }

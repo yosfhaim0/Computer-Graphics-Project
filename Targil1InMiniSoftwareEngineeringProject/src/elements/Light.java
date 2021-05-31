@@ -17,6 +17,10 @@ public abstract class Light {
 	 * 
 	 */
 	protected Color intensity;
+	/**
+	 * Radius of light is mainly used for soft shade
+	 */
+	protected double radius = 5;
 
 	/**
 	 * ctor for light

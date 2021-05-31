@@ -26,6 +26,7 @@ public class DirectionalLight extends Light implements LightSource {
 	public DirectionalLight(Color intens, Vector dir) {
 		super(intens);
 		this.direction = dir.normalized();
+		radius = Double.POSITIVE_INFINITY;
 	}
 
 	@Override
@@ -41,6 +42,22 @@ public class DirectionalLight extends Light implements LightSource {
 	@Override
 	public double getDistance(Point3D point) {
 		return Double.POSITIVE_INFINITY;
+	}
+
+	@Override
+	public double getRadius(Point3D p) {
+		return this.radius;
+	}
+
+	/**
+	 * setter for radius of light
+	 * 
+	 * @param rad radius to set
+	 * @return this for chaining
+	 */
+	public DirectionalLight setRadius(double rad) {
+		this.radius = rad;
+		return this;
 	}
 
 }
