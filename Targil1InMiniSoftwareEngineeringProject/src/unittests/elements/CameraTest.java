@@ -2,10 +2,13 @@ package unittests.elements;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 import elements.AmbientLight;
 import elements.Camera;
+import elements.SpotLight;
 import geometries.*;
 import primitives.*;
 import renderer.ImageWriter;
@@ -20,6 +23,7 @@ import scene.Scene;
  *
  */
 public class CameraTest {
+
 	/**
 	 * test for set vto camera vector (and vup)
 	 */
@@ -31,6 +35,9 @@ public class CameraTest {
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
 		assertEquals("rotet not good", new Vector(0, 0, 1), camera.getvRight());
 
+		camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0));
+		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvRight());
+
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
 		camera.setCameraHead(new Point3D(0, 0, -1));
 		// right down
@@ -41,41 +48,54 @@ public class CameraTest {
 		camera.setCameraHead(new Point3D(-1, 0, 0));
 		// full ofsite
 		assertEquals("rotet not good", new Vector(0, 1, 0).normalize(), camera.getvUp());
-		assertEquals("rotet not good", new Vector(0, 0, 1).normalize(), camera.getvRight());
+		assertEquals("rotet not good", new Vector(0, 0, -1).normalize(), camera.getvRight());
 
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
 		camera.setCameraHead(new Point3D(0, -1, 0));
 		// to 0,-1,0
-		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvUp());
-		assertEquals("rotet not good", new Vector(-1, 0, 0), camera.getvRight());
-
-		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
-		camera.setCameraHead(new Point3D(0, 1, 0));
-		// to 0,1,0
-		assertEquals("rotet not good", new Vector(0, 0, 1), camera.getvUp());
-		assertEquals("rotet not good", new Vector(-1, 0, 0), camera.getvRight());
+		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvUp());
+		assertEquals("rotet not good", new Vector(0, 0, 1), camera.getvRight());
 
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
 		camera.setCameraHead(new Point3D(0, 0, 1));
 		// to 0,0,1
 		assertEquals("rotet not good", new Vector(0, 1, 0), camera.getvUp());
-		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvRight());
+		assertEquals("rotet not good", new Vector(-1, 0, 0), camera.getvRight());
 
 		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
 		camera.setCameraHead(new Point3D(1, 0, 0));
 		// to 1,0,0
 		assertEquals("rotet not good", new Vector(0, 1, 0), camera.getvUp());
-		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvRight());
+		assertEquals("rotet not good", new Vector(0, 0, 1), camera.getvRight());
 
-		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
-		camera.setCameraHead(new Point3D(1, 1, 1));
-		// set to 1,1,1
-		assertEquals("rotet not good", new Vector(-1, 2, -1).normalize(), camera.getvUp());
+		// ============ Equivalence Partitions Tests ==============
+		// test for reset
+		camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0));
+		assertEquals("rotet not good", new Vector(1, 0, 0).normalize(), camera.getvRight());
 
-		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 1, 0));
-		camera.setCameraHead(new Point3D(1, 0, -1));
-		// to 1,0,-1
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setCameraHead(new Point3D(0, 0, -1));
+		// right down
 		assertEquals("rotet not good", new Vector(0, 1, 0), camera.getvUp());
+		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvRight());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setCameraHead(new Point3D(-1, 0, 0));
+		// full ofsite
+		assertEquals("rotet not good", new Vector(0, 1, 0).normalize(), camera.getvUp());
+		assertEquals("rotet not good", new Vector(0, 0, -1).normalize(), camera.getvRight());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setCameraHead(new Point3D(0, -1, 0));
+		// to 0,-1,0
+		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvUp());
+		assertEquals("rotet not good", new Vector(0, 0, 1), camera.getvRight());
+
+		camera = new Camera(Point3D.ZERO, new Vector(1, 0, 0), new Vector(0, 0, 1));
+		camera.setCameraHead(new Point3D(0, 1, 0));
+		// to 0,1,0
+		assertEquals("rotet not good", new Vector(1, 0, 0), camera.getvUp());
+		assertEquals("rotet not good", new Vector(0, 0, -1), camera.getvRight());
 
 	}
 

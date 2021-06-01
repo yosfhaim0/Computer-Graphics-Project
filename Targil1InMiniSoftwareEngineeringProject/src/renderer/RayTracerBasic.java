@@ -1,7 +1,6 @@
 package renderer;
 
 import java.util.List;
-
 import elements.*;
 import geometries.Intersectable.GeoPoint;
 import primitives.*;
@@ -32,7 +31,7 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * A number of rays for a soft shade or for a glassy look or blurry
 	 */
-	private int numOfRay = 1;
+	private int numOfRay = 0;
 	/**
 	 * distance form the begin of the bame to the circal
 	 */
@@ -40,7 +39,7 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * radius for glossy and blurry
 	 */
-	private double radius = 0;
+	private double radiusForGlussyAndBlurry = 0;
 
 	/**
 	 * setter for num of ray the ray are Initialized 1!
@@ -65,11 +64,11 @@ public class RayTracerBasic extends RayTracerBase {
 	}
 
 	/**
-	 * @param radius for glossy
+	 * @param radiusForGlussyAndBlurry for glossy
 	 * @return this for chaining
 	 */
 	public RayTracerBasic setRadius(double radiusGiven) {
-		this.radius = radiusGiven;
+		this.radiusForGlussyAndBlurry = radiusGiven;
 		return this;
 	}
 
@@ -85,6 +84,7 @@ public class RayTracerBasic extends RayTracerBase {
 	@Override
 	public Color traceRay(Ray ray) {
 		GeoPoint closestPoint = findClosestIntersection(ray);
+
 		return closestPoint == null ? scene.background : calcColor(closestPoint, ray);
 	}
 
@@ -111,7 +111,6 @@ public class RayTracerBasic extends RayTracerBase {
 	private Color calcColor(GeoPoint intersection, Ray ray, int level, double k) {
 		Color color = intersection.geometry.getEmission();
 		color = color.add(calcLocalEffects(intersection, ray, k));
-
 		return (1 == level) ? color : color.add(calcGlobalEffects(intersection, ray.getDir(), level, k));
 	}
 
@@ -208,9 +207,9 @@ public class RayTracerBasic extends RayTracerBase {
 		double lightDistance = light.getDistance(geopoint.point);
 		double ktrAll = 0.0;
 		List<Ray> rays = null;
-		if (numOfRay > 1) {
+		if (numOfRay > 0) {
 			rays = lightRay.raySplitter(geopoint.geometry.getNormal(geopoint.point), numOfRay,
-					light.getRadius(geopoint.point), lightDistance);
+					light.getRadius(), lightDistance);
 			for (Ray r : rays) {
 				ktrAll += getKtr(light, geopoint, r, lightDistance);
 			}
@@ -248,7 +247,7 @@ public class RayTracerBasic extends RayTracerBase {
 	 */
 	private Color calcBeamColor(Color color, Vector n, Ray refRay, int level, double k, double kk) {
 		Color addColor = Color.BLACK;
-		List<Ray> rays = refRay.raySplitter(n, numOfRay, radius, distance);
+		List<Ray> rays = refRay.raySplitter(n, numOfRay, radiusForGlussyAndBlurry, distance);
 		for (Ray ray : rays) {
 			addColor = addColor.add(calcGlobalEffect(ray, level - 1, k, kk));
 		}

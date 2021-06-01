@@ -5,6 +5,9 @@ package elements;
 
 import static primitives.Util.*;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import primitives.*;
 
 /**
@@ -28,6 +31,30 @@ public class Camera {
 	 * plane
 	 */
 	private double distance = 0, width, height;
+
+	/**
+	 * radius For Depth Of Field<br>
+	 * the size of aperture window(circle)
+	 */
+	private double radiusForApertureWindow = 50;
+	/**
+	 * distance For Depth Of Filed <br>
+	 * Distance from camera to Focal plane
+	 */
+	private double distanceToFocalPlane = 0;
+	/**
+	 * num Of Ray Form Aperture Window To Focal Point<br>
+	 * Number of rays for focus
+	 */
+	private int numOfRayFormApertureWindowToFocalPoint = 0;
+	/**
+	 * num Of Ray For Anti Aliasing sharping the Edges
+	 */
+	private int numOfRayForAntiAliasing = 0;
+	/**
+	 * radius For Anti Aliasing<br>
+	 */
+	private double radiusForPixel = 0;
 
 	/**
 	 * camera constructor: receive two orthogonal vectors and build a third one
@@ -75,6 +102,31 @@ public class Camera {
 	 */
 	public Vector getvRight() {
 		return vRight;
+	}
+
+	/**
+	 * @return the distance
+	 */
+	public double getDistance() {
+		return distance;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public double getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param numOfRayForAntiAlias the number of ray
+	 */
+	public Camera setNumOfRayForAntiAliasing(int numOfRayForAntiAlias) {
+		if (numOfRayForAntiAliasing < 0)
+			throw new IllegalArgumentException("num Of Ray For Anti Aliasing cant be less then 0!");
+		this.numOfRayForAntiAliasing = numOfRayForAntiAlias;
+		return this;
+
 	}
 
 	/**
@@ -152,14 +204,19 @@ public class Camera {
 	 * @return this the camera itself for builder design
 	 */
 	public Camera setCameraHead(Point3D target) {
+
+		// 1) we calc the direction
 		vTo = target.subtract(location).normalize();
+		// 2) we calc the axisDir
 		try {
-			vRight = vTo.crossProduct(new Vector(0, -1, 0)).normalize();
-		} catch (Exception e) {
-			vRight = new Vector(-1, 0, 0);
+			vRight = vTo.crossProduct(new Vector(0, 1, 0)).normalize();
+			vUp = vRight.crossProduct(vTo).normalize();
+		} catch (IllegalArgumentException e) {
+			vUp = new Vector(1, 0, 0);
+			vRight = vTo.crossProduct(vUp).normalize();
 		}
-		vUp = vTo.crossProduct(vRight).normalize();
 		return this;
+
 	}
 
 	/**
@@ -175,6 +232,83 @@ public class Camera {
 		vRight = vRight.rotatingVectorOnAxis(vTo, angle);
 		vUp = vUp.rotatingVectorOnAxis(vTo, angle);
 		return this;
+	}
+
+	/**
+	 * @param distancForDepthOfFilde the distancForDepthOfFilde to set
+	 */
+	public Camera setDistanceToFocalPlane(double distancForDepthOfFilde) {
+		if (distancForDepthOfFilde < 0)
+			throw new IllegalArgumentException("distanc For Depth Of Filde cant be less then 0!");
+		this.distanceToFocalPlane = distancForDepthOfFilde;
+		return this;
+	}
+
+	/**
+	 * @param radius the radius to set
+	 */
+	public Camera setRadiusForApertureWindow(double radius) {
+		if (radius < 0)
+			throw new IllegalArgumentException("radius For Depth Of Field cant be less then 0!");
+		this.radiusForApertureWindow = radius;
+		return this;
+
+	}
+
+	/**
+	 * @param numOfRayForDepthOfFil the number of ray
+	 */
+	public Camera setNumOfRayFormApertureWindowToFocalPoint(int numOfRayForDepthOfFil) {
+		if (numOfRayForDepthOfFil < 0)
+			throw new IllegalArgumentException("num Of Ray For Depth Of Filde cant be less then 0!");
+		this.numOfRayFormApertureWindowToFocalPoint = numOfRayForDepthOfFil;
+		return this;
+
+	}
+
+	/**
+	 * construct beam of Ray Through Pixel form location of camera F
+	 * 
+	 * @param ray for center ray
+	 * @return List<Ray> form radius For Depth Of Field towards the center of
+	 *         pixel<br>
+	 * 
+	 */
+	public List<Ray> constructBeamRayThroughFocalPoint(Ray ray) {
+		if (numOfRayFormApertureWindowToFocalPoint == 0)
+			return null;
+		List<Ray> list = new LinkedList<>();
+		double t = distanceToFocalPlane / (vTo.dotProduct(ray.getDir()));
+		list = ray.raySplitter(numOfRayFormApertureWindowToFocalPoint, radiusForApertureWindow, distanceToFocalPlane,
+				ray.getPoint(t));
+		return list;
+	}
+
+	/**
+	 * construct beam of Ray Through Pixel form location of camera F
+	 * 
+	 * @param ray for center ray
+	 * @param nX  depend hoe pixel we wont row
+	 * @param nY  depend hoe pixel we wont column
+	 * @return List<Ray> form radius For Anti Aliesing towards the center of
+	 *         pixel<br>
+	 * 
+	 */
+	public List<Ray> constructBeamRayForAntiAliesing(Ray ray, int nX, int nY) {
+		if (numOfRayForAntiAliasing == 0)
+			return null;
+		List<Ray> antiAliasingRays = new LinkedList<>();
+//		nY = (numOfRayForAntiAliasing / 2) / nY;
+//		nX = (numOfRayForAntiAliasing / 2) / nX;
+//
+//		for (int i = 0; i < nY; ++i)
+//			for (int j = 0; j < nX; ++j) {
+//				antiAliasingRays.add(constructRayThroughPixel(nX, nY, j, i));
+//			}
+		double t = distance / (vTo.dotProduct(ray.getDir()));
+		antiAliasingRays = ray.raySplitter(numOfRayForAntiAliasing, width / nX, location.distance(ray.getPoint(t)));
+		return antiAliasingRays;
+
 	}
 
 }

@@ -1,10 +1,7 @@
 package primitives;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 import geometries.Intersectable.GeoPoint;
 import static primitives.Util.*;
 
@@ -125,12 +122,15 @@ public class Ray {
 	}
 
 	/**
+	 * 
+	 * *******For Glassy And Blurry*******<br>
 	 * Gets the num of rays and the area's degrees where all the rays will be
 	 * 
+	 * @param normal    vector for calculate the direction of rays are turning
 	 * @param NumOfRays num of additional rays
 	 * @param radius    of the area for all the rays
 	 * @param distance  of the radius circle from the head of the ray
-	 * @return original ray among with the additional rays
+	 * @return original ray among with the additional rays are randomly
 	 */
 	public List<Ray> raySplitter(Vector normal, int NumOfRays, double radius, double distance) {
 
@@ -138,30 +138,18 @@ public class Ray {
 			return List.of(this);
 
 		double nv = alignZero(normal.dotProduct(dir));
-		Vector firstNormal = dir.createVerticalVector();
-		Vector secondNormal = firstNormal.crossProduct(dir).normalize();
-
 		List<Ray> splittedRays = new LinkedList<>();
 		Point3D centerCirclePoint = null;
- 
+
 		try {
 			centerCirclePoint = this.getPoint(distance);
 		} catch (Exception e) {
 			centerCirclePoint = p0;
 		}
 		Point3D randomCirclePoint = null;
-		double x = 0,y = 0,r = 0,nr;
+		double nr;
 		for (int i = 0; i < NumOfRays; i++) {
-			randomCirclePoint = centerCirclePoint;
-			x = random(-1, 1);
-			y = Math.sqrt(1 - x * x);
-			r = random(-radius, radius);
-			x = alignZero(x * r);
-			y = alignZero(y * r);
-			if (x != 0)
-				randomCirclePoint = randomCirclePoint.add(firstNormal.scale(x));
-			if (y != 0)
-				randomCirclePoint = randomCirclePoint.add(secondNormal.scale(y));
+			randomCirclePoint = randomPointOnRadius(centerCirclePoint, radius);
 			Vector v = randomCirclePoint.subtract(p0);
 			nr = normal.dotProduct(v);
 			if (checkSign(nr, nv))
@@ -171,34 +159,95 @@ public class Ray {
 		return splittedRays;
 	}
 
-	public List<Ray> raySplitter1(Vector normal, int NumOfRays, double Degree, double distance) {
-		if (NumOfRays == 0)
-			return List.of(this);
-		Point3D center = p0.add(this.dir.scale(distance));
-		List<Ray> rays = new LinkedList<Ray>();
-		double radius = Math.tan(Degree / 360d * 2 * Math.PI);
-		Vector x = dir.createVerticalVector();
-		Vector y = x.crossProduct(dir).normalize();
-		double nd = normal.dotProduct(dir);
+	/**
+	 * *******for antiAliasing*******<br>
+	 * Gets the num of rays and the area's degrees where all the rays will be
+	 * 
+	 * @param NumOfRays num of additional rays
+	 * @param radius    of the area for all the rays
+	 * @param distance  of the radius circle from the head of the ray
+	 * @return rays are randomly whitout the ray itself
+	 */
+	public List<Ray> raySplitter(int NumOfRays, double radius, double distance) {
+		List<Ray> splittedRays = new LinkedList<>();
+		Point3D centerCirclePoint = null;
 
-		Point3D pointHeadRay = center;
-		double rand;
-		for (int i = 0; i < NumOfRays; i++) {
-			rand = random(-1, 1);
-			if (rand * radius != 0) {
-				pointHeadRay.add(x.scale(rand * radius));
-			}
-			rand = Math.sqrt(1 - rand * rand);
-			if (rand * radius != 0) {
-				pointHeadRay.add(y.scale(rand * radius));
-			}
-			Vector v = pointHeadRay.subtract(p0);
-			double nv = normal.dotProduct(v);
-			if (nd * nv > 0)
-				rays.add(new Ray(p0, v));
+		try {
+			centerCirclePoint = this.getPoint(distance);
+		} catch (Exception e) {
+			centerCirclePoint = p0;
 		}
-		rays.add(this);
-		return rays;
+		Point3D randomCirclePoint = null;
+		for (int i = 0; i < NumOfRays; i++) {
+			randomCirclePoint = randomPointOnRadius(centerCirclePoint, radius);
+			Vector v = randomCirclePoint.subtract(p0);
+			splittedRays.add(new Ray(p0, v));
+		}
+		return splittedRays;
+	}
+
+	/**
+	 * *******for Depth Of Filed*******<br>
+	 * Gets the num of rays and the area's degrees where all the rays will be
+	 * 
+	 * @param NumOfRays  num of additional rays
+	 * @param radius     of the area for all the rays
+	 * @param distance   of the radius circle from the head of the ray
+	 * @param focalPoint target point, all the rays will go through this point
+	 * @return original ray among with the additional rays
+	 */
+	public List<Ray> raySplitter(int NumOfRays, double radius, double distance, Point3D focalPoint) {
+		List<Ray> splittedRays = new LinkedList<>();
+		for (int i = 0; i < NumOfRays; i++) {
+			Point3D point3d = randomPointOnRadius(p0, radius);
+			Vector v = focalPoint.subtract(point3d);
+			splittedRays.add(new Ray(point3d, v));
+		}
+		splittedRays.add(this);
+		return splittedRays;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param centerOfCircle center
+	 * @param radius         radius of circle
+	 * @return random point on the circle, or null if
+	 */
+	public Point3D randomPointOnRadius(Point3D centerOfCircle, double radius) {
+		double kuter = radius * 2;
+		Point3D p = randomPointOnRectangle(centerOfCircle, kuter, kuter);
+		double t = p.distance(centerOfCircle);
+		while (t > radius) {
+			p = randomPointOnRectangle(centerOfCircle, kuter, kuter);
+			t = p.distance(centerOfCircle);
+		}
+		return p;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param centerOfCircle center
+	 * @param radius         radius of circle
+	 * @return random point on the circle
+	 */
+	public Point3D randomPointOnRectangle(Point3D centerOfCircle, double width, double height) {
+		Vector firstNormal = dir.createVerticalVector();
+		Vector secondNormal = firstNormal.crossProduct(dir).normalize();
+		Point3D randomCirclePoint = centerOfCircle;
+		double x = 0, y = 0, r = 0;
+		x = random(-1, 1);
+		y = random(-1, 1);
+		r = random(-width / 2, width / 2);
+		x = alignZero(x * r);
+		r = random(-height / 2, height / 2);
+		y = alignZero(y * r);
+		if (x != 0)
+			randomCirclePoint = randomCirclePoint.add(firstNormal.scale(x));
+		if (y != 0)
+			randomCirclePoint = randomCirclePoint.add(secondNormal.scale(y));
+		return randomCirclePoint;
 	}
 
 }

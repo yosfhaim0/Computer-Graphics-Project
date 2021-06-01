@@ -39,4 +39,14 @@ public abstract class Light {
 	public Color getIntensity() {
 		return this.intensity;
 	}
+
+	/**
+	 * getRadius for light body
+	 * 
+	 * @param p
+	 * @return
+	 */
+	public double getRadius() {
+		return this.radius;
+	}
 }

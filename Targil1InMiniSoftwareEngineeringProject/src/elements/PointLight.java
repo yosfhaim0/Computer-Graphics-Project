@@ -70,11 +70,6 @@ public class PointLight extends Light implements LightSource {
 	public double getDistance(Point3D point) {
 		return position.distance(point);
 	}
-
-	@Override
-	public double getRadius(Point3D p) {
-		return this.radius;
-	}
 	/**
 	 * setter for radius of light
 	 * @param rad radius to set

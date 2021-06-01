@@ -46,12 +46,8 @@ public interface LightSource {
 	/**
 	 * Radius of light is mainly used for soft shade getter for radius
 	 * 
-	 * @param p A point from which the radius of the Source Light is seen,<br>
-	 *          when the light is point, the radius does not change from point to
-	 *          point,<br >
-	 *          when the light is flat the radius does change from point to point
-	 * @return The visible radius from a certain point
+	 * @return radius of light for soft shadow
 	 */
-	double getRadius(Point3D p);
+	double getRadius();
 
 }

@@ -1,6 +1,5 @@
 package primitives;
 
-
 /**
  * A vector is an object with size and direction Vector from the beginning of
  * the axes to a certain point Builders : a) three coordinates, b) three
@@ -211,7 +210,12 @@ public class Vector {
 		boolean sinZero = Util.isZero(sinAngle);
 		Vector vFinal;
 		if (cosZero) {
-			vFinal = axis.crossProduct(this).scale(sinAngle);
+			try {
+				vFinal = axis.crossProduct(this).scale(sinAngle);
+			} catch (Exception e) {
+				vFinal = this.scale(sinAngle);
+			}
+
 		} else {
 			vFinal = this.scale(cosAngle);
 			if (!sinZero) {
@@ -222,10 +226,10 @@ public class Vector {
 	}
 
 	/**
-	 * This function return a Vertical Vector to "this" vector (this) most be
-	 * normalized!!!
+	 * This function return a Vertical Vector to "this" vector <br>
+	 * (this) most be normalized!!!
 	 * 
-	 * @return normalized normal vector
+	 * @return normal vector Vertical to this
 	 */
 	public Vector createVerticalVector() {
 		double x = head.getX(), y = head.getY(), z = head.getZ();

@@ -1,10 +1,10 @@
 package renderer;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
-
 import elements.*;
 import primitives.*;
-import scene.*;
 
 /**
  * The render job is to create the color matrix of the image from the scene
@@ -21,6 +21,7 @@ public class Render {
 	 * point of view for render
 	 */
 	private Camera camera;
+
 	/**
 	 * ray tracer for render
 	 */
@@ -154,12 +155,12 @@ public class Render {
 		 * @return true if the work still in progress, -1 if it's done
 		 */
 		public boolean nextPixel(Pixel target) {
-			int percent = nextP(target);
-			if (Render.this.print && percent > 0)
+			int finishPixels = nextP(target);
+			if (Render.this.print && finishPixels > 0)
 				synchronized (this) {
 					notifyAll();
 				}
-			if (percent >= 0)
+			if (finishPixels >= 0)
 				return true;
 			if (Render.this.print)
 				synchronized (this) {
@@ -206,8 +207,26 @@ public class Render {
 	 */
 	private void castRay(int nX, int nY, int col, int row) {
 		Ray ray = camera.constructRayThroughPixel(nX, nY, col, row);
-		Color color = rayTracerBase.traceRay(ray);
-		imageWriter.writePixel(col, row, color);
+		List<Ray> raysFocal = camera.constructBeamRayThroughFocalPoint(ray);
+		List<Ray> raysAliesing = camera.constructBeamRayForAntiAliesing(ray, nX, nY);
+		List<Ray> rays = new LinkedList<>();
+		if (raysAliesing != null)
+			rays.addAll(raysAliesing);
+		if (raysFocal != null)
+			rays.addAll(raysFocal);
+		rays.add(ray);
+		Color color;
+		if (rays.size() == 1) {
+			color = rayTracerBase.traceRay(rays.get(0));
+			imageWriter.writePixel(col, row, color);
+		} else {
+			color = Color.BLACK;
+			for (Ray r : rays) {
+				color = color.add(rayTracerBase.traceRay(r));
+			}
+			color = color.reduce(rays.size());
+			imageWriter.writePixel(col, row, color);
+		}
 	}
 
 	/**
@@ -266,6 +285,7 @@ public class Render {
 					castRay(nX, nY, j, i);
 		else
 			renderImageThreaded();
+
 	}
 
 	/**
@@ -324,4 +344,5 @@ public class Render {
 		this.rayTracerBase = basicRayTr;
 		return this;
 	}
+
 }
