@@ -36,7 +36,6 @@ public class RayTracerBasic extends RayTracerBase {
      * number of ray to check for soft shadow
      */
     private int numOfRaySoftShadow = 0;
-
     /**
      * distance form the begin of the beam to the circle
      */

@@ -71,8 +71,6 @@ public class CylinderTests {
 		
 		// TC02: Ray starts before and crosses the cylinder (2 points)
 		result = cylinder.findIntersections(new Ray(new Point3D(0, 4, 0), new Vector(2, -2, 0)));
-		Point3D p1 = new Point3D(2, 2, 0);
-		Point3D p2 = new Point3D(4, 0, 0);
 		assertNull("TC02:empty list", result);
 		
 		// TC03: Ray starts inside the cylinder (1 point)

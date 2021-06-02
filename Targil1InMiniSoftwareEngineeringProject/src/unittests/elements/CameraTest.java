@@ -2,19 +2,10 @@ package unittests.elements;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Test;
 
-import elements.AmbientLight;
-import elements.Camera;
-import elements.SpotLight;
-import geometries.*;
+import elements.*;
 import primitives.*;
-import renderer.ImageWriter;
-import renderer.RayTracerBasic;
-import renderer.Render;
-import scene.Scene;
 
 /**
  * Testing Camera Class

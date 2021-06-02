@@ -230,7 +230,7 @@ public class Vector {
      */
     public Vector createVerticalVector() {
 	double x = head.getX(), y = head.getY(), z = head.getZ();
-	switch (head.findMinimumCoordinate()) {
+	switch (head.findAbsoluteMinimumCoordinate()) {
 	case 'x': {
 	    return new Vector(0, -z, y).normalize();
 	}
@@ -241,7 +241,7 @@ public class Vector {
 	    return new Vector(y, -x, 0).normalize();
 	}
 	default:
-	    throw new IllegalArgumentException("Unexpected value: " + head.findMinimumCoordinate());
+	    throw new IllegalArgumentException("Unexpected value: " + head.findAbsoluteMinimumCoordinate());
 	}
     }
 

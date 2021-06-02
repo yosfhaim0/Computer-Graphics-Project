@@ -3,28 +3,14 @@
  */
 package unittests.lights;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Test;
 
-import elements.AmbientLight;
-import elements.Camera;
-import elements.DirectionalLight;
-import elements.SpotLight;
-import geometries.Cylinder;
-import geometries.Plane;
-import geometries.Polygon;
-import geometries.Sphere;
-import primitives.Color;
-import primitives.Material;
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
-import renderer.ImageWriter;
-import renderer.RayTracerBasic;
-import renderer.Render;
+import elements.*;
+import geometries.*;
+import primitives.*;
+import renderer.*;
 import scene.Scene;
 
 /**

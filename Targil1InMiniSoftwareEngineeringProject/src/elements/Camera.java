@@ -51,10 +51,6 @@ public class Camera {
 	 * num Of Ray For Anti Aliasing sharping the Edges
 	 */
 	private int numOfRayForAntiAliasing = 0;
-	/**
-	 * radius For Anti Aliasing<br>
-	 */
-	private double radiusForPixel = 0;
 
 	/**
 	 * camera constructor: receive two orthogonal vectors and build a third one

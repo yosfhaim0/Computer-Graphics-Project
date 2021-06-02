@@ -4,7 +4,6 @@ import static primitives.Util.*;
 
 import java.util.List;
 
-import geometries.Intersectable.GeoPoint;
 import primitives.*;
 
 /**

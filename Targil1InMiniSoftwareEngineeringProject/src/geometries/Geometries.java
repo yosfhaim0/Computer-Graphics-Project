@@ -6,8 +6,7 @@ package geometries;
 import java.util.LinkedList;
 import java.util.List;
 
-import primitives.Point3D;
-import primitives.Ray;
+import primitives.*;
 
 /**
  * Geometries represent collection of Geometries shape

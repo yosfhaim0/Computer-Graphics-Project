@@ -6,24 +6,15 @@ package unittests.primitives;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
 
-import elements.AmbientLight;
-import elements.Camera;
-import elements.PointLight;
-import elements.SpotLight;
-import geometries.Polygon;
-import geometries.Sphere;
-import geometries.Cylinder;
+import elements.*;
+import geometries.*;
 import geometries.Intersectable.GeoPoint;
-import geometries.Plane;
 import primitives.*;
-import renderer.ImageWriter;
-import renderer.RayTracerBasic;
-import renderer.Render;
+import renderer.*;
 import scene.Scene;
 
 /**
@@ -58,7 +49,6 @@ public class RayTests {
 		// TC04:Closest is last in list
 		list.add(new GeoPoint(null, new Point3D(0, 0, 2)));
 		assertEquals("TC04: Wrong Point Closest", new Point3D(0, 0, 2), ray.getClosestGeoPoint(list).point);
-		System.out.println(Math.tan(5 / 360d * 2 * Math.PI));
 	}
 
 	/**
