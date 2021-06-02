@@ -31,11 +31,16 @@ public class RayTracerBasic extends RayTracerBase {
     /**
      * A number of rays for a soft shade or for a glassy look or blurry
      */
-    private int numOfRay = 0;
+    private int numOfRayBlurryAndGlossy = 0;
     /**
-     * distance form the begin of the bame to the circal
+     * number of ray to check for soft shadow
      */
-    private double distance = 1;
+    private int numOfRaySoftShadow = 0;
+
+    /**
+     * distance form the begin of the beam to the circle
+     */
+    private double distanceForBlurryGlossy = 1;
     /**
      * radius for glossy and blurry
      */
@@ -47,17 +52,29 @@ public class RayTracerBasic extends RayTracerBase {
      * @param numOfRay the numOfRay to set
      * @return this for chaining
      */
-    public RayTracerBasic setNumOfRay(int numOfRay) {
-	this.numOfRay = numOfRay;
+    public RayTracerBasic setNumOfRayBlurryAndGlossy(int numOfRay) {
+	this.numOfRayBlurryAndGlossy = numOfRay;
 	return this;
     }
 
     /**
+     * setter for the number of ray, for soft shadow effect
+     * 
+     * @param numOfRay
+     * @return this - builder pattern
+     */
+    public RayTracerBasic setNumOfRaySoftShadow(int numOfRay) {
+	this.numOfRaySoftShadow = numOfRay;
+	return this;
+    }
+
+    /**
+     * 
      * @param distance the distance to set
      * @return this for chaining
      */
-    public RayTracerBasic setDistance(double distance) {
-	this.distance = distance;
+    public RayTracerBasic setDistanceForBlurryGlossy(double distance) {
+	this.distanceForBlurryGlossy = distance;
 	return this;
     }
 
@@ -204,10 +221,11 @@ public class RayTracerBasic extends RayTracerBase {
 	Ray lightRay = new Ray(geopoint.point, lightDirection, n);
 	double lightDistance = light.getDistance(geopoint.point);
 	double ktrAll = 0.0;
-	List<Ray> rays = null;
-	if (numOfRay > 0) {
-	    rays = lightRay.raySplitter(geopoint.geometry.getNormal(geopoint.point), numOfRay, light.getRadius(),
-		    lightDistance);
+
+	if (numOfRaySoftShadow > 0) {
+	    List<Ray> rays = null;
+	    rays = lightRay.raySplitter(geopoint.geometry.getNormal(geopoint.point), numOfRaySoftShadow,
+		    light.getRadius(), lightDistance);
 	    for (Ray r : rays) { ktrAll += getKtr(light, geopoint, r, lightDistance); }
 	    ktrAll = ktrAll / rays.size();
 	} else {
@@ -240,7 +258,7 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private Color calcBeamColor(Color color, Vector n, Ray refRay, int level, double k, double kk) {
 	Color addColor = Color.BLACK;
-	List<Ray> rays = refRay.raySplitter(n, numOfRay, radiusForGlussyAndBlurry, distance);
+	List<Ray> rays = refRay.raySplitter(n, numOfRayBlurryAndGlossy, radiusForGlussyAndBlurry, distanceForBlurryGlossy);
 	for (Ray ray : rays) { addColor = addColor.add(calcGlobalEffect(ray, level - 1, k, kk)); }
 	int size = rays.size();
 	color = color.add(addColor.reduce(size));

@@ -76,8 +76,9 @@ public class BeamOfRaysTests {
 			, new DirectionalLight(new Color(255, 215, 0), new Vector(-1, -0.4, 1))));
 	int p = 500;
 	ImageWriter imageWriter = new ImageWriter("GlassCube", p, p);
-	Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-		.setRayTracer(new RayTracerBasic(scene).setDistance(80).setNumOfRay(2).setRadius(0.08))
+	Render render = new Render()
+		.setImageWriter(imageWriter).setCamera(camera).setRayTracer(new RayTracerBasic(scene)
+			.setDistanceForBlurryGlossy(80).setNumOfRayBlurryAndGlossy(2).setRadius(0.08))
 		.setMultithreading(3).setDebugPrint();
 
 	render.renderImage();
@@ -133,21 +134,22 @@ public class BeamOfRaysTests {
 	int p = 700;
 	ImageWriter imageWriter = new ImageWriter("Soft Shadow Test", p, p);
 	Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-		.setRayTracer(new RayTracerBasic(scene).setNumOfRay(100)).setMultithreading(3).setDebugPrint();
+		.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(100)).setMultithreading(3)
+		.setDebugPrint();
 
 	render.renderImage();
 	render.writeToImage();
 
 	ImageWriter imageWriter2 = new ImageWriter("Soft Shadow Test whitout soft", p, p);
 	Render render2 = new Render().setImageWriter(imageWriter2).setCamera(camera)
-		.setRayTracer(new RayTracerBasic(scene).setNumOfRay(1)).setMultithreading(3).setDebugPrint();
+		.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3).setDebugPrint();
 
 	render2.renderImage();
 	render2.writeToImage();
     }
 
     /**
-     * tank picture (look like soryan tank)
+     * tank picture (look like siryan tank)
      */
     @Test
     public void blurryTest() {
@@ -229,20 +231,20 @@ public class BeamOfRaysTests {
 		    // Point3D(0, 0, 500))
 		    // .setVpDistance(Math.sqrt(10000 * 5000)))
 		    .setImageWriter(new ImageWriter("Syria tank position whit blurry 2", p, p))
-		    .setRayTracer(new RayTracerBasic(scene).setNumOfRay(2).setRadius(0.01)).setMultithreading(3)
-		    .setDebugPrint();
+		    .setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurryAndGlossy(2).setRadius(0.01))
+		    .setMultithreading(3).setDebugPrint();
 	    render.renderImage();
 	    render.writeToImage();
 
 	    render = render.setImageWriter(new ImageWriter("Syria tank position blurryer  3", p, p))
-		    .setRayTracer(new RayTracerBasic(scene).setNumOfRay(2).setRadius(0.02)).setMultithreading(3)
-		    .setDebugPrint();
+		    .setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurryAndGlossy(2).setRadius(0.02))
+		    .setMultithreading(3).setDebugPrint();
 	    render.renderImage();
 	    render.writeToImage();
 
 	    render = render.setImageWriter(new ImageWriter("Syria tank position blurryest  4", p, p))
-		    .setRayTracer(new RayTracerBasic(scene).setNumOfRay(2).setRadius(0.04)).setMultithreading(3)
-		    .setDebugPrint();
+		    .setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurryAndGlossy(2).setRadius(0.04))
+		    .setMultithreading(3).setDebugPrint();
 	    render.renderImage();
 	    render.writeToImage();
 	}
