@@ -33,10 +33,10 @@ public class Camera {
 	private double distance = 0, width, height;
 
 	/**
-	 * radius For Depth Of Field<br>
-	 * the size of aperture window(circle)
+	 * size For Depth Of Field<br>
+	 * the size of aperture window(rectangle)
 	 */
-	private double radiusForApertureWindow = 50;
+	private double sizeForApertureWindow = 50;
 	/**
 	 * distance For Depth Of Filed <br>
 	 * Distance from camera to Focal plane
@@ -247,10 +247,10 @@ public class Camera {
 	/**
 	 * @param radius the radius to set
 	 */
-	public Camera setRadiusForApertureWindow(double radius) {
+	public Camera setSizeForApertureWindow(double radius) {
 		if (radius < 0)
 			throw new IllegalArgumentException("radius For Depth Of Field cant be less then 0!");
-		this.radiusForApertureWindow = radius;
+		this.sizeForApertureWindow = radius;
 		return this;
 
 	}
@@ -274,12 +274,12 @@ public class Camera {
 	 *         pixel<br>
 	 * 
 	 */
-	public List<Ray> constructBeamRayThroughFocalPoint(Ray ray) {
+	public List<Ray> constructBeamRayThroughFocalPoint(Ray ray, int nX, int nY) {
 		if (numOfRayFormApertureWindowToFocalPoint == 0)
 			return null;
 		List<Ray> list = new LinkedList<>();
 		double t = distanceToFocalPlane / (vTo.dotProduct(ray.getDir()));
-		list = ray.raySplitter(numOfRayFormApertureWindowToFocalPoint, radiusForApertureWindow, distanceToFocalPlane,
+		list = ray.raySplitter(numOfRayFormApertureWindowToFocalPoint, sizeForApertureWindow, distanceToFocalPlane,
 				ray.getPoint(t));
 		return list;
 	}
@@ -306,7 +306,8 @@ public class Camera {
 //				antiAliasingRays.add(constructRayThroughPixel(nX, nY, j, i));
 //			}
 		double t = distance / (vTo.dotProduct(ray.getDir()));
-		antiAliasingRays = ray.raySplitter(numOfRayForAntiAliasing, width / nX, location.distance(ray.getPoint(t)));
+		antiAliasingRays = ray.raySplitter(numOfRayForAntiAliasing, width / nX, height / nY,
+				location.distance(ray.getPoint(t)));
 		return antiAliasingRays;
 
 	}

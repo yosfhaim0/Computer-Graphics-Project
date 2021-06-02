@@ -168,7 +168,7 @@ public class Ray {
 	 * @param distance  of the radius circle from the head of the ray
 	 * @return rays are randomly whitout the ray itself
 	 */
-	public List<Ray> raySplitter(int NumOfRays, double radius, double distance) {
+	public List<Ray> raySplitter(int NumOfRays, double width, double height, double distance) {
 		List<Ray> splittedRays = new LinkedList<>();
 		Point3D centerCirclePoint = null;
 
@@ -179,7 +179,7 @@ public class Ray {
 		}
 		Point3D randomCirclePoint = null;
 		for (int i = 0; i < NumOfRays; i++) {
-			randomCirclePoint = randomPointOnRadius(centerCirclePoint, radius);
+			randomCirclePoint = randomPointOnRectangle(centerCirclePoint, width, height);
 			Vector v = randomCirclePoint.subtract(p0);
 			splittedRays.add(new Ray(p0, v));
 		}
@@ -196,10 +196,10 @@ public class Ray {
 	 * @param focalPoint target point, all the rays will go through this point
 	 * @return original ray among with the additional rays
 	 */
-	public List<Ray> raySplitter(int NumOfRays, double radius, double distance, Point3D focalPoint) {
+	public List<Ray> raySplitter(int NumOfRays, double size, double distance, Point3D focalPoint) {
 		List<Ray> splittedRays = new LinkedList<>();
 		for (int i = 0; i < NumOfRays; i++) {
-			Point3D point3d = randomPointOnRadius(p0, radius);
+			Point3D point3d = randomPointOnRectangle(p0, size, size);
 			Vector v = focalPoint.subtract(point3d);
 			splittedRays.add(new Ray(point3d, v));
 		}

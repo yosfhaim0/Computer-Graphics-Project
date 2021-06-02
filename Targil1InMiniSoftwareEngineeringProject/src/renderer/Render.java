@@ -207,7 +207,7 @@ public class Render {
 	 */
 	private void castRay(int nX, int nY, int col, int row) {
 		Ray ray = camera.constructRayThroughPixel(nX, nY, col, row);
-		List<Ray> raysFocal = camera.constructBeamRayThroughFocalPoint(ray);
+		List<Ray> raysFocal = camera.constructBeamRayThroughFocalPoint(ray,nX, nY);
 		List<Ray> raysAliesing = camera.constructBeamRayForAntiAliesing(ray, nX, nY);
 		List<Ray> rays = new LinkedList<>();
 		if (raysAliesing != null)

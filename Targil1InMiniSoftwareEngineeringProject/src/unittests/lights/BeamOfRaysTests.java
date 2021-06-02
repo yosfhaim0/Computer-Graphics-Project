@@ -283,7 +283,7 @@ public class BeamOfRaysTests {
 		Render render = new Render().setImageWriter(imageWriter)
 				.setCamera(camera
 						.setDistanceToFocalPlane(new Point3D(150, 100, 1000).distance(new Point3D(200, 100, -200)))
-						.setRadiusForApertureWindow(50).setNumOfRayFormApertureWindowToFocalPoint(50))
+						.setSizeForApertureWindow(100).setNumOfRayFormApertureWindowToFocalPoint(50))
 				.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3)//
 				.setDebugPrint();
 
@@ -298,18 +298,18 @@ public class BeamOfRaysTests {
 	 */
 	@Test
 	public void AntiAliasing() {
-		Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setVpDistance(50) //
-				.setViewPlaneSize(80, 80).setNumOfRayForAntiAliasing(100);
+		Camera camera = new Camera(new Point3D(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setVpDistance(9600) //
+				.setViewPlaneSize(1000, 1000).setNumOfRayForAntiAliasing(150);
 		Scene scene = new Scene("Anti Aliasing test")//
 				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
 				.setBackground(new Color(75, 127, 90));
 
-		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50)
+		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 500)
 
 		); // down
 			// right
-		int p = 500;
+		int p = 1000;
 		ImageWriter imageWriter = new ImageWriter("base whit Anti Aliasing", p, p);
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
@@ -322,9 +322,9 @@ public class BeamOfRaysTests {
 		render.renderImage();
 		render.writeToImage();
 
-		camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0)) //
-				.setVpDistance(50) //
-				.setViewPlaneSize(80, 80);
+		camera = new Camera(new Point3D(0, 0, 10000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+				.setVpDistance(9600) //
+				.setViewPlaneSize(1000, 1000);
 		ImageWriter imageWriter1 = new ImageWriter("base whitout Anti Aliasing", p, p);
 		Render render1 = new Render() //
 				.setImageWriter(imageWriter1) //
