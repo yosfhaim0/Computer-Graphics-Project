@@ -134,10 +134,6 @@ public class Ray {
 	 *         the ray itself
 	 */
 	public List<Ray> raySplitter(Vector normal, int NumOfRays, double radius, double distance) {
-
-		if (NumOfRays == 0)
-			return List.of(this);
-
 		double nv = alignZero(normal.dotProduct(dir));
 		List<Ray> splittedRays = new LinkedList<>();
 		Point3D centerCirclePoint = null;
@@ -159,19 +155,18 @@ public class Ray {
 		splittedRays.add(this);
 		return splittedRays;
 	}
-
 	/**
-	 * *******for antiAliasing*******<br>
+	 * 
+	 * *******For Soft Shadow*******<br>
 	 * Creates a beam of rays
 	 * 
 	 * @param NumOfRays num of additional rays
-	 * @param width     of the square
-	 * @param height    of the square
-	 * @param distance  of the square from the head of the ray
-	 * @return A list of random rays passing through the given square *not*
-	 *         including the ray itself
+	 * @param radius    of the area for all the rays
+	 * @param distance  of the radius circle from the head of the ray
+	 * @return A list of random rays passing through the given circle including this
+	 *         the ray itself
 	 */
-	public List<Ray> raySplitter(int NumOfRays, double width, double height, double distance) {
+	public List<Ray> raySplitter(int NumOfRays, double radius, double distance) {
 		List<Ray> splittedRays = new LinkedList<>();
 		Point3D centerCirclePoint = null;
 
@@ -182,30 +177,9 @@ public class Ray {
 		}
 		Point3D randomCirclePoint = null;
 		for (int i = 0; i < NumOfRays; i++) {
-			randomCirclePoint = centerCirclePoint.randomPointOnRectangle(dir, width, height);
+			randomCirclePoint = centerCirclePoint.randomPointOnRadius(dir, radius);
 			Vector v = randomCirclePoint.subtract(p0);
 			splittedRays.add(new Ray(p0, v));
-		}
-		return splittedRays;
-	}
-
-	/**
-	 * *******for Depth Of Filed*******<br>
-	 * Creates a beam of rays
-	 * 
-	 * @param NumOfRays  num of additional rays
-	 * @param size       of the area for all the rays
-	 * @param distance   of the square from the head of the ray
-	 * @param focalPoint target point, all the rays will go through this point
-	 * @return A list of random rays passing through the given square including the
-	 *         ray itself
-	 */
-	public List<Ray> raySplitter(int NumOfRays, double size, double distance, Point3D focalPoint) {
-		List<Ray> splittedRays = new LinkedList<>();
-		for (int i = 0; i < NumOfRays; i++) {
-			Point3D point3d = p0.randomPointOnRectangle(dir, size, size);
-			Vector v = focalPoint.subtract(point3d);
-			splittedRays.add(new Ray(point3d, v));
 		}
 		splittedRays.add(this);
 		return splittedRays;

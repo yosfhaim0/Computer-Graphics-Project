@@ -3,7 +3,7 @@
  */
 package elements;
 
-import static primitives.Util.*;
+import static primitives.Util.isZero;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class Camera {
 	 * distance between camera and view plane width of view plane height of view
 	 * plane
 	 */
-	private double distance = 0, width, height;
+	private double VPdistance = 0, VPwidth, VPheight;
 
 	/**
 	 * size For Depth Of Field<br>
@@ -51,6 +51,10 @@ public class Camera {
 	 * num Of Ray For Anti Aliasing sharping the Edges
 	 */
 	private int numOfRayForAntiAliasing = 0;
+	/**
+	 * view plane center
+	 */
+	private Point3D viewPlaneCenter;
 
 	/**
 	 * camera constructor: receive two orthogonal vectors and build a third one
@@ -70,6 +74,8 @@ public class Camera {
 		vTo = vectorTo.normalized();
 		vRight = vectorTo.crossProduct(vectorUp).normalize();
 		location = locatPoint;
+		if (!isZero(VPdistance))
+			viewPlaneCenter = location.add(vTo.scale(VPdistance));
 	}
 
 	/**
@@ -104,14 +110,14 @@ public class Camera {
 	 * @return the distance
 	 */
 	public double getDistance() {
-		return distance;
+		return VPdistance;
 	}
 
 	/**
 	 * @return the width
 	 */
 	public double getWidth() {
-		return width;
+		return VPwidth;
 	}
 
 	/**
@@ -133,8 +139,8 @@ public class Camera {
 	 * @return this (Builder pattern)
 	 */
 	public Camera setViewPlaneSize(double width, double height) {
-		this.height = height;
-		this.width = width;
+		this.VPheight = height;
+		this.VPwidth = width;
 		return this;
 	}
 
@@ -145,7 +151,9 @@ public class Camera {
 	 * @return this (Builder pattern)
 	 */
 	public Camera setVpDistance(double distance) {
-		this.distance = distance;
+		this.VPdistance = distance;
+		if (!isZero(distance))
+			viewPlaneCenter = location.add(vTo.scale(distance));
 		return this;
 	}
 
@@ -158,17 +166,31 @@ public class Camera {
 	 * @param i  Columns
 	 * @return Ray form location towards the center of pixel
 	 */
-	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
-		Point3D Pc;
-		Pc = location;
-		if (!isZero(distance)) {
-			Pc = location.add(vTo.scale(distance));
-		}
+	public List<Ray> constructBeamRay(int nX, int nY, int j, int i) {
+		Ray ray = constructRayThroughPixel(nX, nY, j, i);
+		List<Ray> rays = new LinkedList<>();
+		if (numOfRayForAntiAliasing > 0)
+			rays.addAll(constructBeamRayForAntiAliesing(ray, nX, nY));
+		if (numOfRayFormApertureWindowToFocalPoint > 0)
+			rays.addAll(constructBeamRayThroughFocalPoint(ray, nX, nY));
+		rays.add(ray);
+		return rays;
+	}
 
-		double Ry = height / nY, Rx = width / nX;
+	/**
+	 * construct Ray Through Pixel form location of camera F
+	 * 
+	 * @param nX depend hoe pixel we wont row
+	 * @param nY depend hoe pixel we wont column
+	 * @param j  Rows
+	 * @param i  Columns
+	 * @return Ray form location towards the center of pixel
+	 */
+	public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
+		double Ry = VPheight / nY, Rx = VPwidth / nX;
 		double xj = (j - (nX - 1) / 2d) * Rx;
 		double yi = -(i - (nY - 1) / 2d) * Ry;
-		Point3D pij = Pc;
+		Point3D pij = viewPlaneCenter;
 		if (!isZero(xj)) {
 			pij = pij.add(vRight.scale(xj));
 		}
@@ -211,8 +233,9 @@ public class Camera {
 			vUp = new Vector(1, 0, 0);
 			vRight = vTo.crossProduct(vUp).normalize();
 		}
+		if (!isZero(VPdistance))
+			viewPlaneCenter = location.add(vTo.scale(VPdistance));
 		return this;
-
 	}
 
 	/**
@@ -271,13 +294,16 @@ public class Camera {
 	 * 
 	 */
 	public List<Ray> constructBeamRayThroughFocalPoint(Ray ray, int nX, int nY) {
-		if (numOfRayFormApertureWindowToFocalPoint == 0)
-			return null;
-		List<Ray> list = new LinkedList<>();
+		List<Ray> splittedRays = new LinkedList<>();
 		double t = distanceToFocalPlane / (vTo.dotProduct(ray.getDir()));
-		list = ray.raySplitter(numOfRayFormApertureWindowToFocalPoint, sizeForApertureWindow, distanceToFocalPlane,
-				ray.getPoint(t));
-		return list;
+		Point3D focalPoint = ray.getPoint(t);
+		for (int i = 0; i < numOfRayFormApertureWindowToFocalPoint; i++) {
+			Point3D point3d = location.randomPointOnRectangle(ray.getDir(), sizeForApertureWindow,
+					sizeForApertureWindow);
+			Vector v = focalPoint.subtract(point3d);
+			splittedRays.add(new Ray(point3d, v));
+		}
+		return splittedRays;
 	}
 
 	/**
@@ -291,21 +317,23 @@ public class Camera {
 	 * 
 	 */
 	public List<Ray> constructBeamRayForAntiAliesing(Ray ray, int nX, int nY) {
-		if (numOfRayForAntiAliasing == 0)
-			return null;
-		List<Ray> antiAliasingRays = new LinkedList<>();
-//		nY = (numOfRayForAntiAliasing / 2) / nY;
-//		nX = (numOfRayForAntiAliasing / 2) / nX;
-//
-//		for (int i = 0; i < nY; ++i)
-//			for (int j = 0; j < nX; ++j) {
-//				antiAliasingRays.add(constructRayThroughPixel(nX, nY, j, i));
-//			}
-		double t = distance / (vTo.dotProduct(ray.getDir()));
-		antiAliasingRays = ray.raySplitter(numOfRayForAntiAliasing, width / nX, height / nY,
-				location.distance(ray.getPoint(t)));
-		return antiAliasingRays;
-
+		List<Ray> splittedRays = new LinkedList<>();
+		Point3D centerCirclePoint = null;
+		double t = VPdistance / (vTo.dotProduct(ray.getDir()));
+		double distance = location.distance(ray.getPoint(t));
+		try {
+			centerCirclePoint = ray.getPoint(distance);
+		} catch (Exception e) {
+			centerCirclePoint = location;
+		}
+		Point3D randomCirclePoint = null;
+		Vector dir = ray.getDir();
+		for (int i = 0; i < numOfRayForAntiAliasing; i++) {
+			randomCirclePoint = centerCirclePoint.randomPointOnRectangle(dir, VPwidth / nX, VPheight / nY);
+			Vector v = randomCirclePoint.subtract(location);
+			splittedRays.add(new Ray(location, v));
+		}
+		return splittedRays;
 	}
 
 }

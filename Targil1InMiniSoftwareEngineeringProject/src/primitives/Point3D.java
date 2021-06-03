@@ -1,7 +1,6 @@
 package primitives;
 
-import static primitives.Util.alignZero;
-import static primitives.Util.random;
+import static primitives.Util.*;
 
 /**
  * A point in three-dimensional space of this shape: (x,y,z)
@@ -14,24 +13,11 @@ public class Point3D {
 	 * 
 	 * x , y , z present the three dimension
 	 */
-	final private Coordinate x, y, z;
+	final Coordinate x, y, z;
 	/**
 	 * ZERO=(0,0,0)
 	 */
 	public static Point3D ZERO = new Point3D(0, 0, 0);
-
-	/**
-	 * point Represented by three coordinate in 3D world
-	 * 
-	 * @param x Axis
-	 * @param y Axis
-	 * @param z Axis
-	 */
-	public Point3D(Coordinate x, Coordinate y, Coordinate z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
-	}
 
 	/**
 	 * point contractor whit 3 double number this number are Are replaced to
@@ -105,8 +91,9 @@ public class Point3D {
 	 * @return new point the sum of the two point 3D
 	 */
 	public Point3D add(Vector v) {
-		return new Point3D(this.x.coord + v.getHead().x.coord, this.y.coord + v.getHead().y.coord,
-				this.z.coord + v.getHead().z.coord);
+		return new Point3D(this.x.coord + v.head.x.coord, //
+				this.y.coord + v.head.y.coord, //
+				this.z.coord + v.head.z.coord);
 
 	}
 
@@ -143,17 +130,15 @@ public class Point3D {
 	 *         if all Coordinates are equal return 'x'
 	 */
 	public char findAbsoluteMinimumCoordinate() {
-		double x = getX(), y = getY(), z = getZ();
-		double minimum = Math.abs(x);
+		double minimum = this.x.coord < 0 ? -this.x.coord : this.x.coord; // abs(x)
 		char index = 'x';
-		y = Math.abs(y);
+		double y = this.y.coord < 0 ? -this.y.coord : this.y.coord; // abs(y)
 		if (y < minimum) {
 			minimum = y;
 			index = 'y';
 		}
-		z = Math.abs(z);
+		double z = this.z.coord < 0 ? -this.z.coord : this.z.coord; // abs(z)
 		if (z < minimum) {
-			minimum = z;
 			index = 'z';
 		}
 		return index;
@@ -194,16 +179,16 @@ public class Point3D {
 	 * @return Returns a random point on the square
 	 */
 	public Point3D randomPointOnRectangle(Vector dir, double width, double height) {
-		Vector firstNormal = dir.createVerticalVector();
+		Vector firstNormal = dir.createOrthogonalVector();
 		Vector secondNormal = firstNormal.crossProduct(dir).normalize();
 		Point3D randomCirclePoint = this;
-		double x = 0, y = 0, r = 0;
-		x = random(-1, 1);
-		y = random(-1, 1);
-		r = random(-width / 2, width / 2);
-		x = alignZero(x * r);
-		r = random(-height / 2, height / 2);
-		y = alignZero(y * r);
+		double r;
+		double wHalf = width / 2;
+		r = random(0, wHalf);
+		double x = random(-r, r);
+		double hHalf = height / 2;
+		r = random(0, hHalf);
+		double y = random(-r, r);
 		if (x != 0)
 			randomCirclePoint = randomCirclePoint.add(firstNormal.scale(x));
 		if (y != 0)

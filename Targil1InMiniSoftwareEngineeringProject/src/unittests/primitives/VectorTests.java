@@ -187,27 +187,27 @@ public class VectorTests {
 	@Test
 	public void testCreateVerticalVector() {
 		Vector v = new Vector(1, 1, 1);
-		double d = v.dotProduct(v.createVerticalVector());
+		double d = v.dotProduct(v.createOrthogonalVector());
 		// TC01: vector 1,1,1 all the same
 		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
 		
 		v = new Vector(-2, 8, -10).normalize();
-		d = v.dotProduct(v.createVerticalVector());
+		d = v.dotProduct(v.createOrthogonalVector());
 		// TC02: component x is smallest
 		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
 		
 		v = new Vector(-10, 8, -5).normalize();
-		d = v.dotProduct(v.createVerticalVector());
+		d = v.dotProduct(v.createOrthogonalVector());
 		// TC03: component z is smallest
 		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
 		
 		v = new Vector(-2, 8, -10).normalize();
-		d = v.dotProduct(v.createVerticalVector());
+		d = v.dotProduct(v.createOrthogonalVector());
 		// TC04: component y is smallest
 		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
 		
 		v = new Vector(-7127, 5000, -9000).normalize();
-		d = v.dotProduct(v.createVerticalVector());
+		d = v.dotProduct(v.createOrthogonalVector());
 		// TC01: vector (-7127, 5000, -9000).normalize()
 		assertEquals("CreateVerticalVector() Does not Create Vertical Vector", 0d, d, 0.00000000000001);
 
