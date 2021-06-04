@@ -14,12 +14,12 @@ import primitives.*;
  * @author yosefHaim
  *
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
 	/**
 	 * list of geometries like sphere, triangle, tube, plane,polygon, cylinder
 	 */
 	private List<Intersectable> geometries = new LinkedList<>();
-
+	
 	/**
 	 * Default ctor
 	 * for geometries 

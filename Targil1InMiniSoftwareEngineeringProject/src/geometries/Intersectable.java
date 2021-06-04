@@ -15,7 +15,8 @@ import primitives.*;
  * @author yosefHaim
  *
  */
-public interface Intersectable {
+public abstract class Intersectable {
+
 	/**
 	 * PDS Class - we link a geometry body with a point on it<br>
 	 * to adapt the color emission and get a more realistic render
@@ -24,8 +25,13 @@ public interface Intersectable {
 	 *
 	 */
 	public static class GeoPoint {
-
+		/**
+		 * geometry are connect to point
+		 */
 		public Geometry geometry;
+		/**
+		 * point are connect to geometry
+		 */
 		public Point3D point;
 
 		/**
@@ -60,7 +66,7 @@ public interface Intersectable {
 	 * @return Returns a list of points (not geo) if there is no intersect return
 	 *         null
 	 */
-	default List<Point3D> findIntersections(Ray ray) {
+	public List<Point3D> findIntersections(Ray ray) {
 		var geoList = findGeoIntersections(ray);
 		return geoList == null ? null : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
 	}
@@ -74,10 +80,10 @@ public interface Intersectable {
 	 *         else<br>
 	 *         if there are no Intersections: null
 	 */
-	default List<GeoPoint> findGeoIntersections(Ray ray) {
+	public List<GeoPoint> findGeoIntersections(Ray ray) {
 		return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
 	}
 
-	List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+	abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
 }

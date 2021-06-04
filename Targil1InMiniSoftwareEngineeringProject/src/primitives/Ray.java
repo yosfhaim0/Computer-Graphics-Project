@@ -155,6 +155,7 @@ public class Ray {
 		splittedRays.add(this);
 		return splittedRays;
 	}
+
 	/**
 	 * 
 	 * *******For Soft Shadow*******<br>

@@ -43,11 +43,13 @@ public class Camera {
 	 */
 	private double distanceToFocalPlane = 0;
 	/**
-	 * num Of Ray Form Aperture Window To Focal Point<br>
+	 * Also serves as a Boolean variable whether or not this image improvement<br>
+	 * exists num Of Ray Form Aperture Window To Focal Point<br>
 	 * Number of rays for focus
 	 */
 	private int numOfRayFormApertureWindowToFocalPoint = 0;
 	/**
+	 * Also serves as a Boolean variable whether or not this image improvement<br>
 	 * num Of Ray For Anti Aliasing sharping the Edges
 	 */
 	private int numOfRayForAntiAliasing = 0;
