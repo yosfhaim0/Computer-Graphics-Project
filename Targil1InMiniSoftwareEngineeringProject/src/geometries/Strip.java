@@ -34,4 +34,10 @@ public class Strip extends Geometry {
 		return pol.findGeoIntersections(ray, maxDistance);
 	}
 
+	@Override
+	protected void setBox() {
+	    // TODO Auto-generated method stub
+	    
+	}
+
 }

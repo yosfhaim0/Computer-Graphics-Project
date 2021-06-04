@@ -17,73 +17,86 @@ import primitives.*;
  */
 public abstract class Intersectable {
 
+    // to comment
+    protected double minX, maxX, minY, maxY, minZ, maxZ;
+    protected Point3D middlePoint;
+    protected boolean bounded = false;
+    protected boolean BVHactivated = false;
+
+    protected abstract void setBox();
+
+    /**
+     * 
+     * @return the center point of the box
+     */
+    public Point3D getMiddlePoint() {
+	return new Point3D(minX + ((maxX - minX) / 2), minY + ((maxY - minY) / 2), minZ + ((maxZ - minZ) / 2));
+    }
+
+    /**
+     * PDS Class - we link a geometry body with a point on it<br>
+     * to adapt the color emission and get a more realistic render
+     * 
+     * @author yosefHaim
+     *
+     */
+    public static class GeoPoint {
 	/**
-	 * PDS Class - we link a geometry body with a point on it<br>
-	 * to adapt the color emission and get a more realistic render
-	 * 
-	 * @author yosefHaim
-	 *
+	 * geometry are connect to point
 	 */
-	public static class GeoPoint {
-		/**
-		 * geometry are connect to point
-		 */
-		public Geometry geometry;
-		/**
-		 * point are connect to geometry
-		 */
-		public Point3D point;
-
-		/**
-		 * Ctor for geoPoint
-		 * 
-		 * @param geometryBody the body associate
-		 * @param point3d      point on the body
-		 */
-		public GeoPoint(Geometry geometryBody, Point3D point3d) {
-			this.geometry = geometryBody;
-			this.point = point3d;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (!(obj instanceof GeoPoint))
-				return false;
-			GeoPoint other = (GeoPoint) obj;
-			return point.equals(other.point) && geometry.equals(other.geometry);
-		}
-	}
+	public Geometry geometry;
+	/**
+	 * point are connect to geometry
+	 */
+	public Point3D point;
 
 	/**
+	 * Ctor for geoPoint
 	 * 
-	 * Default function for finding intersection points
-	 * 
-	 * @param ray Gets a Ray that is supposed to cut the shape
-	 * @return Returns a list of points (not geo) if there is no intersect return
-	 *         null
+	 * @param geometryBody the body associate
+	 * @param point3d      point on the body
 	 */
-	public List<Point3D> findIntersections(Ray ray) {
-		var geoList = findGeoIntersections(ray);
-		return geoList == null ? null : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
+	public GeoPoint(Geometry geometryBody, Point3D point3d) {
+	    this.geometry = geometryBody;
+	    this.point = point3d;
 	}
 
-	/**
-	 * The function returns a list of geoPoints that <br>
-	 * are points of intersection of the shape with the ray
-	 * 
-	 * @param ray Gets a Ray that is supposed to cut the shape
-	 * @return if there are Intersections: List<GeoPoint> Point3D <br>
-	 *         else<br>
-	 *         if there are no Intersections: null
-	 */
-	public List<GeoPoint> findGeoIntersections(Ray ray) {
-		return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+	@Override
+	public boolean equals(Object obj) {
+	    if (this == obj) return true;
+	    if (obj == null) return false;
+	    if (!(obj instanceof GeoPoint)) return false;
+	    GeoPoint other = (GeoPoint) obj;
+	    return point.equals(other.point) && geometry.equals(other.geometry);
 	}
+    }// end GeoPoint Class
 
-	abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+    /**
+     * 
+     * Default function for finding intersection points
+     * 
+     * @param ray Gets a Ray that is supposed to cut the shape
+     * @return Returns a list of points (not geo) if there is no intersect return
+     *         null
+     */
+    public List<Point3D> findIntersections(Ray ray) {
+	var geoList = findGeoIntersections(ray);
+	return geoList == null ? null : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
+    }
+
+    /**
+     * The function returns a list of geoPoints that <br>
+     * are points of intersection of the shape with the ray
+     * 
+     * @param ray Gets a Ray that is supposed to cut the shape
+     * @return if there are Intersections: List<GeoPoint> Point3D <br>
+     *         else<br>
+     *         if there are no Intersections: null
+     */
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+	return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+
+    abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
 }
