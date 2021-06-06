@@ -14,117 +14,118 @@ import primitives.*;
  *
  */
 public class Plane extends Geometry {
-    /**
-     * q0 one of the point plane
-     */
-    private Point3D q0;
-    /**
-     * normal vector to the plane i.e. unit vector orthogonal to the plane
-     */
-    private Vector normal;
-
-    /**
-     * Constructor whit point and vector
-     * 
-     * @param p point on the Plane
-     * @param v normal horizontal to the Plane
-     */
-    public Plane(Point3D p, Vector v) {
-	this.q0 = p;
-	this.normal = v.normalized();
-    }
-
-    // to comment
-    private static final double DELTA = 0.1;
-
-    /**
-     * Constructor that builds Plane from 3 points in the plane
-     * 
-     * @param p1 first point
-     * @param p2 second point
-     * @param p3 third point
-     */
-    public Plane(Point3D p1, Point3D p2, Point3D p3) {
-	Vector v1 = p2.subtract(p1);
-	Vector v2 = p3.subtract(p1);
-	this.normal = v1.crossProduct(v2).normalize();
-	this.q0 = p1;
-    }
-
-    /**
-     * q0 is the on of the par who present plane(there is a normal too)
-     * 
-     * @return point on the plane
-     */
-    public Point3D getq0() {
-	return this.q0;
-    }
-
-    @Override
-    public Vector getNormal(Point3D p) {
 	/**
-	 * Normal form the q0
+	 * q0 one of the point plane
 	 */
-	return this.normal;
-    }
+	private Point3D q0;
+	/**
+	 * normal vector to the plane i.e. unit vector orthogonal to the plane
+	 */
+	private Vector normal;
 
-    /**
-     * the normal present plane
-     * 
-     * @return Vector
-     */
-    public Vector getNormal() {
-	return this.normal;
-    }
-
-    @Override
-    protected void setBox() {
-
-	if (normal.getHead().getY() == 0 && normal.getHead().getZ() == 0) {
-	    minX = maxX = q0.getX();
-	    minX -= DELTA;
-	    maxX += DELTA;
-	} else {
-	    minX = Double.NEGATIVE_INFINITY;
-	    maxX = Double.POSITIVE_INFINITY;
+	/**
+	 * Constructor whit point and vector
+	 * 
+	 * @param p point on the Plane
+	 * @param v normal horizontal to the Plane
+	 */
+	public Plane(Point3D p, Vector v) {
+		this.q0 = p;
+		this.normal = v.normalized();
 	}
-	if (normal.getHead().getX() == 0 && normal.getHead().getZ() == 0) {
-	    minY = maxY = q0.getY();
-	    minY -= DELTA;
-	    maxY += DELTA;
-	} else {
-	    minY = Double.NEGATIVE_INFINITY;
-	    maxY = Double.POSITIVE_INFINITY;
-	}
-	if (normal.getHead().getX() == 0 && normal.getHead().getY() == 0) {
-	    minZ = maxZ = q0.getZ();
-	    minZ -= DELTA;
-	    maxZ += DELTA;
-	} else {
-	    minZ = Double.NEGATIVE_INFINITY;
-	    maxZ = Double.POSITIVE_INFINITY;
-	}
-    }
 
-    @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-	double nQMinusP0;
-	double nv = normal.dotProduct(ray.getDir());
-	try {
-	    nQMinusP0 = normal.dotProduct(q0.subtract(ray.getP0()));
-	} catch (Exception e) {
-	    // if q0 == p0 there are no intersection
-	    return null;
+	// to comment
+	private static final double DELTA = 0.1;
+
+	/**
+	 * Constructor that builds Plane from 3 points in the plane
+	 * 
+	 * @param p1 first point
+	 * @param p2 second point
+	 * @param p3 third point
+	 */
+	public Plane(Point3D p1, Point3D p2, Point3D p3) {
+		Vector v1 = p2.subtract(p1);
+		Vector v2 = p3.subtract(p1);
+		this.normal = v1.crossProduct(v2).normalize();
+		this.q0 = p1;
 	}
-	// Because nv is equal to 0 it means that: 1. plane and the ray are parallel ->
-	// no intersection points 2. they are contained each other (ray and the plane)
-	// -> infinite intersection points
-	if (isZero(nv)) return null;
 
-	// if t<0 it mean there are no intersection whit the ray
-	// if t==0 it mean the begin of the ray are contained in the plane
-	double t = alignZero(nQMinusP0 / nv);
+	/**
+	 * q0 is the on of the par who present plane(there is a normal too)
+	 * 
+	 * @return point on the plane
+	 */
+	public Point3D getq0() {
+		return this.q0;
+	}
 
-	return t > 0 && alignZero(t - maxDistance) <= 0 ? List.of(new GeoPoint(this, ray.getPoint(t))) : null;
-    }
+	@Override
+	public Vector getNormal(Point3D p) {
+		/**
+		 * Normal form the q0
+		 */
+		return this.normal;
+	}
+
+	/**
+	 * the normal present plane
+	 * 
+	 * @return Vector
+	 */
+	public Vector getNormal() {
+		return this.normal;
+	}
+
+	@Override
+	protected void setBox() {
+		double x = normal.getHead().getX(), y = normal.getHead().getY(), z = normal.getHead().getZ();
+		if (y == 0 && z == 0) {
+			minX = maxX = q0.getX();
+			minX -= DELTA;
+			maxX += DELTA;
+		} else {
+			minX = Double.NEGATIVE_INFINITY;
+			maxX = Double.POSITIVE_INFINITY;
+		}
+		if (x == 0 && z == 0) {
+			minY = maxY = q0.getY();
+			minY -= DELTA;
+			maxY += DELTA;
+		} else {
+			minY = Double.NEGATIVE_INFINITY;
+			maxY = Double.POSITIVE_INFINITY;
+		}
+		if (x == 0 && y == 0) {
+			minZ = maxZ = q0.getZ();
+			minZ -= DELTA;
+			maxZ += DELTA;
+		} else {
+			minZ = Double.NEGATIVE_INFINITY;
+			maxZ = Double.POSITIVE_INFINITY;
+		}
+	}
+
+	@Override
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+		double nQMinusP0;
+		double nv = normal.dotProduct(ray.getDir());
+		try {
+			nQMinusP0 = normal.dotProduct(q0.subtract(ray.getP0()));
+		} catch (Exception e) {
+			// if q0 == p0 there are no intersection
+			return null;
+		}
+		// Because nv is equal to 0 it means that: 1. plane and the ray are parallel ->
+		// no intersection points 2. they are contained each other (ray and the plane)
+		// -> infinite intersection points
+		if (isZero(nv))
+			return null;
+
+		// if t<0 it mean there are no intersection whit the ray
+		// if t==0 it mean the begin of the ray are contained in the plane
+		double t = alignZero(nQMinusP0 / nv);
+
+		return t > 0 && alignZero(t - maxDistance) <= 0 ? List.of(new GeoPoint(this, ray.getPoint(t))) : null;
+	}
 }

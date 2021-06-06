@@ -106,8 +106,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    protected void setBox() {
-
+    protected void setBox() { 
 	minX = center.getX() - radius;
 	maxX = center.getX() + radius;
 	minY = center.getY() - radius;
@@ -115,6 +114,6 @@ public class Sphere extends Geometry {
 	minZ = center.getZ() - radius;
 	maxZ = center.getZ() + radius;
 	middlePoint = center;
-	bounded = true;
+	finity = true;
     }
 }

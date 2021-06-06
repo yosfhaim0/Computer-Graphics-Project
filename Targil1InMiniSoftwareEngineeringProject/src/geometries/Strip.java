@@ -5,7 +5,6 @@ package geometries;
 
 import java.util.List;
 
-
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -18,10 +17,10 @@ public class Strip extends Geometry {
 	Polygon pol;
 
 	public Strip(Point3D p1, Point3D p2) {
-		pol = new Polygon(new Point3D(p1.getX() + 0.1, 0, p1.getY() + 0.1),
-				new Point3D(p1.getX() - 0.1, 0, p1.getY() + 0.1), //
-				new Point3D(p1.getX() - 0.1, 0, p1.getY() - 0.1), //
-				new Point3D(p1.getX() + 0.1, 0, p1.getY() - 0.1));
+		pol = new Polygon(new Point3D(p1.getX() > 0 ? +0.1 : -0.1, 0, p1.getY() > 0 ? +0.1 : -0.1),
+				new Point3D(p1.getX() > 0 ? +1 : -1, 0, p1.getY() > 0 ? +1 : -1), //
+				new Point3D(p2.getX() > 0 ? +1 : -1, 0, p2.getY() > 0 ? +1 : -1), //
+				new Point3D(p2.getX() > 0 ? +1 : -1, 0, p2.getY() > 0 ? +1 : -1));
 	}
 
 	@Override
@@ -36,8 +35,8 @@ public class Strip extends Geometry {
 
 	@Override
 	protected void setBox() {
-	    // TODO Auto-generated method stub
-	    
+		// TODO Auto-generated method stub
+
 	}
 
 }
