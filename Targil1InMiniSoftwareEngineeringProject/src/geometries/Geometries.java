@@ -61,9 +61,8 @@ public class Geometries extends Intersectable {
 		}
 		return resultList;
 	}
-
 	@Override
-	protected void setBox() {
+	protected void CreateBoundingBox() {
 		minX = Double.MAX_VALUE;
 		minY = Double.MAX_VALUE;
 		minZ = Double.MAX_VALUE;
@@ -86,25 +85,27 @@ public class Geometries extends Intersectable {
 				maxZ = geo.maxZ;
 
 		}
-		middlePoint = getMiddlePoint();
+		middleBoxPoint = getMiddlePoint();
 	}
 
 	/**
 	 * the function is calling the makeTree function after taking out all infinity
-	 * shapes to a separate list after the function makeTree was called and return
-	 * the binary tree list we add the infinity shape list to the head of the binary
-	 * list so _shapes as all geometries in one list.
+	 * shapes to a separate list.<br>
+	 * after the function createGeometriesTreeRecursion was called and return the
+	 * binary tree list we add the infinity shape list to the head of the binary
+	 * tree.<br>
+	 * so geometries as all geometries in one binary tree.
 	 */
-	public void callMakeTree() {
+	public void createGeometriesTree() {
 		LinkedList<Intersectable> shapesWhitOutBox = null;
 		for (int i = 0; i < geometries.size(); ++i) {
-			if (!geometries.get(i).finity) {
+			if (!geometries.get(i).finityShape) {
 				if (shapesWhitOutBox == null)
 					shapesWhitOutBox = new LinkedList<Intersectable>();
 				shapesWhitOutBox.add(geometries.remove(i));
 			}
 		}
-		geometries = makeTree(geometries);
+		geometries = createGeometriesTreeRecursion(geometries);
 		if (shapesWhitOutBox != null)
 			geometries.addAll(0, shapesWhitOutBox);
 	}
@@ -113,7 +114,7 @@ public class Geometries extends Intersectable {
 	 * update box size after every new geometry we add to geometries list.
 	 */
 	protected void updateBoxSize(Intersectable a, Intersectable b) {
-		finity = true;
+		finityShape = true;
 		minX = Double.MAX_VALUE;
 		minY = Double.MAX_VALUE;
 		minZ = Double.MAX_VALUE;
@@ -126,43 +127,47 @@ public class Geometries extends Intersectable {
 		maxX = Math.max(a.maxX, b.maxX);
 		maxY = Math.max(a.maxY, b.maxY);
 		maxZ = Math.max(a.maxZ, b.maxZ);
-		middlePoint = getMiddlePoint();
+		middleBoxPoint = getMiddlePoint();
 	}
 
 	/**
-	 * the function is making pears of two closes geometries until the list is empty
-	 * the function calls itself until the list contains one geometry node
+	 * The function calculates the list that represents a binary tree of boxes
+	 * within boxes...<br>
+	 * inside each box there are two closely related shapes,<br>
+	 * used to accelerate the ray tracer,<br>
+	 * in case a ray does not cut the box all the boxes inside it are probably not
+	 * cut.
 	 *
-	 * @param geometries2 the list of finite shapes
-	 * @return a list of shapes in a binary way
+	 * @param finiteShapes the list of finite Shapes
+	 * @return a list of shapes present tree of geometries
 	 */
-	List<Intersectable> makeTree(List<Intersectable> geometries2) {
-		if (geometries2.size() == 1)
-			return geometries2;
+	List<Intersectable> createGeometriesTreeRecursion(List<Intersectable> finiteShapes) {
+		if (finiteShapes.size() == 1)
+			return finiteShapes;
 		LinkedList<Intersectable> _newShapes = null;
-		while (!geometries2.isEmpty()) {
-			Intersectable first = geometries2.remove(0), nextTo = geometries2.get(0);
-			double minD = first.middlePoint.distance(nextTo.middlePoint);
+		while (!finiteShapes.isEmpty()) {
+			Intersectable first = finiteShapes.remove(0), nextTo = finiteShapes.get(0);
+			double minD = first.middleBoxPoint.distance(nextTo.middleBoxPoint);
 			int min = 0;
-			for (int i = 1; i < geometries2.size(); ++i) {
+			for (int i = 1; i < finiteShapes.size(); ++i) {
 				if (minD == 0)
 					break;
-				double temp = first.middlePoint.distance(geometries2.get(i).middlePoint);
+				double temp = first.middleBoxPoint.distance(finiteShapes.get(i).middleBoxPoint);
 				if (temp < minD) {
 					minD = temp;
-					nextTo = geometries2.get(i);
+					nextTo = finiteShapes.get(i);
 					min = i;
 				}
 			}
 			if (_newShapes == null)
 				_newShapes = new LinkedList<Intersectable>();
-			geometries2.remove(min);
+			finiteShapes.remove(min);
 			Geometries newGeo = new Geometries(first, nextTo);
 			newGeo.updateBoxSize(first, nextTo);
 			_newShapes.add(newGeo);
-			if (geometries2.size() == 1)
-				_newShapes.add(geometries2.remove(0));
+			if (finiteShapes.size() == 1)
+				_newShapes.add(finiteShapes.remove(0));
 		}
-		return makeTree(_newShapes);
+		return createGeometriesTreeRecursion(_newShapes);
 	}
 }

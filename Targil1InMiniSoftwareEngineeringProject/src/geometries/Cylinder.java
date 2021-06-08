@@ -133,7 +133,7 @@ public class Cylinder extends Tube {
 	}
 
 	@Override
-	protected void setBox() {
+	protected void CreateBoundingBox() {
 		double x = axisRay.getDir().getHead().getX(), y = axisRay.getDir().getHead().getY(),
 				z = axisRay.getDir().getHead().getZ();
 		Ray ray = new Ray(axisRay.getP0(), axisRay.getDir().createOrthogonalVector());
@@ -158,7 +158,7 @@ public class Cylinder extends Tube {
 			minZ = axisRay.getPoint(-radius).getZ();
 			maxZ = axisRay.getPoint(radius + height).getZ();
 		}
-		middlePoint = getMiddlePoint();
-		finity = true;
+		middleBoxPoint = getMiddlePoint();
+		finityShape = true;
 	}
 }

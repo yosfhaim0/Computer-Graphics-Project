@@ -160,7 +160,7 @@ public class Tube extends Geometry {
 	}
 
 	@Override
-	protected void setBox() {
+	protected void CreateBoundingBox() {
 		double x = axisRay.getDir().getHead().getX(), y = axisRay.getDir().getHead().getY(),
 				z = axisRay.getDir().getHead().getZ();
 		Ray ray = new Ray(axisRay.getP0(), axisRay.getDir().createOrthogonalVector());
@@ -186,7 +186,7 @@ public class Tube extends Geometry {
 			minZ = Double.NEGATIVE_INFINITY;
 			maxZ = Double.POSITIVE_INFINITY;
 		}
-		middlePoint = getMiddlePoint();
+		middleBoxPoint = getMiddlePoint();
 	}
 
 }

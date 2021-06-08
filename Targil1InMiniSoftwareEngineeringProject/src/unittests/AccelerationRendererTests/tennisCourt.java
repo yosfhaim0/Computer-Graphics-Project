@@ -3,28 +3,16 @@
  */
 package unittests.AccelerationRendererTests;
 
-import static org.junit.Assert.*;
-
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import elements.*;
 
-import elements.AmbientLight;
-import elements.Camera;
-import elements.DirectionalLight;
-import elements.PointLight;
-import elements.SpotLight;
 import geometries.*;
 import primitives.*;
-import primitives.Point3D;
-import primitives.Vector;
-import renderer.ImageWriter;
-import renderer.RayTracerBasic;
-import renderer.Render;
-import scene.Scene;
+import renderer.*;
+import scene.*;
 
 /**
  * @author yosefHaim
@@ -90,6 +78,35 @@ public class tennisCourt {
 					.setEmission(new Color(0, 255, 0))
 					.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)));
 		}
+		for (int i = -1000; i < 1000; i = i + 150) {
+			scene.geometries.add(new Sphere(new Point3D(i, 50, 150), 50).setEmission(new Color(0, 255, 0))
+					.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)));
+		}
+		Point3D A, B, C, D, E, F, G, H;
+		for (int i = -1000; i < 1000; i = i + 300) {
+			A = new Point3D(i, 0, -150);
+			B = new Point3D(i + 150, 0, -150);
+			C = new Point3D(i + 150, 0, -300);
+			D = new Point3D(i, 0, -300);
+			E = new Point3D(i, 150, -300);
+			F = new Point3D(i + 150, 150, -300);
+			G = new Point3D(i + 150, 150, -150);
+			H = new Point3D(i, 150, -150);
+
+			scene.geometries.add(new Polygon(A, B, C, D).setEmission(new Color(java.awt.Color.BLACK))// DOWN
+					.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)),
+					new Polygon(C, B, G, F).setEmission(new Color(java.awt.Color.YELLOW))
+							.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)),
+					new Polygon(B, G, H, A).setEmission(new Color(java.awt.Color.BLACK))
+							.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)),
+					new Polygon(A, D, E, H).setEmission(new Color(java.awt.Color.BLACK))
+							.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)),
+					new Polygon(C, F, E, D).setEmission(new Color(java.awt.Color.BLACK))
+							.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)),
+					new Polygon(E, F, G, H).setEmission(new Color(java.awt.Color.BLACK))
+							.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)));
+		}
+
 		scene.geometries.add(new Plane(Point3D.ZERO, new Vector(0, 1, 0)).setEmission(new Color(java.awt.Color.BLACK))
 				.setMaterial(new Material().setKd(0.5).setKs(0.5).setkT(0).setkR(0.1).setShininess(60)));
 		scene.lights.addAll(List.of(
@@ -100,10 +117,10 @@ public class tennisCourt {
 			scene.addLights(new SpotLight(new Color(100, 100, 100), new Point3D(i, 500, 100), new Point3D(i, 0, 0))
 					.setkC(1).setkL(0.0001).setkQ(0.00005));
 		}
-		int p = 500;
+		int p = 100;
 		scene.geometries.createBox();
-		scene.geometries.callMakeTree();
-		ImageWriter imageWriter = new ImageWriter("spheres", p, p);
+		scene.geometries.createGeometriesTree();
+		ImageWriter imageWriter = new ImageWriter("cliyndersAndSpheres", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
 				.setRayTracer(new RayTracerBasic(scene))//
 				.setMultithreading(3)//
@@ -119,7 +136,7 @@ public class tennisCourt {
 	 * Produce a picture of a several spheres with beautiful effects
 	 */
 	@Test
-	public void OurPicture1() {
+	public void Spheres() {
 		Scene scene = new Scene("Test scene");
 		Camera camera = (new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
 		camera.setVpDistance(1000).setViewPlaneSize(200, 200);
@@ -129,13 +146,14 @@ public class tennisCourt {
 		scene.geometries.add(
 				new Plane(new Point3D(0, 100, 500), new Vector(new Point3D(0, -1, 0)))
 						.setEmission(new Color(java.awt.Color.BLACK))
-						.setMaterial(new Material().setKd(0.5).setKs(0.5).setkT(0).setkR(0.2).setShininess(60)),
+						.setMaterial(new Material().setKd(0.5).setKs(0.5).setkT(0).setkR(0.4).setShininess(60)
+								.setRadiusForGlossy(0.08)),
 				new Sphere(new Point3D(50, 50, 2000), 50).setEmission(new Color(64, 224, 208))
 						.setMaterial(new Material().setKd(0.2).setKs(0.2).setkT(0.8).setkR(0).setShininess(10)),
 				new Sphere(new Point3D(150, 0, 2100), 100).setEmission(new Color(0, 255, 0))
 						.setMaterial(new Material().setKd(00.2).setKs(0.2).setkT(0.5).setkR(0).setShininess(100)),
 				new Sphere(new Point3D(-250, -50, 2200), 150).setEmission(new Color(32, 178, 170))
-						.setMaterial(new Material().setKd(0.2).setKs(0.2).setkT(0).setkR(0.2).setShininess(100)),
+						.setMaterial(new Material().setKd(0.2).setKs(0.2).setkT(0).setkR(0.0).setShininess(100)),
 				new Sphere(new Point3D(-50, 25, 2100), 75).setEmission(new Color(220, 20, 60))
 						.setMaterial(new Material().setKd(0.2).setKs(0.2).setkT(0.3).setkR(0.0).setShininess(20)));
 
@@ -144,10 +162,11 @@ public class tennisCourt {
 						.setkQ(0.00000001),
 				new SpotLight(new Color(500, 300, 0), new Point3D(250, -200, 1900), new Vector(-1, 1, 0.5)).setkC(1)
 						.setkL(4E-7).setkQ(2E-10));
-
-		ImageWriter imageWriter = new ImageWriter("OurPicture1", 600, 600);
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
+		ImageWriter imageWriter = new ImageWriter("spheras", 600, 600);
 		Render render = new Render().setCamera(camera).setImageWriter(imageWriter)
-				.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3).setDebugPrint();
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRayGlossy(100)).setMultithreading(3).setDebugPrint();
 
 		render.renderImage();
 		render.writeToImage();

@@ -34,7 +34,7 @@ public class Strip extends Geometry {
 	}
 
 	@Override
-	protected void setBox() {
+	protected void CreateBoundingBox() {
 		// TODO Auto-generated method stub
 
 	}

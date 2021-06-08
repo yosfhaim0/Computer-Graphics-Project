@@ -78,7 +78,7 @@ public class Plane extends Geometry {
 	}
 
 	@Override
-	protected void setBox() {
+	protected void CreateBoundingBox() {
 		double x = normal.getHead().getX(), y = normal.getHead().getY(), z = normal.getHead().getZ();
 		if (y == 0 && z == 0) {
 			minX = maxX = q0.getX();

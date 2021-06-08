@@ -16,14 +16,32 @@ import primitives.*;
  *
  */
 public abstract class Intersectable {
-
-	// to comment
+	/**
+	 * minX, maxX, minY, maxY, minZ, maxZ<br>
+	 * To create a box that corresponds to the axes we need 6 variables,<br>
+	 * because there are 8 points of the box double 3 coordinates and each
+	 * coordinate appears 4 times the same<br>
+	 * so it is possible to divide 3 * 8/4 = 6
+	 */
 	protected double minX, maxX, minY, maxY, minZ, maxZ;
-	protected Point3D middlePoint;
-	protected boolean finity = false;
+	/**
+	 * middle Box Point, the inner middle point of the box
+	 */
+	protected Point3D middleBoxPoint;
+	/**
+	 * if the shape are finite shape like sphere or cylinder = true<br>
+	 * other wise if shape are like plane or tube it mean infinity = false
+	 */
+	protected boolean finityShape = false;
+	/**
+	 * To give an option with or without acceleration of speed bounding volume
+	 * Hierarchy<br>
+	 * if we wont whit acceleration = true , whitout acceleration = false
+	 */
 	protected boolean BVHactivated = false;
 
 	/**
+	 * 
 	 * Create box for the shape <br>
 	 * set the miniX value to the minimum coordinate x of the shape or collection of
 	 * shape <br>
@@ -32,7 +50,7 @@ public abstract class Intersectable {
 	 * set the miniZ value to the minimum coordinate z of the shape or collection of
 	 * shape<br>
 	 */
-	protected abstract void setBox();
+	protected abstract void CreateBoundingBox();
 
 	/**
 	 * creating boxes for all shapes in the geometries list and setting the bounding
@@ -40,24 +58,26 @@ public abstract class Intersectable {
 	 */
 	public void createBox() {
 		BVHactivated = true;
-		setBox();
+		CreateBoundingBox();
 	}
 
 	/**
+	 * Function for finding the midpoint inside the box
 	 * 
-	 * @return the center point of the box
+	 * @return the center inner point of the box
 	 */
 	public Point3D getMiddlePoint() {
 		return new Point3D(minX + ((maxX - minX) / 2), minY + ((maxY - minY) / 2), minZ + ((maxZ - minZ) / 2));
 	}
 
 	/**
-	 * check if ray intersect with the box
+	 * Extremely fast algorithms<br>
+	 * for checking whether a ray cuts a box parallel to the axis
 	 *
-	 * @param ray the ray
+	 * @param A ray we want to test whether it is cutting or not the box
 	 * @return true if intersect false if not
 	 */
-	public boolean isIntersect(Ray ray) {
+	public boolean isIntersectWithTheBox(Ray ray) {
 		Point3D head = ray.getDir().getHead();
 		Point3D p = ray.getP0();
 		double temp;
@@ -145,7 +165,7 @@ public abstract class Intersectable {
 	 *         null
 	 */
 	public List<Point3D> findIntersections(Ray ray) {
-		var geoList = findGeoIntersections(ray);
+		var geoList = findIntsersectionsBound(ray);
 		return geoList == null ? null : geoList.stream().map(gp -> gp.point).collect(Collectors.toList());
 	}
 
@@ -163,12 +183,27 @@ public abstract class Intersectable {
 		return findIntsersectionsBound(ray);
 	}
 
+	/**
+	 * The function returns a list of geoPoints that <br>
+	 * are points of intersection of the shape with the ray
+	 * 
+	 * @param ray Gets a Ray that is supposed to cut the shape
+	 * @return if there are Intersections: List<GeoPoint> Point3D <br>
+	 *         else<br>
+	 *         if there are no Intersections: null
+	 */
 	public List<GeoPoint> findIntsersectionsBound(Ray ray) {
-		return BVHactivated && !isIntersect(ray) ? null : findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+		return BVHactivated && !isIntersectWithTheBox(ray) ? null : findGeoIntersections(ray, Double.POSITIVE_INFINITY);
 	}
 
+	/**
+	 * 
+	 * @param ray
+	 * @param maxDistanc
+	 * @return
+	 */
 	public List<GeoPoint> findIntsersectionsBound(Ray ray, double maxDistanc) {
-		return BVHactivated && !isIntersect(ray) ? null : findGeoIntersections(ray, maxDistanc);
+		return BVHactivated && !isIntersectWithTheBox(ray) ? null : findGeoIntersections(ray, maxDistanc);
 	}
 
 	abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);

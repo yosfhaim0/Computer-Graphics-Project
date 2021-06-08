@@ -128,7 +128,7 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    protected void setBox() {
+    protected void CreateBoundingBox() {
 	minX = Double.MAX_VALUE;
 	minY = Double.MAX_VALUE; 
 	minZ = Double.MAX_VALUE;
@@ -143,8 +143,8 @@ public class Polygon extends Geometry {
 	    if (point.getZ() < minZ) minZ = point.getZ();
 	    if (point.getZ() < maxZ) maxZ = point.getZ();
 	}
-	middlePoint = getMiddlePoint();
-	finity = true;
+	middleBoxPoint = getMiddlePoint();
+	finityShape = true;
     }
 
 }
