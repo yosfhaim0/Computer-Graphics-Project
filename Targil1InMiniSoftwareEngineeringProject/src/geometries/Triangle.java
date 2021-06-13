@@ -24,24 +24,14 @@ public class Triangle extends Polygon {
 		super(p1, p2, p3);
 	}
 
-	
-
-	public Triangle(Color color, Material material, Point3D p1, Point3D p2, Point3D p3) {
-		super(p1, p2, p3);
-		this.emission=color;
-		this.setMaterial(material);
-	}
-
-
-
 	@Override
 	public String toString() {
 		return "Triangle [vertices=" + vertices + ", plane=" + plane + "]";
 	}
 
 	@Override
-	public List<GeoPoint> findGeoIntersections(Ray ray,double maxDistance) {
-		List<GeoPoint> result = plane.findGeoIntersections(ray,maxDistance);
+	public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+		List<GeoPoint> result = plane.findGeoIntersections(ray, maxDistance);
 		if (result == null) {
 			return null;
 		}
@@ -68,7 +58,7 @@ public class Triangle extends Polygon {
 		if (!(checkSign(NdotProductDir0, NdotProductDir1)) || !(checkSign(NdotProductDir1, NdotProductDir2))
 				|| !(checkSign(NdotProductDir2, NdotProductDir0)))
 			return null;
-		result.get(0).geometry=this;
+		result.get(0).geometry = this;
 		return result;
 	}
 

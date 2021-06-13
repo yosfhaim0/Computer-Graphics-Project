@@ -51,6 +51,8 @@ public class SpotLight extends PointLight {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param kC the kC to set
 	 */
 	public SpotLight setkC(double kC) {
@@ -58,6 +60,8 @@ public class SpotLight extends PointLight {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param kL the kL to set
 	 */
 	public SpotLight setkL(double kL) {
@@ -65,6 +69,8 @@ public class SpotLight extends PointLight {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param kQ the kQ to set
 	 */
 	public SpotLight setkQ(double kQ) {
@@ -72,6 +78,8 @@ public class SpotLight extends PointLight {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param sharp the sharp to set
 	 */
 	public SpotLight setSharp(int sharp) {

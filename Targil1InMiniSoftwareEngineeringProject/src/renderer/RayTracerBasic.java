@@ -43,7 +43,7 @@ public class RayTracerBasic extends RayTracerBase {
 	/**
 	 * distance form the begin of the beam to the circle
 	 */
-	private double distanceForBlurryGlossy = 1;
+	private double distanceForBlurryGlossy = 80;
 
 	/**
 	 * setter for num of ray the ray are Initialized 1!
@@ -193,7 +193,7 @@ public class RayTracerBasic extends RayTracerBase {
 		if (kkt > MIN_CALC_COLOR_K) {
 			Ray ray1 = constructRefractedRay(normal, geopoint.point, v);
 			if (numOfRayBlurry > 0) {
-				color = calcBeamColor(material.radiusForBlurry, numOfRayBlurry, color, normal, ray1, level, kt, kkt);
+				color = calcBeamColor(material.radiusForBlurry, numOfRayBlurry, color, normal.scale(-1), ray1, level, kt, kkt);
 			} else {
 				color = calcGlobalEffect(ray1, level - 1, kt, kkt);
 			}

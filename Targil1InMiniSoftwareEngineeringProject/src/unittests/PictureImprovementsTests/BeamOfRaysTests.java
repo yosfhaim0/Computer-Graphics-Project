@@ -33,42 +33,42 @@ public class BeamOfRaysTests {
 		scene.geometries.add(new Polygon( // AEFD
 				new Point3D(0, 0, 0), new Point3D(0, 70, 0), new Point3D(-50, 70, 50), new Point3D(-50, 0, 50))
 						.setEmission(new Color(105, 105, 105))
-						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0)),
+						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0)),
 				new Polygon( // TOP
 						new Point3D(0, 70, 0), new Point3D(-50, 70, 50), new Point3D(0, 70, 100),
 						new Point3D(50, 70, 50)).setEmission(new Color(105, 105, 105))
-								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0)),
+								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0)),
 				new Polygon( // DFHB
 						new Point3D(-50, 0, 50), new Point3D(-50, 70, 50), new Point3D(0, 70, 100),
 						new Point3D(0, 0, 100)).setEmission(new Color(105, 105, 105))
-								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0)),
+								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0)),
 				new Polygon( // BHGC
 						new Point3D(0, 0, 100), new Point3D(0, 70, 100), new Point3D(50, 70, 50),
 						new Point3D(50, 0, 50)).setEmission(new Color(105, 105, 105))
-								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0)),
+								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0)),
 				new Polygon( // CGEA
 						new Point3D(50, 0, 50), new Point3D(50, 70, 50), new Point3D(0, 70, 0), new Point3D(0, 0, 0))
 								.setEmission(new Color(105, 105, 105))
-								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0)),
+								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0)),
 				new Polygon( // BOTTOM
 						new Point3D(0, 0, 0), new Point3D(-50, 0, 50), new Point3D(0, 0, 100), new Point3D(50, 0, 50))
 								.setEmission(new Color(105, 105, 105))
-								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0))
+								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0))
 
 				, new Sphere(new Point3D(0, 35, 50), 25).setEmission(new Color(java.awt.Color.red))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100))
 
 				,
 				new Plane(new Point3D(0, -5, 0), new Vector(0, 1, 0)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-						.setMaterial(new Material().setKd(0.2).setKs(0).setShininess(50).setkT(0).setkR(0.8)
+						.setMaterial(new Material().setKd(0.2).setKs(0).setShininess(50).setKt(0).setKr(0.8)
 								.setRadiusForGlossy(0.08))
 
 				,
 				new Sphere(new Point3D(-100, 35, 0), 30).setEmission(new Color(255, 210, 0))
-						.setMaterial(new Material().setKd(0.3).setKs(0).setShininess(900).setkT(0).setkR(0)
+						.setMaterial(new Material().setKd(0.3).setKs(0).setShininess(900).setKt(0).setKr(0)
 								.setRadiusForGlossy(0.08)),
 				new Sphere(new Point3D(100, 35, 0), 30).setEmission(new Color(255, 210, 0)).setMaterial(
-						new Material().setKd(0.3).setKs(0).setShininess(900).setkT(0).setkR(0).setRadiusForGlossy(0.08))
+						new Material().setKd(0.3).setKs(0).setShininess(900).setKt(0).setKr(0).setRadiusForGlossy(0.08))
 
 		);
 
@@ -81,7 +81,8 @@ public class BeamOfRaysTests {
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
 				.setRayTracer(new RayTracerBasic(scene).setDistanceForBlurryGlossy(80).setNumOfRayGlossy(100))
 				.setMultithreading(3).setDebugPrint();
-
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render.renderImage();
 		render.writeToImage();
 		// whitin glussy
@@ -137,7 +138,8 @@ public class BeamOfRaysTests {
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
 				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(100)).setMultithreading(3)
 				.setDebugPrint();
-
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render.renderImage();
 		render.writeToImage();
 
@@ -208,8 +210,8 @@ public class BeamOfRaysTests {
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(500)), // flor
 				new Polygon(new Point3D(300, 2000, 2000), new Point3D(300, 2000, 0), new Point3D(-300, 2000, 0),
 						new Point3D(-300, 2000, 2000)).setEmission(new Color(java.awt.Color.DARK_GRAY))
-								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setkT(0.6).setkR(0)
-										.setRadiusForGlossy(0.01))
+								.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6).setKr(0)
+										.setRadiusForBlurry(2))
 
 		);
 
@@ -219,37 +221,19 @@ public class BeamOfRaysTests {
 								.setkL(1E-5).setkQ(1.5E-7)).setSharp(3),
 				new SpotLight(new Color(1000, 1000, 1000), new Point3D(0, 1020, 700), new Vector(0, -1, 0)) //
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(5)));
-		int p = 1000;
+		int p = 700;
 		ImageWriter imageWriter = new ImageWriter("Syria tank position whitout blurry ", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(cam).setRayTracer(new RayTracerBasic(scene))
 				.setMultithreading(3).setDebugPrint();
-
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render.renderImage();
 		render.writeToImage();
-		boolean flag = true;
-		if (flag) {
-			render = render
-					// .setCamera(cam.setPosition(new Point3D(2000, 5000, 5000)).setCameraHead(new
-					// Point3D(0, 0, 500))
-					// .setVpDistance(Math.sqrt(10000 * 5000)))
-					.setImageWriter(new ImageWriter("Syria tank position whit blurry 2", p, p))
-					.setRayTracer(new RayTracerBasic(scene).setNumOfRayGlossy(100)).setMultithreading(3)
-					.setDebugPrint();
-			render.renderImage();
-			render.writeToImage();
-
-			render = render.setImageWriter(new ImageWriter("Syria tank position blurryer  3", p, p))
-					.setRayTracer(new RayTracerBasic(scene).setNumOfRayGlossy(100)).setMultithreading(3)
-					.setDebugPrint();
-			render.renderImage();
-			render.writeToImage();
-
-			render = render.setImageWriter(new ImageWriter("Syria tank position blurryest  4", p, p))
-					.setRayTracer(new RayTracerBasic(scene).setNumOfRayGlossy(100)).setMultithreading(3)
-					.setDebugPrint();
-			render.renderImage();
-			render.writeToImage();
-		}
+		render = render.setImageWriter(new ImageWriter("Syria tank position whit blurry", p, p))
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurry(100).setDistanceForBlurryGlossy(80))
+				.setMultithreading(3).setDebugPrint();
+		render.renderImage();
+		render.writeToImage();
 	}
 
 	@Test
@@ -290,7 +274,8 @@ public class BeamOfRaysTests {
 						.setSizeForApertureWindow(100).setNumOfRayFormApertureWindowToFocalPoint(50))
 				.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3)//
 				.setDebugPrint();
-
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render.renderImage();
 		render.writeToImage();
 
@@ -336,7 +321,8 @@ public class BeamOfRaysTests {
 				.setRayTracer(new RayTracerBasic(scene))//
 				.setDebugPrint()//
 				.setMultithreading(3);
-
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render1.renderImage();
 		render1.writeToImage();
 	}
@@ -371,6 +357,8 @@ public class BeamOfRaysTests {
 		ImageWriter imageWriter = new ImageWriter("View of the split rays random On circle", 200, 200);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
 				.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3).setDebugPrint();
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render.renderImage();
 		render.writeToImage();
 
@@ -412,8 +400,12 @@ public class BeamOfRaysTests {
 				.setRayTracer(new RayTracerBasic(scene))//
 				.setMultithreading(3)//
 				.setDebugPrint();
+		scene.geometries.createBox();
+		scene.geometries.createGeometriesTree();
 		render.renderImage();
 		render.writeToImage();
 
 	}
+
+	
 }

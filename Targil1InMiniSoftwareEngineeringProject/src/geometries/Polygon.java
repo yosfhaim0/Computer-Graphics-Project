@@ -141,7 +141,7 @@ public class Polygon extends Geometry {
 	    if (point.getY() < minY) minY = point.getY();
 	    if (point.getY() > maxY) maxY = point.getY();
 	    if (point.getZ() < minZ) minZ = point.getZ();
-	    if (point.getZ() < maxZ) maxZ = point.getZ();
+	    if (point.getZ() > maxZ) maxZ = point.getZ();
 	}
 	middleBoxPoint = getMiddlePoint();
 	finityShape = true;

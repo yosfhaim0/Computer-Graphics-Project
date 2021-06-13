@@ -100,6 +100,17 @@ public class Scene {
 	}
 
 	/**
+	 * set Tree Of Geometries
+	 * 
+	 * @return this for builder pattern
+	 */
+	public Scene setTreeOfGeomtir() {
+		geometries.createBox();
+		geometries.createGeometriesTree();
+		return this;
+	}
+
+	/**
 	 * adding list
 	 * 
 	 * @param lights

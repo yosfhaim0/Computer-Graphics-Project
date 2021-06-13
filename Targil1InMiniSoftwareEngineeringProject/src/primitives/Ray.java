@@ -85,6 +85,7 @@ public class Ray {
 	 */
 	public Point3D getPoint(double t) {
 		return p0.add(dir.scale(t));
+
 	}
 
 	@Override
@@ -147,10 +148,12 @@ public class Ray {
 		double nr;
 		for (int i = 0; i < NumOfRays; i++) {
 			randomCirclePoint = centerCirclePoint.randomPointOnRadius(dir, radius);
-			Vector v = randomCirclePoint.subtract(p0);
-			nr = normal.dotProduct(v);
-			if (checkSign(nr, nv))
-				splittedRays.add(new Ray(p0, v));
+			if (randomCirclePoint != null) {
+				Vector v = randomCirclePoint.subtract(p0);
+				nr = normal.dotProduct(v);
+				if (checkSign(nr, nv))
+					splittedRays.add(new Ray(p0, v));
+			}
 		}
 		splittedRays.add(this);
 		return splittedRays;
@@ -178,9 +181,12 @@ public class Ray {
 		}
 		Point3D randomCirclePoint = null;
 		for (int i = 0; i < NumOfRays; i++) {
-			randomCirclePoint = centerCirclePoint.randomPointOnRadius(dir, radius);
-			Vector v = randomCirclePoint.subtract(p0);
-			splittedRays.add(new Ray(p0, v));
+			
+				randomCirclePoint = centerCirclePoint.randomPointOnRadius(dir, radius);
+				if (randomCirclePoint != null) {
+				Vector v = randomCirclePoint.subtract(p0);
+				splittedRays.add(new Ray(p0, v));
+			}
 		}
 		splittedRays.add(this);
 		return splittedRays;

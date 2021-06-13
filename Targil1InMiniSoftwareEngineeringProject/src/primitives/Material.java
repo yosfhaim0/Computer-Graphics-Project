@@ -44,6 +44,10 @@ public class Material {
 	 * radius For Glossy
 	 */
 	public double radiusForGlossy = 0;
+	/**
+	 * radius For Blurry
+	 */
+	public double radiusForBlurry = 0;
 
 	/**
 	 * setter for radius
@@ -67,11 +71,6 @@ public class Material {
 	}
 
 	/**
-	 * radius For Blurry
-	 */
-	public double radiusForBlurry = 0;
-
-	/**
 	 * @param nShininess the nShininess to set
 	 */
 	public Material setShininess(int nShininess) {
@@ -80,8 +79,7 @@ public class Material {
 	}
 
 	/**
-	 * diffusive
-	 * set the kD coef.
+	 * diffusive set the kD coef.
 	 * 
 	 * @param kD diffusive coefficient
 	 * @return this (Material) - for concatenation
@@ -92,8 +90,7 @@ public class Material {
 	}
 
 	/**
-	 * specular
-	 * set the kS coef.
+	 * specular set the kS coef.
 	 * 
 	 * @param kS the specular coefficient
 	 * @return this - for concatenation
@@ -104,25 +101,23 @@ public class Material {
 	}
 
 	/**
-	 * transparency
-	 * set the kT coef.
+	 * transparency set the kT coef.
 	 * 
 	 * @param kT the transparency coefficient
 	 * @return this - Builder pattern
 	 */
-	public Material setkT(double kT) {
+	public Material setKt(double kT) {
 		this.kT = kT;
 		return this;
 	}
 
 	/**
-	 * reflection
-	 * set the kR coef.
+	 * reflection set the kR coef.
 	 * 
 	 * @param kR the reflection coefficient
 	 * @return this - Builder pattern
 	 */
-	public Material setkR(double kR) {
+	public Material setKr(double kR) {
 		this.kR = kR;
 		return this;
 	}

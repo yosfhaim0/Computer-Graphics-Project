@@ -159,11 +159,7 @@ public class Point3D {
 		double diameter = radius * 2;
 		Point3D p = randomPointOnRectangle(dir, diameter, diameter);
 		double t = p.distance(this);
-		while (t > radius) {
-			p = randomPointOnRectangle(dir, diameter, diameter);
-			t = p.distance(this);
-		}
-		return p;
+		return t < radius ? p : null;
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class PointLight extends Light implements LightSource {
 	 * Discount coefficients <br>
 	 * Fixed, linear, and square Respectively
 	 */
-	private double kC=1, kL=0, kQ=0;
+	private double kC = 1, kL = 0, kQ = 0;
 
 	/**
 	 * ctor for point light
@@ -31,6 +31,8 @@ public class PointLight extends Light implements LightSource {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param kC the kC to set
 	 */
 	public PointLight setkC(double kC) {
@@ -39,6 +41,8 @@ public class PointLight extends Light implements LightSource {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param kL the kL to set
 	 */
 	public PointLight setkL(double kL) {
@@ -47,6 +51,8 @@ public class PointLight extends Light implements LightSource {
 	}
 
 	/**
+	 * setter
+	 * 
 	 * @param kQ the kQ to set
 	 */
 	public PointLight setkQ(double kQ) {
@@ -70,13 +76,15 @@ public class PointLight extends Light implements LightSource {
 	public double getDistance(Point3D point) {
 		return position.distance(point);
 	}
+
 	/**
 	 * setter for radius of light
+	 * 
 	 * @param rad radius to set
 	 * @return this for chaining
 	 */
 	public PointLight setRadius(double rad) {
-		this.radius=rad;
+		this.radius = rad;
 		return this;
 	}
 

@@ -17,7 +17,13 @@ public class Cylinder extends Tube {
 	 * the height of tube more parm for cylinder is height
 	 */
 	private double height;
+	/**
+	 * base low base
+	 */
 	private Plane base1;
+	/**
+	 * the upper base
+	 */
 	private Plane base2;
 
 	/**
@@ -54,7 +60,7 @@ public class Cylinder extends Tube {
 		// distance between the level high of p0 and p
 		double t = v.dotProduct(p.subtract(p0));
 		// if t=0 or t=height - the point is on one of the bases
-		if (isZero(t) || isZero(t - this.height))
+		if (isZero(t/100) || isZero(t - this.height))
 			return v;
 
 		// else t =is the distance scalr whit unit vector v O = the center of the tube
@@ -136,28 +142,43 @@ public class Cylinder extends Tube {
 	protected void CreateBoundingBox() {
 		double x = axisRay.getDir().getHead().getX(), y = axisRay.getDir().getHead().getY(),
 				z = axisRay.getDir().getHead().getZ();
-		Ray ray = new Ray(axisRay.getP0(), axisRay.getDir().createOrthogonalVector());
 		if (x == 0) {
-			minX = ray.getPoint(-radius).getX();
-			maxX = ray.getPoint(radius).getX();
+			maxX = axisRay.getP0().getX() + radius;
+			minX = axisRay.getP0().getX() - radius;
 		} else {
+			maxX = axisRay.getPoint(height + radius).getX();
 			minX = axisRay.getPoint(-radius).getX();
-			maxX = axisRay.getPoint(radius + height).getX();
+			if (maxX < minX) {
+				double temp = minX;
+				minX = maxX;
+				maxX = temp;
+			}
 		}
 		if (y == 0) {
-			minY = ray.getPoint(-radius).getY();
-			maxY = ray.getPoint(radius).getY();
+			maxY = axisRay.getP0().getY() + radius;
+			minY = axisRay.getP0().getY() - radius;
 		} else {
+			maxY = axisRay.getPoint(height + radius).getY();
 			minY = axisRay.getPoint(-radius).getY();
-			maxY = axisRay.getPoint(radius + height).getY();
+			if (maxY < minY) {
+				double temp = minY;
+				minY = maxY;
+				maxY = temp;
+			}
 		}
 		if (z == 0) {
-			minZ = ray.getPoint(-radius).getZ();
-			maxZ = ray.getPoint(radius).getZ();
+			maxZ = axisRay.getP0().getZ() + radius;
+			minZ = axisRay.getP0().getZ() - radius;
 		} else {
+			maxZ = axisRay.getPoint(height + radius).getZ();
 			minZ = axisRay.getPoint(-radius).getZ();
-			maxZ = axisRay.getPoint(radius + height).getZ();
+			if (maxZ < minZ) {
+				double temp = minZ;
+				minZ = maxZ;
+				maxZ = temp;
+			}
 		}
+
 		middleBoxPoint = getMiddlePoint();
 		finityShape = true;
 	}
