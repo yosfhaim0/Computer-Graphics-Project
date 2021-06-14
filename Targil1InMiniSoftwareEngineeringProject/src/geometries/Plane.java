@@ -22,6 +22,10 @@ public class Plane extends Geometry {
 	 * normal vector to the plane i.e. unit vector orthogonal to the plane
 	 */
 	private Vector normal;
+	/**
+	 * for given the box some air, for performance
+	 */
+	private static final double DELTA = 0.1;
 
 	/**
 	 * Constructor whit point and vector
@@ -33,9 +37,6 @@ public class Plane extends Geometry {
 		this.q0 = p;
 		this.normal = v.normalized();
 	}
-
-	// to comment
-	private static final double DELTA = 0.1;
 
 	/**
 	 * Constructor that builds Plane from 3 points in the plane

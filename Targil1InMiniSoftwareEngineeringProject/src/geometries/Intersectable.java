@@ -53,8 +53,8 @@ public abstract class Intersectable {
 	protected abstract void CreateBoundingBox();
 
 	/**
-	 * creating boxes for all shapes in the geometries list and setting the bounding
-	 * to be true
+	 * creating boxes for all shapes in the geometries list<br>
+	 * and setting the bounding to be true
 	 */
 	public void createBox() {
 		BVHactivated = true;
@@ -74,7 +74,7 @@ public abstract class Intersectable {
 	 * Extremely fast algorithms<br>
 	 * for checking whether a ray cuts a box
 	 *
-	 * @param A ray we want to test whether it is cutting or not the box
+	 * @param ray we want to test whether it is cutting or not the box
 	 * @return true if intersect false if not
 	 */
 	public boolean isIntersectWithTheBox(Ray ray) {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package unittests.PictureImprovementsTests;
+package unittests.MiniProjectTests;
 
 import scene.*;
 
@@ -13,10 +13,12 @@ import geometries.*;
 import renderer.*;
 
 /**
+ * Beam Of Rays Tests picture
+ * 
  * @author yosefHaim
  *
  */
-public class BeamOfRaysTests {
+public class MP1BeamOfRaysTests {
 	/**
 	 * glussy test
 	 */
@@ -86,7 +88,7 @@ public class BeamOfRaysTests {
 		render.renderImage();
 		render.writeToImage();
 		// whitin glussy
-		ImageWriter imageWriter1 = new ImageWriter("GlassCube whitin glussy", p, p);
+		ImageWriter imageWriter1 = new ImageWriter("GlassCube whitout glussy", p, p);
 		Render render1 = new Render().setImageWriter(imageWriter1).setCamera(camera)
 				.setRayTracer(new RayTracerBasic(scene)).setMultithreading(3).setDebugPrint();
 
@@ -407,5 +409,4 @@ public class BeamOfRaysTests {
 
 	}
 
-	
 }

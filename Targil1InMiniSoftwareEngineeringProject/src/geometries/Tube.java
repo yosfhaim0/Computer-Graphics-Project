@@ -4,9 +4,8 @@ import static primitives.Util.*;
 
 import java.util.List;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
+
 
 /**
  * Tube with unlimited height tube represent by direction and radius
@@ -23,8 +22,6 @@ public class Tube extends Geometry {
 	 * radius of the tube
 	 */
 	protected double radius;
-	// to comment
-	private static final double DELTA = 0.1;
 
 	/**
 	 * ctor of: tube Infinity shape

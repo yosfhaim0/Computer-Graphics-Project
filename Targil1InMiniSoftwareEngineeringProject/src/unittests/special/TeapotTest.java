@@ -1555,13 +1555,13 @@ public class TeapotTest {
 	);
 	scene.lights.add(new PointLight(new Color(500, 500, 500), new Point3D(100, 0, -100)) //
 		.setkQ(0.000001));
-	scene.setTreeOfGeomtir();
+	//scene.setTreeOfGeomtir();
 	ImageWriter imageWriter = new ImageWriter("teapot", 800, 800);
 	Render render = new Render() //
 		.setCamera(camera) //
 		.setImageWriter(imageWriter) //
 		.setRayTracer(new RayTracerBasic(scene)) //
-		.setMultithreading(3)//
+		//.setMultithreading(3)//
 		.setDebugPrint()//
 	;
 	boolean flag = /* false */true;

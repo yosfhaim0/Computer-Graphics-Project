@@ -10,12 +10,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import elements.*;
-import geometries.*;
 import geometries.Intersectable.GeoPoint;
 import primitives.*;
-import renderer.*;
-import scene.Scene;
 
 /**
  * @author yosefHaim

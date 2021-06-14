@@ -1,9 +1,8 @@
-package unittests.AccelerationRendererTests;
+package unittests.MiniProjectTests;
 
 import java.util.List;
 
 import org.junit.Test;
-
 import elements.*;
 
 import geometries.*;
@@ -11,7 +10,13 @@ import primitives.*;
 import renderer.*;
 import scene.*;
 
-public class Accelerat {
+/**
+ * Mini Project 2 Accelerate Tests Picture
+ * 
+ * @author yosefHaim
+ *
+ */
+public class MP2AccelerateTests {
 	/**
 	 * Produce a picture of a some spheres with light
 	 */
@@ -58,7 +63,7 @@ public class Accelerat {
 				new DirectionalLight(new Color(224, 255, 255), new Vector(1, 5, 0))));
 		int p = 700;
 
-		ImageWriter imageWriter = new ImageWriter("31 sphere and pearl Mini Project 2", p, p);
+		ImageWriter imageWriter = new ImageWriter("MP2 31 sphere and pearl", p, p);
 		Render render = new Render()//
 				.setImageWriter(imageWriter)//
 				.setCamera(camera).setRayTracer(new RayTracerBasic(scene.//
@@ -68,14 +73,13 @@ public class Accelerat {
 
 				.setMultithreading(3)//
 				.setDebugPrint();
-		// .setMultithreading(3);
 
 		render.renderImage();
 		render.writeToImage();
 	}
 
 	/**
-	 * tank picture (look like siryan tank)
+	 * x and circel picture
 	 */
 	@Test
 	public void picturForZoomBackground() {
@@ -125,7 +129,7 @@ public class Accelerat {
 		);
 
 		scene.addLights(new DirectionalLight(new Color(0, 0, 0), new Vector(0, -1, 0)),
-				((SpotLight) new SpotLight(new Color(1800, 1800, 1800), new Point3D(3000, 5000, 3000),
+				((SpotLight) new SpotLight(new Color(1500, 1500, 1500), new Point3D(3000, 5000, 3000),
 						new Point3D(10, 0, 1750)) //
 								.setkL(1E-5).setkQ(1.5E-7)).setRadius(100),
 				new SpotLight(new Color(200, 200, 200), new Point3D(0, 8000, 0), new Point3D(1720, 0, 10)) //
@@ -133,9 +137,9 @@ public class Accelerat {
 				new SpotLight(new Color(200, 200, 200), new Point3D(0, 8000, 0), new Point3D(2300, 0, 2300)) //
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(5));
 		int p = 700;
-		ImageWriter imageWriter = new ImageWriter("picturForZoomBackground", p, p);
+		ImageWriter imageWriter = new ImageWriter("MP2 picturForZoomBackground", 480, 360);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(cam)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(150)).setMultithreading(3)
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(20)).setMultithreading(3)
 				.setDebugPrint();
 		scene.geometries.createBox();
 		scene.geometries.createGeometriesTree();
@@ -143,30 +147,59 @@ public class Accelerat {
 		render.writeToImage();
 	}
 
+	/**
+	 * Cylinder and spheres
+	 */
 	@Test
-	public void cylinders() {
+	public void cylindersAndSpheres() {
 
 		Scene scene = new Scene("spheres");
 
 		Camera camera = (new Camera(new Point3D(1000, 500, 500), new Vector(0, -1, 0), new Vector(1, 0, 0)))
-				.setVpDistance(4000).setViewPlaneSize(2000, 2000).setCameraHead(Point3D.ZERO);
+				.setVpDistance(4000).setViewPlaneSize(2000, 2000).setCameraHead(Point3D.ZERO)
+				.setNumOfRayForAntiAliasing(2);
 
 		scene.setBackground(Color.BLACK);
 		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
-		Color color[] = { Color.BLACK, Color.BROWM, Color.GOLD, Color.PERPERL, new Color(java.awt.Color.green),
-				new Color(java.awt.Color.blue), new Color(java.awt.Color.GRAY), new Color(java.awt.Color.orange),
-				new Color(java.awt.Color.red) };
+		Color color[] = { Color.BLACK, Color.BROWM, Color.GOLD, Color.PERPERL, Color.BLACK,
+				new Color(java.awt.Color.green), new Color(java.awt.Color.blue), new Color(java.awt.Color.GRAY),
+				Color.BLACK, new Color(java.awt.Color.orange), new Color(java.awt.Color.red),
+				new Color(java.awt.Color.DARK_GRAY), Color.BLACK, new Color(java.awt.Color.cyan),
+				new Color(java.awt.Color.magenta), new Color(java.awt.Color.pink), Color.BLACK,
+				new Color(java.awt.Color.WHITE), new Color(java.awt.Color.yellow),
+				new Color(java.awt.Color.lightGray) };
 		int c = 0;
+		int sum = 16;
 		for (int i = -1000; i < 1000; i = i + 100) {
-
-			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, 0), new Vector(0, 1, 0)), 30, 100)
-					.setEmission(color[c++ % 9])
-					.setMaterial(new Material().setKd(0.5).setKs(0.5).setKt(0).setKr(0).setShininess(100)));
+			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, 0), new Vector(0, 1, 0)), 25, 100)
+					.setEmission(color[c++ % sum]).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
 		}
 		c = 0;
 		for (int i = -1000; i < 1000; i = i + 150) {
-			scene.geometries.add(new Sphere(new Point3D(i, 50, 150), 50).setEmission(color[c++ % 9])
-					.setMaterial(new Material().setKd(0.2).setKs(0.2).setKt(0).setKr(0.0).setShininess(100)));
+			scene.geometries.add(new Sphere(new Point3D(i, 50, 150), 40).setEmission(color[c++ % sum])
+					.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		c = 0;
+		for (int i = -1000; i < 1000; i = i + 150) {
+			scene.geometries.add(new Sphere(new Point3D(i, 50, -150), 40).setEmission(color[c++ % sum])
+					.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		c = 0;
+		for (int i = -1000; i < 1000; i = i + 100) {
+
+			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, -300), new Vector(0, 1, 0)), 25, 100)
+					.setEmission(color[c++ % sum]).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		c = 0;
+		for (int i = -1000; i < 1000; i = i + 150) {
+			scene.geometries.add(new Sphere(new Point3D(i, 50, -450), 40).setEmission(color[c++ % sum])
+					.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		c = 0;
+		for (int i = -1000; i < 1000; i = i + 100) {
+
+			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, -600), new Vector(0, 1, 0)), 25, 100)
+					.setEmission(color[c++ % sum]).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
 		}
 //		
 
@@ -177,15 +210,73 @@ public class Accelerat {
 						.setkL(0.0001).setkQ(0.00005).setRadius(100),
 				new PointLight(new Color(40000, 40000, 40000), new Point3D(1000, 1000, -1000)).setkC(1).setkL(4E-4)
 						.setkQ(2E-5).setRadius(300));
-//		for (int i = -1000; i < 1000; i = i + 60) {
-//			scene.addLights(new SpotLight(new Color(100, 100, 100), new Point3D(i, 500, 100), new Point3D(i, 0, 0))
-//					.setkC(1).setkL(0.0001).setkQ(0.00005).setRadius(10));
-//		}
-		int p = 400;
+		int p = 1000;
 		scene.setTreeOfGeomtir();
-		ImageWriter imageWriter = new ImageWriter("cliyndersAndSpheres", p, p);
+		ImageWriter imageWriter = new ImageWriter("MP2 cliyndersAndSpheres", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(100))//
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(30))//
+				.setMultithreading(3)//
+				.setDebugPrint()//
+		;
+
+		render.renderImage();
+		render.writeToImage();
+
+	}
+
+	/**
+	 * cylinder and spheres whitout color, only black
+	 */
+	@Test
+	public void cylindersAndSpheres2() {
+
+		Scene scene = new Scene("spheres");
+
+		Camera camera = (new Camera(new Point3D(1000, 500, 500), new Vector(0, -1, 0), new Vector(1, 0, 0)))
+				.setVpDistance(4000).setViewPlaneSize(2000, 2000).setCameraHead(Point3D.ZERO)
+				.setNumOfRayForAntiAliasing(2);
+
+		scene.setBackground(Color.BLACK);
+		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
+		for (int i = -1000; i < 1000; i = i + 100) {
+			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, 0), new Vector(0, 1, 0)), 25, 100)
+					.setEmission(Color.BLACK).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		for (int i = -1000; i < 1000; i = i + 150) {
+			scene.geometries.add(new Sphere(new Point3D(i, 50, 150), 40).setEmission(Color.BLACK)
+					.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		for (int i = -1000; i < 1000; i = i + 150) {
+			scene.geometries.add(new Sphere(new Point3D(i, 50, -150), 40).setEmission(Color.BLACK)
+					.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		for (int i = -1000; i < 1000; i = i + 100) {
+
+			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, -300), new Vector(0, 1, 0)), 25, 100)
+					.setEmission(Color.BLACK).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		for (int i = -1000; i < 1000; i = i + 150) {
+			scene.geometries.add(new Sphere(new Point3D(i, 50, -450), 40).setEmission(Color.BLACK)
+					.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+		for (int i = -1000; i < 1000; i = i + 100) {
+
+			scene.geometries.add(new Cylinder(new Ray(new Point3D(i, 0, -600), new Vector(0, 1, 0)), 25, 100)
+					.setEmission(Color.BLACK).setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(100)));
+		}
+
+		scene.geometries.add(new Plane(Point3D.ZERO, new Vector(0, 1, 0)).setEmission(Color.BLACK)
+				.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30)));
+		scene.addLights(
+				new SpotLight(new Color(1000, 600, 1000), new Point3D(1000, 500, 500), Point3D.ZERO).setkC(1)
+						.setkL(0.0001).setkQ(0.00005).setRadius(100),
+				new PointLight(new Color(40000, 40000, 40000), new Point3D(1000, 1000, -1000)).setkC(1).setkL(4E-4)
+						.setkQ(2E-5).setRadius(300));
+		int p = 1000;
+		scene.setTreeOfGeomtir();
+		ImageWriter imageWriter = new ImageWriter("MP2 cliyndersAndSpheres OnlyBlack", p, p);
+		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(30))//
 				.setMultithreading(3)//
 				.setDebugPrint()//
 		;
@@ -210,7 +301,7 @@ public class Accelerat {
 				new Plane(new Point3D(0, 100, 500), new Vector(new Point3D(0, -1, 0)))
 						.setEmission(new Color(java.awt.Color.BLACK))
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setKt(0).setKr(0.4).setShininess(60)
-								.setRadiusForGlossy(0.08)),
+								.setRadiusForGlossy(0.8)),
 				new Sphere(new Point3D(50, 50, 2000), 50).setEmission(new Color(64, 224, 208))
 						.setMaterial(new Material().setKd(0.2).setKs(0.2).setKt(0.8).setKr(0).setShininess(10)),
 				new Sphere(new Point3D(150, 0, 2100), 100).setEmission(new Color(0, 255, 0))
@@ -227,9 +318,11 @@ public class Accelerat {
 						.setkL(4E-7).setkQ(2E-10));
 		scene.geometries.createBox();
 		scene.geometries.createGeometriesTree();
-		ImageWriter imageWriter = new ImageWriter("spheras", 600, 600);
+		ImageWriter imageWriter = new ImageWriter("MP2 spheras", 600, 600);
 		Render render = new Render().setCamera(camera).setImageWriter(imageWriter)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRayGlossy(100)).setMultithreading(3).setDebugPrint();
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRayGlossy(100).setDistanceForBlurryGlossy(80))//
+				.setMultithreading(3)//
+				.setDebugPrint();
 
 		render.renderImage();
 		render.writeToImage();
@@ -309,12 +402,12 @@ public class Accelerat {
 		scene.lights.addAll(List.of(// new DirectionalLight(new Color(50, 50, 0), new Vector(0, -1, -500)),
 				new SpotLight(new Color(255, 215, 0), new Point3D(-400, 1000, 1500), new Vector(400, -1000, -1500)) //
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(3)));
-
+		scene.setTreeOfGeomtir();
 		Render render = new Render()
 				.setCamera(cam.setPosition(new Point3D(0, 100000, 100000)).setCameraHead(new Point3D(0, 0, 500))
-						.setVpDistance(Math.sqrt(10000 * 10000) * 2 * 2 * 2 * 2 * 1.7).rotateHorizontally(180))
-				.setImageWriter(new ImageWriter("Newton's cradle position 2", 500, 500)).setMultithreading(3)
-				.setDebugPrint().setRayTracer(new RayTracerBasic(scene.setTreeOfGeomtir()).setNumOfRayBlurry(100));
+						.setVpDistance(Math.sqrt(10000 * 10000) * 2 * 2 * 2 * 2 * 1.3).rotateHorizontally(180))
+				.setImageWriter(new ImageWriter("MP2 Newton's cradle position 2", 500, 500)).setMultithreading(3)
+				.setDebugPrint().setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurry(100));
 
 		render.renderImage();
 		render.writeToImage();

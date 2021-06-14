@@ -16,7 +16,9 @@ public class Color {
 	final private double r;
 	final private double g;
 	final private double b;
-
+	/**
+	 * known color for using 
+	 */
 	public static final Color BLACK = new Color(0.0, 0.0, 0.0);
 	public static final Color GOLD = new Color(255.0, 215.0, 0.0);
 	public static final Color PERPERL = new Color(253.0, 51.0, 255.0);
