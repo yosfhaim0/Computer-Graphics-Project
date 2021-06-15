@@ -78,6 +78,33 @@ public class Ray {
 	}
 
 	/**
+	 * getter for Coordinate of head dir vector
+	 * 
+	 * @return head vector X coordinate
+	 */
+	public double GetXCordOfHead() {
+		return dir.getHead().getX();
+	}
+
+	/**
+	 * getter for Coordinate of head dir vector
+	 * 
+	 * @return head vector Y coordinate
+	 */
+	public double GetYCordOfHead() {
+		return dir.getHead().getY();
+	}
+
+	/**
+	 * getter for Coordinate of head dir vector
+	 * 
+	 * @return head vector Z coordinate
+	 */
+	public double GetZCordOfHead() {
+		return dir.getHead().getZ();
+	}
+
+	/**
 	 * Calculates point on the ray at certain distance from the ray head
 	 * 
 	 * @param t the distance from the ray head
@@ -181,9 +208,9 @@ public class Ray {
 		}
 		Point3D randomCirclePoint = null;
 		for (int i = 0; i < NumOfRays; i++) {
-			
-				randomCirclePoint = centerCirclePoint.randomPointOnRadius(dir, radius);
-				if (randomCirclePoint != null) {
+
+			randomCirclePoint = centerCirclePoint.randomPointOnRadius(dir, radius);
+			if (randomCirclePoint != null) {
 				Vector v = randomCirclePoint.subtract(p0);
 				splittedRays.add(new Ray(p0, v));
 			}

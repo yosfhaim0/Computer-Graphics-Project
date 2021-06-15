@@ -6,7 +6,6 @@ import java.util.List;
 
 import primitives.*;
 
-
 /**
  * Tube with unlimited height tube represent by direction and radius
  * 
@@ -158,8 +157,8 @@ public class Tube extends Geometry {
 
 	@Override
 	protected void CreateBoundingBox() {
-		double x = axisRay.getDir().getHead().getX(), y = axisRay.getDir().getHead().getY(),
-				z = axisRay.getDir().getHead().getZ();
+
+		double x = axisRay.GetXCordOfHead(), y = axisRay.GetYCordOfHead(), z = axisRay.GetZCordOfHead();
 		if (x == 0) {
 			maxX = axisRay.getP0().getX() + radius;
 			minX = axisRay.getP0().getX() - radius;

@@ -24,8 +24,8 @@ public class MP2AccelerateTests {
 	public void spheres32() {
 		Scene scene = new Scene("Test scene");
 		Camera camera = new Camera(new Point3D(0, -620, -800), new Vector(0, 1, Math.sqrt(3)),
-				new Vector(0, -1 * Math.sqrt(3), 1)).setNumOfRayFormApertureWindowToFocalPoint(20)
-						.setSizeForApertureWindow(100)
+				new Vector(0, -1 * Math.sqrt(3), 1)).setNumOfRayFormApertureWindowToFocalPoint(100)
+						.setSizeForApertureWindow(100).setNumOfRayForAntiAliasing(40)
 						.setDistanceToFocalPlane(new Point3D(0, -620, -800).distance(new Point3D(0, 70, 400)) - 50);
 		camera.setVpDistance(1000);
 		camera.setViewPlaneSize(200, 200);
@@ -61,7 +61,7 @@ public class MP2AccelerateTests {
 				new SpotLight(new Color(255, 255, 224), new Point3D(200, -200, 350), new Vector(-1, 1, 0.5)).setkL(2E-7)
 						.setkQ(2E-10).setRadius(20),
 				new DirectionalLight(new Color(224, 255, 255), new Vector(1, 5, 0))));
-		int p = 700;
+		int p = 1000;
 
 		ImageWriter imageWriter = new ImageWriter("MP2 31 sphere and pearl", p, p);
 		Render render = new Render()//
@@ -137,7 +137,7 @@ public class MP2AccelerateTests {
 				new SpotLight(new Color(200, 200, 200), new Point3D(0, 8000, 0), new Point3D(2300, 0, 2300)) //
 						.setkL(1E-5).setkQ(1.5E-7).setSharp(5));
 		int p = 700;
-		ImageWriter imageWriter = new ImageWriter("MP2 picturForZoomBackground", 480, 360);
+		ImageWriter imageWriter = new ImageWriter("MP2 picturForZoomBackground", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(cam)
 				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(20)).setMultithreading(3)
 				.setDebugPrint();
@@ -157,7 +157,7 @@ public class MP2AccelerateTests {
 
 		Camera camera = (new Camera(new Point3D(1000, 500, 500), new Vector(0, -1, 0), new Vector(1, 0, 0)))
 				.setVpDistance(4000).setViewPlaneSize(2000, 2000).setCameraHead(Point3D.ZERO)
-				.setNumOfRayForAntiAliasing(2);
+				.setNumOfRayForAntiAliasing(16);
 
 		scene.setBackground(Color.BLACK);
 		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -214,7 +214,7 @@ public class MP2AccelerateTests {
 		scene.setTreeOfGeomtir();
 		ImageWriter imageWriter = new ImageWriter("MP2 cliyndersAndSpheres", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(30))//
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(80))//
 				.setMultithreading(3)//
 				.setDebugPrint()//
 		;
@@ -233,8 +233,8 @@ public class MP2AccelerateTests {
 		Scene scene = new Scene("spheres");
 
 		Camera camera = (new Camera(new Point3D(1000, 500, 500), new Vector(0, -1, 0), new Vector(1, 0, 0)))
-				.setVpDistance(4000).setViewPlaneSize(2000, 2000).setCameraHead(Point3D.ZERO)
-				.setNumOfRayForAntiAliasing(2);
+				.setVpDistance(4000).setViewPlaneSize(2000, 2000).setCameraHead(Point3D.ZERO).setNumOfRayFormApertureWindowToFocalPoint(40).setSizeForApertureWindow(100).setDistanceToFocalPlane(new Point3D(1000, 500, 500).distance(Point3D.ZERO)-50)
+				;
 
 		scene.setBackground(Color.BLACK);
 		scene.setAmbientLight(new AmbientLight(Color.BLACK, 0.15));
@@ -276,7 +276,7 @@ public class MP2AccelerateTests {
 		scene.setTreeOfGeomtir();
 		ImageWriter imageWriter = new ImageWriter("MP2 cliyndersAndSpheres OnlyBlack", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(30))//
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(80))//
 				.setMultithreading(3)//
 				.setDebugPrint()//
 		;

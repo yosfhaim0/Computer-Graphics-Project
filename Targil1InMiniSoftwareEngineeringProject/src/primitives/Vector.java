@@ -1,5 +1,6 @@
 package primitives;
 
+
 /**
  * A vector is an object with size and direction Vector from the beginning of
  * the axes to a certain point Builders : a) three coordinates, b) three
@@ -45,6 +46,9 @@ public class Vector {
 	public Point3D getHead() {
 		return this.head;
 	}
+	
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {

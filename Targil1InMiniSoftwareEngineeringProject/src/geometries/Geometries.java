@@ -98,19 +98,26 @@ public class Geometries extends Intersectable {
 	 * so geometries as all geometries in one binary tree.
 	 */
 	public void createGeometriesTree() {
-		LinkedList<Intersectable> shapesWhitOutBox = null;
-		for (int i = 0; i < geometries.size(); ++i) {
-			if (!geometries.get(i).finityShape) {
-				if (shapesWhitOutBox == null)
-					shapesWhitOutBox = new LinkedList<Intersectable>();
-				shapesWhitOutBox.add(geometries.remove(i));
-				i--;
+		List<Intersectable> shapesWithoutBox = null;
+		List<Intersectable> shapesWithBox = null;
+		for (var i : geometries) {
+			if (i.finityShape) {
+				if (shapesWithBox == null)
+					shapesWithBox = new LinkedList<Intersectable>();
+				shapesWithBox.add(i);
+			} else {
+				if (shapesWithoutBox == null)
+					shapesWithoutBox = new LinkedList<Intersectable>();
+				shapesWithoutBox.add(i);
 			}
 		}
-		if (!geometries.isEmpty())
-			geometries = createGeometriesTreeRecursion(geometries);
-		if (shapesWhitOutBox != null)
-			geometries.addAll(0, shapesWhitOutBox);
+		if (shapesWithBox == null)
+			geometries = shapesWithoutBox;
+		else {
+			geometries = createGeometriesTreeRecursion(shapesWithBox);
+			if (shapesWithoutBox != null)
+				geometries.addAll(0, shapesWithoutBox);
+		}
 	}
 
 	/**
