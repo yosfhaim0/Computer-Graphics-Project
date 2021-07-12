@@ -13,4 +13,4 @@ The program has a lot of fields: color, geometry, algebra, photography, architec
 
 The program contains vectors and points created by the programmer rather than modules reserved in the work environment.
  Examples of images  Depth of the field including anti aliasing
-![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%2031%20sphere%20and%20pearl%20antiAliasing%26dof.png=true)
+![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%2031%20sphere%20and%20pearl%20antiAliasing%26dof.png?raw=true)
