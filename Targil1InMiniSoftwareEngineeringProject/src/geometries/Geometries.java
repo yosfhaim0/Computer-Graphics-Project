@@ -181,4 +181,8 @@ public class Geometries extends Intersectable {
 		}
 		return createGeometriesTreeRecursion(_newShapes);
 	}
+	//List<Intersectable> createGeometriesTreeRecursion1(List<Intersectable> finiteShapes) 
+	//{
+		
+	//}
 }
