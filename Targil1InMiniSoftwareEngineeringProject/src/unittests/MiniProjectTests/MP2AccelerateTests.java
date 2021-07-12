@@ -24,8 +24,8 @@ public class MP2AccelerateTests {
 	public void spheres32() {
 		Scene scene = new Scene("Test scene");
 		Camera camera = new Camera(new Point3D(0, -620, -800), new Vector(0, 1, Math.sqrt(3)),
-				new Vector(0, -1 * Math.sqrt(3), 1)).setNumOfRayFormApertureWindowToFocalPoint(100)
-						.setSizeForApertureWindow(100).setNumOfRayForAntiAliasing(40)
+				new Vector(0, -1 * Math.sqrt(3), 1)).setNumOfRayFormApertureWindowToFocalPoint(20)
+						.setSizeForApertureWindow(100).setNumOfRayForAntiAliasing(3)
 						.setDistanceToFocalPlane(new Point3D(0, -620, -800).distance(new Point3D(0, 70, 400)) - 50);
 		camera.setVpDistance(1000);
 		camera.setViewPlaneSize(200, 200);
@@ -139,7 +139,7 @@ public class MP2AccelerateTests {
 		int p = 700;
 		ImageWriter imageWriter = new ImageWriter("MP2 picturForZoomBackground", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(cam)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(20)).setMultithreading(3)
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(5)).setMultithreading(3)
 				.setDebugPrint();
 		scene.geometries.createBox();
 		scene.geometries.createGeometriesTree();
@@ -214,7 +214,7 @@ public class MP2AccelerateTests {
 		scene.setTreeOfGeomtir();
 		ImageWriter imageWriter = new ImageWriter("MP2 cliyndersAndSpheres", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(80))//
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(20))//
 				.setMultithreading(3)//
 				.setDebugPrint()//
 		;
@@ -276,7 +276,7 @@ public class MP2AccelerateTests {
 		scene.setTreeOfGeomtir();
 		ImageWriter imageWriter = new ImageWriter("MP2 cliyndersAndSpheres OnlyBlack", p, p);
 		Render render = new Render().setImageWriter(imageWriter).setCamera(camera)
-				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(80))//
+				.setRayTracer(new RayTracerBasic(scene).setNumOfRaySoftShadow(20))//
 				.setMultithreading(3)//
 				.setDebugPrint()//
 		;
@@ -407,7 +407,7 @@ public class MP2AccelerateTests {
 				.setCamera(cam.setPosition(new Point3D(0, 100000, 100000)).setCameraHead(new Point3D(0, 0, 500))
 						.setVpDistance(Math.sqrt(10000 * 10000) * 2 * 2 * 2 * 2 * 1.3).rotateHorizontally(180))
 				.setImageWriter(new ImageWriter("MP2 Newton's cradle position 2", 500, 500)).setMultithreading(3)
-				.setDebugPrint().setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurry(100));
+				.setDebugPrint().setRayTracer(new RayTracerBasic(scene).setNumOfRayBlurry(20));
 
 		render.renderImage();
 		render.writeToImage();
