@@ -11,7 +11,7 @@ import scene.Scene;
 /**
  * Test rendering an image
  * 
- * @author Dan
+ * @author Dan zilber
  */
 public class TeapotTest {
     private final Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
