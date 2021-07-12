@@ -12,3 +12,5 @@ this optional option of frozen objects or objects like water means that their re
 The program has a lot of fields: color, geometry, algebra, photography, architecture, etc.
 
 The program contains vectors and points created by the programmer rather than modules reserved in the work environment.
+ Examples of images  Depth of the field including anti aliasing
+ ![Alt text](relative/path/to/img.jpg?raw=true "Title")
