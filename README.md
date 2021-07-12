@@ -21,7 +21,7 @@ The program contains vectors and points created by the programmer rather than mo
 ![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%2031%20sphere%20and%20pearl%20antiAliasing%26dof.png?raw=true)
 
 anti alising and soft shadow
-![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%2031%20sphere%20and%20pearl%20antiAliasing%26dof.png?raw=true)
+![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%20cliyndersAndSpheres%20antiAliasing.png?raw=true)
 
 x&o whit soft shadow
 ![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%20picturForZoomBackground%20softshad.png?raw=true)
