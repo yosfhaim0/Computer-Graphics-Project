@@ -37,6 +37,8 @@ The program contains vectors and points created by the programmer rather than mo
 *Depth of field*
 ![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/Depth%20Of%20Field.png?raw=true)
 
+*soft shdow*
+![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/Soft%20Shadow%20Test.png?raw=true)
 
 *Picture from the lecturer with a 1000 of Polygons to see if the algorithm works fast*
 ![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/teapot.png?raw=true)
