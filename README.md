@@ -1,5 +1,5 @@
 # Computer-Graphics-Project
-Computer Graphics 
+**Computer Graphics **
 
 The project in an introduction to software engineering at the Academic Institute, the first 8 parts are 
 instructions for creating the project whit order form lecturer and the latest parts give more free hand for students, 
