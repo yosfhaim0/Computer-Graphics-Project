@@ -1,5 +1,5 @@
 # Computer-Graphics-Project
-Computer Graphics
+**A program that creates 3D images**
 
 **background of the project.**
 The project in an introduction to software engineering at the Academic Institute, the first parts 
