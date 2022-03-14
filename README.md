@@ -18,6 +18,27 @@ this optional option of frozen objects or objects like water means that their re
 The program requires problem domain: color, geometry, algebra, photography, architecture, etc.
 The program contains vectors and points created by the programmer rather than modules reserved in the work environment.
 
+
+# Things I learned in the project:
+**•To gain hands-on practice in acquiring proficiency in a new problem domain and to develop 
+abstract description of it**
+
+**• To develop understanding and appreciation of complex software projects**
+
+**• To understand the basic mechanisms of object-oriented modelling and abstraction**
+
+**• To understand the flow from an idea to code**
+
+**• To understand and apply principles of class design**
+
+**• To develop an intuition of basic design patterns to address design challenges**
+
+**• To understand and apply techniques supporting Agile Development: Refactoring, Testfirst 
+programming and Pair programming.**
+
+
+
+
  *Examples of images  Depth of the field including anti aliasing and  soft shadow*
 
 ![alt text](https://github.com/yosfhaim0/Computer-Graphics-Project/blob/master/Targil1InMiniSoftwareEngineeringProject/images/MP2%20cliyndersAndSpheres%20OnlyBlack%20softshd%26dof.png?raw=true)
